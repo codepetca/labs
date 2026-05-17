@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const navItems = [
   { href: "/projects", label: "Projects" },
@@ -10,19 +11,21 @@ const navItems = [
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="flex size-9 items-center justify-center rounded-md border border-border bg-foreground font-mono text-sm font-semibold text-background">
-            CL
-          </span>
-          <span className="block text-sm font-semibold text-foreground">
-            CodePet Labs
-          </span>
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <Link href="/" aria-label="CodePet Labs home" className="shrink-0">
+          <Image
+            src="/images/paw-mark.svg"
+            alt=""
+            width={40}
+            height={40}
+            priority
+            className="size-10 rounded-md border border-border bg-foreground"
+          />
         </Link>
 
         <nav
           aria-label="Main navigation"
-          className="-mx-1 flex gap-1 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="-mx-1 flex min-w-0 gap-1 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {navItems.map((item) => (
             <Link

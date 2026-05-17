@@ -1,26 +1,77 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f9f6;
+  --foreground: #17202a;
+  --surface: #ffffff;
+  --surface-muted: #eef3ef;
+  --card: #ffffff;
+  --card-soft: #f2f6f4;
+  --border: #d8e1db;
+  --muted: #5c6975;
+  --accent: #087f8c;
+  --accent-soft: #d9f0ee;
+  --warm: #d9653b;
+  --warm-soft: #f7e5db;
+  --violet: #6552b8;
+  --violet-soft: #e8e3fb;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-card: var(--card);
+  --color-card-soft: var(--card-soft);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-warm: var(--warm);
+  --color-warm-soft: var(--warm-soft);
+  --color-violet: var(--violet);
+  --color-violet-soft: var(--violet-soft);
+  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #111519;
+    --foreground: #edf2f1;
+    --surface: #161c21;
+    --surface-muted: #1e252b;
+    --card: #192027;
+    --card-soft: #202932;
+    --border: #2f3b45;
+    --muted: #a5b0b8;
+    --accent: #55c7c8;
+    --accent-soft: #16383b;
+    --warm: #f08a61;
+    --warm-soft: #43261e;
+    --violet: #a79cff;
+    --violet-soft: #2c2946;
   }
 }
 
-body {
+* {
+  box-sizing: border-box;
+}
+
+html {
   background: var(--background);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, var(--background) 0%, var(--surface-muted) 100%);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
 }

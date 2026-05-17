@@ -1,65 +1,147 @@
-import Image from "next/image";
+import Link from "next/link";
+
+import { SectionHeading } from "@/components/section-heading";
+
+const focusAreas = [
+  {
+    name: "CodePetPal",
+    description:
+      "Companion-style learning experiments for motivation, feedback, and lightweight progress loops.",
+    accent: "bg-accent-soft text-accent",
+  },
+  {
+    name: "Gradex",
+    description:
+      "Teacher-facing gradebook and analytics prototypes that explore clearer student progress signals.",
+    accent: "bg-violet-soft text-violet",
+  },
+  {
+    name: "Attendance",
+    description:
+      "TapCheck-style attendance flows using mock rosters and fast classroom check-in patterns.",
+    accent: "bg-warm-soft text-warm",
+  },
+  {
+    name: "Polling",
+    description:
+      "Low-friction classroom pulse checks, feedback prompts, and discussion starters.",
+    accent: "bg-accent-soft text-accent",
+  },
+  {
+    name: "Pika UI Experiments",
+    description:
+      "Interface studies for future Pika-adjacent products, dashboards, and shared design language.",
+    accent: "bg-violet-soft text-violet",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main>
+      <section className="mx-auto grid w-full max-w-6xl gap-10 px-5 py-14 sm:px-8 sm:py-20 lg:grid-cols-[1fr_420px] lg:items-center">
+        <div className="max-w-3xl">
+          <p className="mb-4 inline-flex rounded-md border border-border bg-surface px-3 py-1 text-sm font-medium text-muted">
+            Independent student builder studio
           </p>
+          <h1 className="text-5xl font-semibold tracking-normal text-foreground sm:text-6xl">
+            CodePet Labs
+          </h1>
+          <p className="mt-6 max-w-2xl text-xl leading-8 text-muted">
+            An AI-native software lab exploring educational tools around the
+            Pika ecosystem.
+          </p>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-muted">
+            CodePet Labs is a small invite-only environment where motivated
+            students learn modern software development by shipping
+            Pika-adjacent tools, prototypes, and experiments. It is not a
+            school club, formal class, or employment program.
+          </p>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/projects"
+              className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
+            >
+              View projects
+            </Link>
+            <Link
+              href="/join"
+              className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card-soft"
+            >
+              How joining works
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+          <div className="rounded-md border border-border bg-card-soft p-4">
+            <div className="flex items-center justify-between border-b border-border pb-3">
+              <div>
+                <p className="text-sm font-semibold text-foreground">
+                  Labs board
+                </p>
+                <p className="text-xs text-muted">Mock-first prototypes</p>
+              </div>
+              <span className="rounded-md bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent">
+                Summer 2026
+              </span>
+            </div>
+            <div className="mt-4 space-y-3">
+              {["Idea", "Prototype", "Demo", "Review"].map((step, index) => (
+                <div
+                  key={step}
+                  className="flex items-center gap-3 rounded-md border border-border bg-surface p-3"
+                >
+                  <span className="flex size-8 items-center justify-center rounded-md bg-foreground font-mono text-sm text-background">
+                    0{index + 1}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      {step}
+                    </p>
+                    <p className="text-xs text-muted">
+                      {index === 0 && "Shape the problem with Pika context."}
+                      {index === 1 && "Build with mock data and small scope."}
+                      {index === 2 && "Share a working slice each week."}
+                      {index === 3 && "Verify, polish, and decide next steps."}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="border-y border-border bg-surface/75">
+        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+          <SectionHeading
+            eyebrow="Current focus"
+            title="Small projects around real product questions"
+            description="Labs work stays adjacent to Pika core. Students explore useful interfaces, workflows, and product ideas in separate repos with mock data first."
+          />
+
+          <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+            {focusAreas.map((area) => (
+              <article
+                key={area.name}
+                className="rounded-lg border border-border bg-card p-5 shadow-sm"
+              >
+                <span
+                  className={`mb-4 inline-flex rounded-md px-2.5 py-1 text-xs font-semibold ${area.accent}`}
+                >
+                  Focus
+                </span>
+                <h2 className="text-lg font-semibold text-foreground">
+                  {area.name}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-muted">
+                  {area.description}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

@@ -1,0 +1,14 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Polling playground prototype</title>
+  <desc id="desc">A pulse poll interface with answer bars.</desc>
+  <rect width="640" height="420" rx="28" fill="#D9F0EE"/>
+  <rect x="48" y="48" width="544" height="324" rx="24" fill="#FFFFFF" stroke="#BFDCD8" stroke-width="2"/>
+  <rect x="88" y="92" width="284" height="18" rx="9" fill="#17202A"/>
+  <rect x="88" y="132" width="380" height="12" rx="6" fill="#D8E1DB"/>
+  <rect x="88" y="188" width="464" height="44" rx="14" fill="#F2F6F4"/>
+  <rect x="112" y="204" width="298" height="12" rx="6" fill="#087F8C"/>
+  <rect x="88" y="252" width="464" height="44" rx="14" fill="#F2F6F4"/>
+  <rect x="112" y="268" width="198" height="12" rx="6" fill="#087F8C" opacity=".72"/>
+  <rect x="88" y="316" width="464" height="44" rx="14" fill="#F2F6F4"/>
+  <rect x="112" y="332" width="96" height="12" rx="6" fill="#087F8C" opacity=".44"/>
+</svg>

@@ -1,0 +1,14 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CodePet Labs join flow</title>
+  <desc id="desc">A simple invite flow from pick to build to demo.</desc>
+  <rect width="640" height="420" rx="28" fill="#E8E3FB"/>
+  <rect x="48" y="48" width="544" height="324" rx="24" fill="#FFFFFF" stroke="#D7CFF5" stroke-width="2"/>
+  <circle cx="150" cy="210" r="54" fill="#D9F0EE"/>
+  <circle cx="320" cy="210" r="54" fill="#F7E5DB"/>
+  <circle cx="490" cy="210" r="54" fill="#E8E3FB"/>
+  <path d="M212 210H258" stroke="#17202A" stroke-width="10" stroke-linecap="round"/>
+  <path d="M382 210H428" stroke="#17202A" stroke-width="10" stroke-linecap="round"/>
+  <rect x="116" y="298" width="68" height="12" rx="6" fill="#087F8C"/>
+  <rect x="286" y="298" width="68" height="12" rx="6" fill="#D9653B"/>
+  <rect x="456" y="298" width="68" height="12" rx="6" fill="#6552B8"/>
+</svg>

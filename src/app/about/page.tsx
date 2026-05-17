@@ -1,51 +1,62 @@
+import Image from "next/image";
+
 import { SectionHeading } from "@/components/section-heading";
 
 const principles = [
   {
     title: "Learn by shipping",
-    body: "Students work on real slices of product thinking: framing a problem, building a prototype, demoing it, and improving it from feedback.",
+    body: "Ship small. Improve from feedback.",
   },
   {
     title: "AI-assisted development",
-    body: "AI is part of the workflow, but students are responsible for understanding, testing, and explaining the work they submit.",
+    body: "AI helps. Builders verify.",
   },
   {
     title: "Async collaboration",
-    body: "Most progress happens through GitHub, Discord, short demos, and clear written updates instead of classroom-style meetings.",
+    body: "GitHub, Discord, short demos.",
   },
   {
     title: "Product thinking",
-    body: "The work is about usefulness, clarity, constraints, and tradeoffs, not just producing code that runs locally.",
+    body: "Usefulness before code volume.",
   },
   {
     title: "Independent from school systems",
-    body: "CodePet Labs is not a class, club, grade pathway, or school-affiliated program. It is an independent builder environment.",
+    body: "Optional, ungraded, unaffiliated.",
   },
   {
     title: "Pika as the anchor",
-    body: "Pika gives Labs a real ecosystem to orbit, while Pika core remains supervised, protected, and separate from student experiments.",
+    body: "Orbit Pika. Protect core.",
   },
 ];
 
 export default function AboutPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
-      <SectionHeading
-        eyebrow="About"
-        title="A small lab for students who want to build seriously"
-        description="CodePet Labs gives motivated students a place to practice modern software work in a grounded, portfolio-friendly way. The tone is practical: build something small, make it work, explain the decisions, and keep improving."
-      />
+    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
+      <div className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <SectionHeading
+          eyebrow="About"
+          title="Build. Verify. Ship."
+          description="A small studio for serious student work."
+        />
+        <Image
+          src="/images/visual-ui.svg"
+          alt="Pika UI experiment card"
+          width={640}
+          height={420}
+          className="aspect-[16/10] w-full rounded-lg border border-border bg-card object-cover shadow-sm"
+        />
+      </div>
 
-      <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {principles.map((principle) => (
           <article
             key={principle.title}
-            className="rounded-lg border border-border bg-card p-5 shadow-sm"
+            className="rounded-lg border border-border bg-card p-4 shadow-sm"
           >
-            <h2 className="text-lg font-semibold text-foreground">
+            <h2 className="text-base font-semibold text-foreground">
               {principle.title}
             </h2>
-            <p className="mt-3 text-sm leading-6 text-muted">
+            <p className="mt-2 text-sm leading-5 text-muted">
               {principle.body}
             </p>
           </article>

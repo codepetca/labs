@@ -1,0 +1,15 @@
+<svg width="640" height="420" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">CodePetPal XP prototype</title>
+  <desc id="desc">A simple XP card with progress rings and streak states.</desc>
+  <rect width="640" height="420" rx="28" fill="#D9F0EE"/>
+  <rect x="48" y="48" width="544" height="324" rx="24" fill="#FFFFFF" stroke="#BFDCD8" stroke-width="2"/>
+  <circle cx="150" cy="150" r="58" fill="#087F8C"/>
+  <circle cx="150" cy="150" r="34" fill="#FFFFFF"/>
+  <path d="M132 154L146 168L172 130" stroke="#087F8C" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="248" y="112" width="194" height="16" rx="8" fill="#17202A"/>
+  <rect x="248" y="146" width="248" height="12" rx="6" fill="#D8E1DB"/>
+  <rect x="248" y="174" width="156" height="12" rx="6" fill="#D8E1DB"/>
+  <rect x="88" y="252" width="464" height="56" rx="16" fill="#F2F6F4"/>
+  <rect x="112" y="274" width="328" height="12" rx="6" fill="#087F8C"/>
+  <circle cx="492" cy="280" r="18" fill="#087F8C"/>
+</svg>

@@ -1,54 +1,65 @@
+import Image from "next/image";
+
 import { SectionHeading } from "@/components/section-heading";
 
 const notes = [
-  "Participation is optional and not connected to grades.",
-  "CodePet Labs is independent and not school-affiliated.",
-  "The focus is learning, building, and portfolio-quality work.",
-  "Students work in separate project repos with mock data first.",
-  "Production Pika access is restricted and supervised.",
-  "Student projects may be rewritten, replaced, or integrated later.",
+  { title: "Optional", body: "No grades. No employment tie." },
+  { title: "Independent", body: "Not school-affiliated." },
+  { title: "Portfolio", body: "Build visible work." },
+  { title: "Separate repos", body: "Mock data first." },
+  { title: "Restricted access", body: "No production student data." },
+  { title: "Flexible future", body: "Work may be rewritten later." },
 ];
 
 export default function JoinPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
+    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <SectionHeading
         eyebrow="Join"
-        title="Small, invite-only, and intentionally experimental"
-        description="CodePet Labs is currently kept small so projects can get useful direction and students can build without the overhead of a formal program."
+        title="Invite-only"
+        description="Small. Optional. Experimental."
       />
 
-      <div className="mt-8 grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-        <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-foreground">
-            How it works today
-          </h2>
-          <p className="mt-4 text-sm leading-6 text-muted">
-            Students are invited into a builder environment where they can pick
-            up focused Labs projects, learn modern development habits, and
-            share visible progress. The work happens async through GitHub and
-            Discord, with syncs used for demos, direction-setting, blockers,
-            and next steps.
-          </p>
-          <p className="mt-4 text-sm leading-6 text-muted">
-            Labs is a learning environment, not an employment program. It is
-            meant to create skill growth, confidence, and credible portfolio
-            artifacts without granting access to production systems or real
-            student data.
-          </p>
+      <div className="mt-7 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <section className="overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+          <Image
+            src="/images/visual-join.svg"
+            alt="Invite flow from pick to build to demo"
+            width={640}
+            height={420}
+            className="aspect-[16/10] w-full object-cover"
+          />
+          <div className="grid gap-3 p-4 sm:grid-cols-3">
+            {["Pick", "Build", "Demo"].map((step, index) => (
+              <div
+                key={step}
+                className="rounded-lg border border-border bg-card-soft p-3"
+              >
+                <span className="font-mono text-xs text-muted">
+                  0{index + 1}
+                </span>
+                <p className="mt-2 text-sm font-semibold text-foreground">
+                  {step}
+                </p>
+              </div>
+            ))}
+          </div>
         </section>
 
-        <section className="rounded-lg border border-border bg-card p-6 shadow-sm">
-          <h2 className="text-xl font-semibold text-foreground">
-            Ground rules
-          </h2>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+        <section className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
+          <h2 className="text-lg font-semibold text-foreground">Ground rules</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {notes.map((note) => (
               <div
-                key={note}
-                className="rounded-md border border-border bg-card-soft p-4 text-sm leading-6 text-muted"
+                key={note.title}
+                className="rounded-md border border-border bg-card-soft p-3"
               >
-                {note}
+                <p className="text-sm font-semibold text-foreground">
+                  {note.title}
+                </p>
+                <p className="mt-1 text-sm leading-5 text-muted">
+                  {note.body}
+                </p>
               </div>
             ))}
           </div>

@@ -72,6 +72,7 @@ No environment variables are required for the initial site.
 - [Operating Model](docs/operating-model.md)
 - [Workflow](docs/workflow.md)
 - [AI Guidelines](docs/ai-guidelines.md)
+- [UI/UX Style Guide](docs/ui-ux-style.md)
 - [Onboarding](docs/onboarding.md)
 - [Student Roles](docs/student-roles.md)
 - [Project Ideas](docs/project-ideas.md)

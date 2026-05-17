@@ -32,3 +32,5 @@ Students are responsible for the final work they submit.
 ## Practical Standard
 
 Good AI-assisted work is clear, tested, and explainable. If AI creates something confusing, simplify it before asking for review.
+
+For UI work, follow [UI/UX Style Guide](ui-ux-style.md): mobile-first, minimal, low-text, and mock-data-first.

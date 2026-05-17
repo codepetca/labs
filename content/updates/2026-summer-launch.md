@@ -1,6 +1,6 @@
 # 2026 Summer Launch
 
-CodePet Labs starts as a small summer builder track for Pika-adjacent ideas. The first goal is not production permanence. The goal is useful prototypes, stronger student judgment, and visible work that can become portfolio material.
+Small summer builder track for Pika-adjacent prototypes.
 
 - Build with mock data first.
 - Keep Pika core protected.

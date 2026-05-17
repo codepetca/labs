@@ -2,37 +2,45 @@
   {
     "name": "CodePetPal XP Prototype",
     "status": "Prototype",
-    "description": "A mock-data experiment for XP, streaks, encouragement loops, and lightweight progress feedback around CodePet-style learning.",
+    "description": "XP, streaks, and encouragement loops using mock learners.",
     "focusArea": "Student motivation",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
-    "contributor": "CP"
+    "contributor": "CP",
+    "imageUrl": "/images/visual-codepetpal.svg",
+    "imageAlt": "XP prototype card with progress states"
   },
   {
     "name": "Gradex Dashboard Prototype",
     "status": "Design build",
-    "description": "A teacher dashboard sketch for grade signals, class summaries, and clearer progress views without touching production data.",
+    "description": "Grade signals and class summaries without production data.",
     "focusArea": "Teacher analytics",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
-    "contributor": "GX"
+    "contributor": "GX",
+    "imageUrl": "/images/visual-gradex.svg",
+    "imageAlt": "Gradex dashboard prototype with charts"
   },
   {
     "name": "TapCheck Attendance Experiments",
     "status": "Exploration",
-    "description": "Attendance interaction prototypes using mock rosters, quick check-in states, and classroom-friendly review screens.",
+    "description": "Fast check-in states with mock rosters.",
     "focusArea": "Classroom workflow",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
-    "contributor": "TC"
+    "contributor": "TC",
+    "imageUrl": "/images/visual-attendance.svg",
+    "imageAlt": "Attendance prototype with tap states"
   },
   {
     "name": "Pika Polling Playground",
     "status": "Idea",
-    "description": "A playground for classroom polls, quick pulse checks, and low-friction feedback moments that could orbit the Pika ecosystem.",
+    "description": "Quick polls and low-friction classroom feedback.",
     "focusArea": "Live feedback",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
-    "contributor": "PP"
+    "contributor": "PP",
+    "imageUrl": "/images/visual-polling.svg",
+    "imageAlt": "Polling playground prototype with answer bars"
   }
 ]

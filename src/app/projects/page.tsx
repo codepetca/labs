@@ -7,14 +7,14 @@ const projectList = projects as ProjectCardProject[];
 
 export default function ProjectsPage() {
   return (
-    <main className="mx-auto w-full max-w-6xl px-5 py-14 sm:px-8">
+    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <SectionHeading
         eyebrow="Projects"
-        title="Pika-adjacent prototypes and student experiments"
-        description="These projects use mock data, separate repos, and narrow scopes. The goal is to learn by shipping visible work while keeping Pika core supervised and protected."
+        title="Prototypes"
+        description="Mock data. Clear demos."
       />
 
-      <div className="mt-8 grid gap-5 md:grid-cols-2">
+      <div className="mt-7 grid gap-4 sm:grid-cols-2">
         {projectList.map((project) => (
           <ProjectCard key={project.name} project={project} />
         ))}

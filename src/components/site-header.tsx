@@ -15,13 +15,8 @@ export function SiteHeader() {
           <span className="flex size-9 items-center justify-center rounded-md border border-border bg-foreground font-mono text-sm font-semibold text-background">
             CL
           </span>
-          <span className="min-w-0">
-            <span className="block text-sm font-semibold text-foreground">
-              CodePet Labs
-            </span>
-            <span className="block truncate text-xs text-muted">
-              Student software lab
-            </span>
+          <span className="block text-sm font-semibold text-foreground">
+            CodePet Labs
           </span>
         </Link>
 

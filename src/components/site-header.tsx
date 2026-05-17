@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 const navItems = [
   { href: "/projects", label: "Projects" },
@@ -13,14 +13,27 @@ export function SiteHeader() {
     <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link href="/" aria-label="CodePet Labs home" className="shrink-0">
-          <Image
-            src="/images/paw-mark.svg"
-            alt=""
-            width={40}
-            height={40}
-            priority
-            className="size-10 rounded-md border border-border bg-foreground"
-          />
+          <span
+            aria-hidden="true"
+            className="grid size-10 place-items-center rounded-md border border-border bg-surface"
+          >
+            <Image
+              src="/images/paw-light.svg"
+              alt=""
+              width={24}
+              height={24}
+              priority
+              className="size-6 dark:hidden"
+            />
+            <Image
+              src="/images/paw-dark.svg"
+              alt=""
+              width={24}
+              height={24}
+              priority
+              className="hidden size-6 dark:block"
+            />
+          </span>
         </Link>
 
         <nav

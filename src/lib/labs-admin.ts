@@ -7,6 +7,7 @@ export type LabsConfig = {
   adminEmails: string[];
   builderRoleSlug: string;
   adminRoleSlug: string;
+  discordInviteUrl: string | null;
 };
 
 export type LabsUser = {
@@ -58,6 +59,7 @@ export function getLabsConfig(): LabsConfig {
     adminEmails: parseAdminEmails(process.env.CODEPET_ADMIN_EMAILS),
     builderRoleSlug: process.env.CODEPET_BUILDER_ROLE_SLUG ?? "builder",
     adminRoleSlug: process.env.CODEPET_ADMIN_ROLE_SLUG ?? "admin",
+    discordInviteUrl: process.env.CODEPET_DISCORD_INVITE_URL ?? null,
   };
 }
 

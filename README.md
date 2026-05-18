@@ -57,6 +57,7 @@ CODEPET_WORKOS_ORG_ID=
 CODEPET_ADMIN_EMAILS=you@example.com
 CODEPET_BUILDER_ROLE_SLUG=builder
 CODEPET_ADMIN_ROLE_SLUG=admin
+CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
 ```
 
 See `.env.example` and `docs/member-management.md` for the full setup.

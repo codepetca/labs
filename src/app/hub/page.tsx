@@ -3,6 +3,7 @@ import Link from "next/link";
 import { saveGithubUsername } from "@/app/hub/actions";
 import {
   getCurrentLabsUser,
+  getLabsConfig,
   getLabsConfigStatus,
   getLabsMembership,
   isAdminEmail,
@@ -18,6 +19,7 @@ export default async function HubPage() {
   }
 
   const user = await getCurrentLabsUser();
+  const config = getLabsConfig();
   const membership = await getLabsMembership(user.id);
   const isAdmin = isAdminEmail(user.email);
   const isActiveMember = membership?.status === "active";
@@ -75,8 +77,13 @@ export default async function HubPage() {
       </div>
 
       <section className="mt-4 rounded-lg border border-border bg-card p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-foreground">Links</h2>
+        <h2 className="text-base font-semibold text-foreground">
+          {isActiveMember ? "Next steps" : "Links"}
+        </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
+          {isActiveMember && config.discordInviteUrl ? (
+            <HubLink href={config.discordInviteUrl} label="Join Discord" />
+          ) : null}
           <HubLink href="/projects" label="Projects" />
           <HubLink href="/showcase" label="Showcase" />
           {isAdmin ? <HubLink href="/admin" label="Admin" /> : null}

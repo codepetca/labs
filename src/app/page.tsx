@@ -2,29 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { SectionHeading } from "@/components/section-heading";
+import { TrackCard } from "@/components/track-card";
+import type { ProjectCardProject } from "@/components/project-card";
 
-const focusAreas = [
-  {
-    name: "CodePetPal",
-    imageUrl: "/images/visual-codepetpal.svg",
-  },
-  {
-    name: "Gradex",
-    imageUrl: "/images/visual-gradex.svg",
-  },
-  {
-    name: "Attendance",
-    imageUrl: "/images/visual-attendance.svg",
-  },
-  {
-    name: "Polling",
-    imageUrl: "/images/visual-polling.svg",
-  },
-  {
-    name: "Pika UI",
-    imageUrl: "/images/visual-ui.svg",
-  },
-];
+import projects from "../../content/projects.json";
+
+const projectList = projects as ProjectCardProject[];
 
 export default function Home() {
   const discordInviteUrl = process.env.CODEPET_DISCORD_INVITE_URL;
@@ -77,37 +60,13 @@ export default function Home() {
         />
       </section>
 
-      <section className="border-y border-border bg-surface/75">
+      <section id="tracks" className="border-y border-border bg-surface/75">
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <SectionHeading title="Five tracks" />
-            <Link
-              href="/projects"
-              className="text-sm font-semibold text-accent hover:underline"
-            >
-              See projects
-            </Link>
-          </div>
+          <SectionHeading title="Five tracks" />
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {focusAreas.map((area) => (
-              <article
-                key={area.name}
-                className="overflow-hidden rounded-lg border border-border bg-card shadow-sm"
-              >
-                <Image
-                  src={area.imageUrl}
-                  alt=""
-                  width={640}
-                  height={420}
-                  className="aspect-[16/10] w-full object-cover"
-                />
-                <div className="p-4">
-                  <h2 className="text-base font-semibold leading-6 text-foreground">
-                    {area.name}
-                  </h2>
-                </div>
-              </article>
+            {projectList.map((project) => (
+              <TrackCard key={project.name} project={project} />
             ))}
           </div>
         </div>

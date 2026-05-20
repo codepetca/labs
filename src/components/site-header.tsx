@@ -1,10 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const navItems = [
-  { href: "/projects", label: "Projects" },
-];
-
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-background/90 backdrop-blur">
@@ -35,15 +31,6 @@ export function SiteHeader() {
           aria-label="Main navigation"
           className="-mx-1 flex min-w-0 gap-1 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="shrink-0 rounded-md px-3 py-2 font-medium text-muted transition hover:bg-card-soft hover:text-foreground"
-            >
-              {item.label}
-            </Link>
-          ))}
           <Link
             href="/hub"
             aria-label="Profile"

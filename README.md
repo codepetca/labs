@@ -31,7 +31,7 @@ pnpm build
 
 The public site is static-first. Content lives in local files:
 
-- `content/projects.json` stores project cards shown on `/projects`.
+- `content/projects.json` stores project cards shown on the home page and `/projects`.
 - `content/updates/2026-summer-launch.md` is rendered on `/projects`.
 - `docs/` stores practical operating docs for students and reviewers.
 
@@ -73,7 +73,8 @@ Edit `content/projects.json` and add an object:
   "description": "Short description of the work.",
   "focusArea": "Classroom workflow",
   "demoUrl": "#demo-placeholder",
-  "githubUrl": "#github-placeholder",
+  "githubUrl": "https://github.com/codepetca/codepet-labs",
+  "demoVideoUrl": "/videos/project-demo.mp4",
   "contributor": "AB"
 }
 ```

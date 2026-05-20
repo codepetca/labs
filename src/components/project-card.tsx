@@ -7,6 +7,7 @@ export type ProjectCardProject = {
   focusArea: string;
   demoUrl: string;
   githubUrl: string;
+  demoVideoUrl?: string;
   contributor: string;
   imageUrl: string;
   imageAlt: string;

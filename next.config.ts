@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/showcase",
-        destination: "/projects",
+        destination: "/#tracks",
         permanent: false,
       },
     ];

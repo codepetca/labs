@@ -5,7 +5,8 @@
     "description": "XP and streak experiments.",
     "focusArea": "Student motivation",
     "demoUrl": "#demo-placeholder",
-    "githubUrl": "#github-placeholder",
+    "githubUrl": "https://github.com/codepetca/codepet-labs",
+    "demoVideoUrl": "/videos/codepetpal-demo.mp4",
     "contributor": "CP",
     "imageUrl": "/images/visual-codepetpal.svg",
     "imageAlt": "XP prototype card with progress states"
@@ -16,7 +17,8 @@
     "description": "Class progress dashboard.",
     "focusArea": "Teacher analytics",
     "demoUrl": "#demo-placeholder",
-    "githubUrl": "#github-placeholder",
+    "githubUrl": "https://github.com/codepetca/codepet-labs",
+    "demoVideoUrl": "/videos/gradex-demo.mp4",
     "contributor": "GX",
     "imageUrl": "/images/visual-gradex.svg",
     "imageAlt": "Gradex dashboard prototype with charts"
@@ -27,7 +29,8 @@
     "description": "Fast check-in flows.",
     "focusArea": "Classroom workflow",
     "demoUrl": "#demo-placeholder",
-    "githubUrl": "#github-placeholder",
+    "githubUrl": "https://github.com/codepetca/codepet-labs",
+    "demoVideoUrl": "/videos/tapcheck-demo.mp4",
     "contributor": "TC",
     "imageUrl": "/images/visual-attendance.svg",
     "imageAlt": "Attendance prototype with tap states"
@@ -38,9 +41,22 @@
     "description": "Quick polls and low-friction classroom feedback.",
     "focusArea": "Live feedback",
     "demoUrl": "#demo-placeholder",
-    "githubUrl": "#github-placeholder",
+    "githubUrl": "https://github.com/codepetca/codepet-labs",
+    "demoVideoUrl": "/videos/polling-demo.mp4",
     "contributor": "PP",
     "imageUrl": "/images/visual-polling.svg",
     "imageAlt": "Polling playground prototype with answer bars"
+  },
+  {
+    "name": "Pika UI Experiments",
+    "status": "Exploration",
+    "description": "Small interface experiments.",
+    "focusArea": "Interface design",
+    "demoUrl": "#demo-placeholder",
+    "githubUrl": "https://github.com/codepetca/codepet-labs",
+    "demoVideoUrl": "/videos/pika-ui-demo.mp4",
+    "contributor": "UI",
+    "imageUrl": "/images/visual-ui.svg",
+    "imageAlt": "Pika UI experiment card"
   }
 ]

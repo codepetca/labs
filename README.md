@@ -42,8 +42,10 @@ WorkOS for authentication and organization membership.
 
 Labs has a lightweight WorkOS-backed approval flow:
 
-- The home page sends interested builders to AuthKit sign-up.
-- `/hub` lets signed-in users add their GitHub username and see approval status.
+- The home page sends interested builders to the WorkOS-protected hub.
+- AuthKit should be configured for GitHub Social Login only.
+- `/hub` requires a linked GitHub OAuth identity, then lets users add their
+  GitHub username and see approval status.
 - `/admin` lets allowlisted admins approve, pause, reactivate, or hide members.
 
 Set these environment variables locally and in Vercel:
@@ -60,7 +62,9 @@ CODEPET_ADMIN_ROLE_SLUG=admin
 CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
 ```
 
-See `.env.example` and `docs/member-management.md` for the full setup.
+In WorkOS, enable GitHub Social Login and disable email/password sign-up plus
+other social providers. See `.env.example` and `docs/member-management.md` for
+the full setup.
 
 ## Add a Project
 

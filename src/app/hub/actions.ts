@@ -14,6 +14,7 @@ export async function saveGithubUsername(formData: FormData) {
   await workos.userManagement.updateUser({
     userId: user.id,
     metadata: {
+      ...fullUser.metadata,
       githubUsername,
       labsStatus: fullUser.metadata.labsStatus ?? "pending",
     },

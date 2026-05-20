@@ -5,6 +5,7 @@ import {
   getCurrentLabsUser,
   getLabsConfig,
   getLabsConfigStatus,
+  getLabsGithubIdentity,
   getLabsMembership,
   isAdminEmail,
 } from "@/lib/labs-admin";
@@ -19,6 +20,12 @@ export default async function HubPage() {
   }
 
   const user = await getCurrentLabsUser();
+  const githubIdentity = await getLabsGithubIdentity(user.id);
+
+  if (!githubIdentity) {
+    return <GitHubRequired email={user.email} />;
+  }
+
   const config = getLabsConfig();
   const membership = await getLabsMembership(user.id);
   const isAdmin = isAdminEmail(user.email);
@@ -49,6 +56,10 @@ export default async function HubPage() {
             <div className="rounded-md border border-border bg-card-soft p-3">
               <dt className="text-muted">Email</dt>
               <dd className="mt-1 font-medium text-foreground">{user.email}</dd>
+            </div>
+            <div className="rounded-md border border-border bg-card-soft p-3">
+              <dt className="text-muted">GitHub auth</dt>
+              <dd className="mt-1 font-medium text-foreground">Verified</dd>
             </div>
             <div className="rounded-md border border-border bg-card-soft p-3">
               <dt className="text-muted">GitHub</dt>
@@ -85,6 +96,35 @@ export default async function HubPage() {
           ) : null}
           <HubLink href="/#tracks" label="Projects" />
           {isAdmin ? <HubLink href="/admin" label="Admin" /> : null}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function GitHubRequired({ email }: { email: string }) {
+  return (
+    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
+      <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
+        <h1 className="text-3xl font-semibold tracking-normal text-foreground">
+          GitHub required
+        </h1>
+        <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
+          You are signed in as {email}. Sign out, then use GitHub to continue.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link
+            href="/logout"
+            className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
+          >
+            Sign out
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card-soft"
+          >
+            Home
+          </Link>
         </div>
       </section>
     </main>

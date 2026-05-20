@@ -28,6 +28,10 @@ export type LabsMember = LabsUser & {
   memberSince: string;
 };
 
+type LabsIdentity = Awaited<
+  ReturnType<WorkOS["userManagement"]["getUserIdentities"]>
+>[number];
+
 let workosClient: WorkOS | null = null;
 
 export function getLabsConfigStatus() {
@@ -71,20 +75,32 @@ export function getWorkOSClient() {
   return workosClient;
 }
 
-export async function markLabsInterest(userId: string) {
+export async function markLabsInterest(
+  userId: string,
+  options: { authenticationMethod?: string } = {},
+) {
   const workos = getWorkOSClient();
-  const user = await workos.userManagement.getUser(userId);
+  const [user, githubIdentity] = await Promise.all([
+    workos.userManagement.getUser(userId),
+    getLabsGithubIdentity(userId),
+  ]);
+  const hasGithubIdentity =
+    Boolean(githubIdentity) ||
+    isGithubAuthenticationMethod(options.authenticationMethod);
 
-  if (user.metadata.labsStatus) {
+  if (user.metadata.labsStatus && user.metadata.labsAuthProvider === "github") {
     return;
   }
 
   await workos.userManagement.updateUser({
     userId,
     metadata: {
-      labsStatus: "pending",
-      labsJoinedAt: new Date().toISOString(),
+      ...user.metadata,
+      labsStatus: getNextLabsStatus(user.metadata.labsStatus, hasGithubIdentity),
+      labsJoinedAt: user.metadata.labsJoinedAt ?? new Date().toISOString(),
       labsSource: "codepet-labs",
+      labsAuthProvider: hasGithubIdentity ? "github" : "github_required",
+      ...(githubIdentity ? { githubIdentityId: githubIdentity.idpId } : {}),
     },
   });
 }
@@ -92,6 +108,13 @@ export async function markLabsInterest(userId: string) {
 export async function getCurrentLabsUser() {
   const { user } = await withAuth({ ensureSignedIn: true });
   return getWorkOSClient().userManagement.getUser(user.id);
+}
+
+export async function getLabsGithubIdentity(userId: string) {
+  const identities =
+    await getWorkOSClient().userManagement.getUserIdentities(userId);
+
+  return identities.find(isGithubIdentity) ?? null;
 }
 
 export async function requireLabsAdmin() {
@@ -174,6 +197,33 @@ function parseAdminEmails(value: string | undefined) {
     .split(",")
     .map((email) => email.trim().toLowerCase())
     .filter(Boolean);
+}
+
+function isGithubIdentity(identity: LabsIdentity) {
+  return identity.type === "OAuth" && isGithubAuthenticationMethod(identity.provider);
+}
+
+function isGithubAuthenticationMethod(method: string | undefined) {
+  if (!method) {
+    return false;
+  }
+
+  const normalized = method.replace(/[-_\s]/g, "").toLowerCase();
+
+  return normalized === "githuboauth";
+}
+
+function getNextLabsStatus(
+  currentStatus: string | undefined,
+  hasGithubIdentity: boolean,
+) {
+  if (hasGithubIdentity) {
+    return currentStatus === "github_required" || !currentStatus
+      ? "pending"
+      : currentStatus;
+  }
+
+  return currentStatus === "not_now" ? currentStatus : "github_required";
 }
 
 function toLabsUser(user: Awaited<ReturnType<WorkOS["userManagement"]["getUser"]>>) {

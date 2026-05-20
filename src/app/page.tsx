@@ -32,10 +32,10 @@ export default function Home() {
           />
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/signup"
-              className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
+              href="/hub"
+              className="inline-flex min-h-16 items-center justify-center rounded-md bg-foreground px-10 py-5 text-xl font-semibold text-background transition hover:opacity-90 sm:min-w-44"
             >
-              Join with GitHub
+              Join
             </Link>
             {discordInviteUrl ? (
               <Link

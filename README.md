@@ -98,6 +98,7 @@ flow in production.
 - [Operating Model](docs/operating-model.md)
 - [Workflow](docs/workflow.md)
 - [AI Guidelines](docs/ai-guidelines.md)
+- [AI Instructions](docs/ai-instructions.md)
 - [UI/UX Style Guide](docs/ui-ux-style.md)
 - [Member Management](docs/member-management.md)
 - [Discord Setup](docs/discord-setup.md)

@@ -30,6 +30,8 @@ compact continuity layer for the repo.
 - Public content: `content/projects.json`, `content/updates/`, and `docs/`.
 - Membership docs: `docs/member-management.md`.
 - Discord setup docs: `docs/discord-setup.md`.
+- Testing posture: no dedicated test script or harness yet; use `pnpm lint` and
+  `pnpm build` for code/UI changes.
 
 ## Known Hazards
 
@@ -44,3 +46,5 @@ compact continuity layer for the repo.
 
 - Docs-only: review changed Markdown and run `git diff --check`.
 - Code or UI: run `pnpm lint` and `pnpm build`.
+- Behavior changes: add tests when a harness exists; otherwise explain the gap
+  and describe the manual verification.

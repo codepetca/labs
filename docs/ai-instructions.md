@@ -35,6 +35,18 @@ After that, load only the docs needed for the task.
 Inspect or modify source only after the startup context and task-specific docs
 are loaded.
 
+## Testing And TDD
+
+CodePet Labs does not currently have a dedicated test script or test harness.
+Do not claim strict TDD is required for this repo yet.
+
+- Preserve `pnpm lint` and `pnpm build` as the normal checks for code or UI.
+- For future non-trivial behavior changes, prefer adding tests once a test
+  harness exists.
+- If a behavior change ships without tests, explain why in the handoff.
+- Do not require tests for docs-only changes, copy edits, visual-only polish,
+  scaffolding experiments, or mock-data prototypes.
+
 ## Repo Invariants
 
 - Keep the public site mobile-first, minimal, low-text, and mock-data-first.
@@ -67,6 +79,8 @@ Use the smallest verification that covers the change:
 - Content-only changes: run `pnpm lint` if TypeScript or JSON shape can be
   affected.
 - Code or UI changes: run `pnpm lint` and `pnpm build`.
+- Behavior changes: add or update tests when a test harness exists; otherwise
+  state that no test harness exists and describe the manual check.
 - UI changes: also inspect the page at mobile width and include screenshots or
   a short screen recording in the PR when useful.
 

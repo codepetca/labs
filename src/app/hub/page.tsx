@@ -29,8 +29,7 @@ export default async function HubPage() {
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
         <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-          <p className="text-sm font-medium text-muted">Labs hub</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
+          <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
             {isActiveMember ? "Builder access" : "Thanks for your interest"}
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
@@ -97,8 +96,7 @@ function SetupNeeded({ missing }: { missing: string[] }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <p className="text-sm font-medium text-muted">Labs hub</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground">
+        <h1 className="text-3xl font-semibold tracking-normal text-foreground">
           Auth setup needed
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted">

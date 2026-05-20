@@ -6,37 +6,25 @@ import { SectionHeading } from "@/components/section-heading";
 const focusAreas = [
   {
     name: "CodePetPal",
-    label: "XP loops",
-    accent: "bg-accent-soft text-accent",
     imageUrl: "/images/visual-codepetpal.svg",
   },
   {
     name: "Gradex",
-    label: "Progress",
-    accent: "bg-violet-soft text-violet",
     imageUrl: "/images/visual-gradex.svg",
   },
   {
     name: "Attendance",
-    label: "Check-ins",
-    accent: "bg-warm-soft text-warm",
     imageUrl: "/images/visual-attendance.svg",
   },
   {
     name: "Polling",
-    label: "Pulse",
-    accent: "bg-accent-soft text-accent",
     imageUrl: "/images/visual-polling.svg",
   },
   {
     name: "Pika UI",
-    label: "Interfaces",
-    accent: "bg-violet-soft text-violet",
     imageUrl: "/images/visual-ui.svg",
   },
 ];
-
-const guardrails = ["Mock data", "No core access", "Demo weekly"];
 
 export default function Home() {
   return (
@@ -46,9 +34,6 @@ export default function Home() {
           <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
             CodePet Labs
           </h1>
-          <p className="mt-4 max-w-lg text-lg leading-7 text-muted sm:text-xl">
-            AI-native builds around Pika.
-          </p>
           <Image
             src="/images/lab-board.svg"
             alt="CodePet Labs prototype board"
@@ -57,16 +42,6 @@ export default function Home() {
             priority
             className="mt-6 aspect-[3/2] w-full rounded-lg border border-border bg-card object-cover shadow-sm lg:hidden"
           />
-          <div className="mt-6 flex flex-wrap gap-2">
-            {guardrails.map((guardrail) => (
-              <span
-                key={guardrail}
-                className="rounded-md border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-muted"
-              >
-                {guardrail}
-              </span>
-            ))}
-          </div>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/projects"
@@ -97,9 +72,7 @@ export default function Home() {
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Focus"
               title="Five tracks"
-              description="Small prototypes. Visible demos."
             />
             <Link
               href="/projects"
@@ -123,11 +96,6 @@ export default function Home() {
                   className="aspect-[16/10] w-full object-cover"
                 />
                 <div className="p-4">
-                  <span
-                    className={`mb-3 inline-flex rounded-md px-2.5 py-1 text-xs font-semibold ${area.accent}`}
-                  >
-                    {area.label}
-                  </span>
                   <h2 className="text-base font-semibold leading-6 text-foreground">
                     {area.name}
                   </h2>

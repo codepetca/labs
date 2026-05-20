@@ -2,7 +2,7 @@
   {
     "name": "CodePetPal XP Prototype",
     "status": "Prototype",
-    "description": "XP, streaks, and encouragement loops using mock learners.",
+    "description": "XP and streak experiments.",
     "focusArea": "Student motivation",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
@@ -13,7 +13,7 @@
   {
     "name": "Gradex Dashboard Prototype",
     "status": "Design build",
-    "description": "Grade signals and class summaries without production data.",
+    "description": "Class progress dashboard.",
     "focusArea": "Teacher analytics",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",
@@ -24,7 +24,7 @@
   {
     "name": "TapCheck Attendance Experiments",
     "status": "Exploration",
-    "description": "Fast check-in states with mock rosters.",
+    "description": "Fast check-in flows.",
     "focusArea": "Classroom workflow",
     "demoUrl": "#demo-placeholder",
     "githubUrl": "#github-placeholder",

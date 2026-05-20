@@ -7,7 +7,7 @@ landing page, or corporate program.
 
 - Mobile-first: design the 360px screen first.
 - Minimal: every section needs one job.
-- Low text: short headings, one-line descriptions, compact labels.
+- Low text: short headings, no default subtitles, sparse labels.
 - Calm: quiet surfaces, soft borders, clear hierarchy.
 - Slightly playful: small accents are fine; decoration should be rare.
 
@@ -16,7 +16,7 @@ landing page, or corporate program.
 - Put the real page content above the fold on mobile.
 - Use one primary action per page when possible.
 - Keep paragraphs under two lines on mobile.
-- Prefer chips, status labels, and compact cards over explanatory blocks.
+- Use chips and status labels only when they help an action or admin workflow.
 - Cards are for repeated items, project summaries, placeholders, and callouts.
 - Do not nest cards inside cards.
 - Keep border radius at `8px` or less.
@@ -27,7 +27,7 @@ landing page, or corporate program.
 - Use literal, concrete language.
 - Avoid corporate phrases like "unlock potential" or "reimagine education."
 - Avoid school-club language like "members," "meetings," or "sign-ups."
-- Say "mock data," "separate repos," and "Pika core protected" clearly.
+- Keep safety and legal boundaries in docs, not public-page warning chips.
 - Headings should usually be 1-4 words.
 - Button labels should be verbs or clear destinations.
 
@@ -51,5 +51,5 @@ Before committing AI-assisted UI work:
 - Check the page at mobile width first.
 - Verify no UI element overlaps or resizes awkwardly.
 - Keep all content static and PR-editable.
-- Preserve mock-data-first and no-production-data boundaries.
+- Preserve project boundaries without adding extra public-site warning labels.
 - Run `pnpm lint` and `pnpm build`.

@@ -8,11 +8,7 @@ const projectList = projects as ProjectCardProject[];
 export default function ProjectsPage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-      <SectionHeading
-        eyebrow="Projects"
-        title="Prototypes"
-        description="Mock data. Clear demos."
-      />
+      <SectionHeading title="Prototypes" />
 
       <div className="mt-7 grid gap-4 sm:grid-cols-2">
         {projectList.map((project) => (

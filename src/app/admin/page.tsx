@@ -52,8 +52,7 @@ function AdminDashboard({
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <p className="text-sm font-medium text-muted">Admin</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
+        <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
           CodePet members
         </h1>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
@@ -286,8 +285,7 @@ function SetupNeeded({ missing }: { missing: string[] }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <p className="text-sm font-medium text-muted">Admin</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground">
+        <h1 className="text-3xl font-semibold tracking-normal text-foreground">
           Setup needed
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted">
@@ -312,8 +310,7 @@ function AccessProblem({ error }: { error: unknown }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <p className="text-sm font-medium text-muted">Admin</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground">
+        <h1 className="text-3xl font-semibold tracking-normal text-foreground">
           Access unavailable
         </h1>
         <p className="mt-3 text-sm leading-6 text-muted">{message}</p>

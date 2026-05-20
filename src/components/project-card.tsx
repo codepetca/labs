@@ -28,21 +28,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       />
 
       <div className="flex flex-1 flex-col p-4">
-        <div className="flex items-center justify-between gap-3">
-          <span className="rounded-md bg-accent-soft px-2.5 py-1 text-xs font-semibold text-accent">
-            {project.status}
-          </span>
-          <span className="rounded-md bg-card-soft px-2.5 py-1 font-mono text-xs text-muted">
-            {project.contributor}
-          </span>
-        </div>
-
-        <h2 className="mt-4 text-base font-semibold leading-6 text-foreground">
+        <h2 className="text-base font-semibold leading-6 text-foreground">
           {project.name}
         </h2>
-        <p className="mt-1 text-xs font-semibold uppercase text-muted">
-          {project.focusArea}
-        </p>
         <p className="mt-3 flex-1 text-sm leading-5 text-muted">
           {project.description}
         </p>

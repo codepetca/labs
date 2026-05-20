@@ -13,7 +13,7 @@ async function getLaunchNote() {
   );
   const markdown = await readFile(filePath, "utf8");
   const lines = markdown.trim().split(/\r?\n/);
-  const title = lines[0]?.replace(/^#\s*/, "") ?? "Launch note";
+  const title = lines[0]?.replace(/^#\s*/, "") ?? "Demos soon";
   const body = lines.slice(1).join("\n").trim();
 
   return { title, body };
@@ -50,9 +50,7 @@ export default async function ShowcasePage() {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <SectionHeading
-        eyebrow="Showcase"
         title="Demos soon"
-        description="Clips, screens, notes."
       />
 
       <div className="mt-7 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
@@ -64,22 +62,9 @@ export default async function ShowcasePage() {
             height={420}
             className="aspect-[16/10] w-full object-cover"
           />
-          <div className="grid gap-2 p-4 sm:grid-cols-3">
-            {["Clips", "Screens", "Notes"].map((item) => (
-              <p
-                key={item}
-                className="rounded-md border border-border bg-card-soft px-3 py-2 text-center text-sm font-semibold text-foreground"
-              >
-                {item}
-              </p>
-            ))}
-          </div>
         </section>
 
         <aside className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
-          <p className="mb-2 text-xs font-semibold uppercase text-accent">
-            Launch note
-          </p>
           <h2 className="text-lg font-semibold text-foreground">
             {launchNote.title}
           </h2>

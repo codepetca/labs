@@ -11,6 +11,8 @@ const notes = [
 ];
 
 export default function JoinPage() {
+  const discordInviteUrl = process.env.CODEPET_DISCORD_INVITE_URL;
+
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <SectionHeading
@@ -31,6 +33,16 @@ export default function JoinPage() {
         >
           Member hub
         </Link>
+        {discordInviteUrl ? (
+          <Link
+            href={discordInviteUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-surface px-5 py-3 text-sm font-semibold text-foreground transition hover:bg-card-soft"
+          >
+            Join Discord
+          </Link>
+        ) : null}
       </div>
 
       <div className="mt-7 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">

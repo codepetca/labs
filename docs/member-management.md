@@ -10,7 +10,8 @@ CodePet Labs uses WorkOS as the member source of truth.
 4. The user adds their GitHub username in `/hub`.
 5. An admin reviews `/admin`.
 6. Approval creates a CodePet organization membership.
-7. Approved builders see the Discord invite and project links in `/hub`.
+7. If Discord is configured, users can join from `/join`.
+8. Approved builders also see the Discord invite and project links in `/hub`.
 
 No separate database is needed for the first version.
 
@@ -36,5 +37,5 @@ No separate database is needed for the first version.
 Use `.env.example` as the template. `CODEPET_ADMIN_EMAILS` is a
 comma-separated allowlist for people who can open `/admin`.
 
-`CODEPET_DISCORD_INVITE_URL` is optional. If it is set, only active builders see
-the **Join Discord** link in `/hub`.
+`CODEPET_DISCORD_INVITE_URL` is optional. If it is set, `/join` shows a public
+**Join Discord** button, and active builders also see the link in `/hub`.

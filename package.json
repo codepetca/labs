@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "discord:setup": "node scripts/setup-discord.mjs",
     "lint": "eslint"
   },
   "dependencies": {

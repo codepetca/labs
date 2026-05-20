@@ -100,6 +100,7 @@ flow in production.
 - [AI Guidelines](docs/ai-guidelines.md)
 - [UI/UX Style Guide](docs/ui-ux-style.md)
 - [Member Management](docs/member-management.md)
+- [Discord Setup](docs/discord-setup.md)
 - [Onboarding](docs/onboarding.md)
 - [Student Roles](docs/student-roles.md)
 - [Project Ideas](docs/project-ideas.md)

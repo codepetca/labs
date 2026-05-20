@@ -1,3 +1,5 @@
+import { unstable_rethrow } from "next/navigation";
+
 import {
   approveUser,
   deactivateMember,
@@ -33,6 +35,7 @@ export default async function AdminPage() {
     config = getLabsConfig();
     directory = await getLabsDirectory();
   } catch (error) {
+    unstable_rethrow(error);
     return <AccessProblem error={error} />;
   }
 

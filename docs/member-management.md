@@ -10,7 +10,7 @@ CodePet Labs uses WorkOS as the member source of truth.
 4. The callback marks GitHub-authenticated users as `pending`.
 5. The user adds their GitHub username in `/hub`.
 6. An admin reviews `/admin`.
-7. Approval creates a CodePet organization membership.
+7. Approval marks the user as an approved builder in WorkOS metadata.
 8. If Discord is configured, users can join from the home page.
 9. Approved builders also see the Discord invite and project links in `/hub`.
 
@@ -20,9 +20,9 @@ No separate database is needed for the first version.
 
 - `pending`: signed up and waiting for review.
 - `github_required`: signed in without a linked GitHub OAuth identity.
-- `approved`: added to the CodePet WorkOS organization as a builder.
+- `approved`: approved as a CodePet Labs builder.
 - `not_now`: hidden from the main pending queue.
-- `inactive`: org membership is paused in WorkOS.
+- `inactive`: builder access is paused.
 
 ## Required WorkOS Setup
 
@@ -32,11 +32,12 @@ No separate database is needed for the first version.
 - Add redirect URI: `/callback`.
 - Set `NEXT_PUBLIC_WORKOS_REDIRECT_URI` to the full callback URL.
 - Set the sign-in endpoint to `/login`.
-- Create the CodePet Labs organization.
-- Create `builder` and `admin` role slugs, or update the env vars.
 
 The app also checks WorkOS user identities server-side. A signed-in user without
 a GitHub OAuth identity sees a GitHub-required screen instead of the normal hub.
+
+No WorkOS organization is required for the first version. Builder state lives in
+user metadata so Labs can stay small until organization roles or SSO are needed.
 
 ## Environment Variables
 

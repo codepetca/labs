@@ -36,7 +36,7 @@ The public site is static-first. Content lives in local files:
 - `docs/` stores practical operating docs for students and reviewers.
 
 There is no database or production data dependency. The optional member hub uses
-WorkOS for authentication and organization membership.
+WorkOS for authentication and lightweight approval metadata.
 
 ## Member Management
 
@@ -46,7 +46,7 @@ Labs has a lightweight WorkOS-backed approval flow:
 - AuthKit should be configured for GitHub Social Login only.
 - `/hub` requires a linked GitHub OAuth identity, then lets users add their
   GitHub username and see approval status.
-- `/admin` lets allowlisted admins approve, pause, reactivate, or hide members.
+- `/admin` lets allowlisted admins approve, pause, reactivate, or hide builders.
 
 Set these environment variables locally and in Vercel:
 
@@ -55,10 +55,7 @@ WORKOS_API_KEY=
 WORKOS_CLIENT_ID=
 WORKOS_COOKIE_PASSWORD=
 NEXT_PUBLIC_WORKOS_REDIRECT_URI=http://localhost:3000/callback
-CODEPET_WORKOS_ORG_ID=
 CODEPET_ADMIN_EMAILS=you@example.com
-CODEPET_BUILDER_ROLE_SLUG=builder
-CODEPET_ADMIN_ROLE_SLUG=admin
 CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
 ```
 

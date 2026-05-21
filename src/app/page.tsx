@@ -16,20 +16,27 @@ export default function Home() {
     <main>
       <section
         id="join"
-        className="mx-auto grid w-full max-w-5xl gap-7 px-4 py-8 sm:px-6 sm:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center"
+        className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-14"
       >
         <div className="max-w-3xl">
-          <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
-            CodePet Labs
-          </h1>
-          <Image
-            src="/images/lab-board.svg"
-            alt="CodePet Labs prototype board"
-            width={960}
-            height={640}
-            priority
-            className="mt-6 aspect-[3/2] w-full rounded-lg border border-border bg-card object-cover shadow-sm lg:hidden"
-          />
+          <div className="flex items-start gap-4 sm:items-center">
+            <Image
+              src="/images/lab-flask.svg"
+              alt=""
+              width={160}
+              height={160}
+              priority
+              className="mt-1 size-16 shrink-0 sm:size-20"
+            />
+            <div>
+              <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
+                CodePet Labs
+              </h1>
+              <p className="mt-3 text-base leading-6 text-muted sm:text-lg">
+                Tiny playful experiments.
+              </p>
+            </div>
+          </div>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
               href="/hub"
@@ -49,15 +56,6 @@ export default function Home() {
             ) : null}
           </div>
         </div>
-
-        <Image
-          src="/images/lab-board.svg"
-          alt="CodePet Labs prototype board"
-          width={960}
-          height={640}
-          priority
-          className="hidden aspect-[3/2] w-full rounded-lg border border-border bg-card object-cover shadow-sm lg:block"
-        />
       </section>
 
       <section id="tracks" className="border-y border-border bg-surface/75">

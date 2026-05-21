@@ -17,6 +17,8 @@ They are not long status meetings. A good sync answers: what changed, what works
 ## GitHub Flow
 
 - Each project should live in its own repo when possible.
+- Use one worktree per branch. See [`docs/dev-workflow.md`](./dev-workflow.md)
+  for the Labs worktree convention.
 - Work should happen through branches and pull requests.
 - Pull requests should explain the change, the test path, and any known gaps.
 - Small PRs are better than large unclear drops.

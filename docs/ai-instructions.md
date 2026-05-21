@@ -3,9 +3,10 @@
 This file routes AI coding agents to the right project docs. Use it after
 `.ai/START-HERE.md`.
 
-CodePet Labs intentionally keeps lighter guidance than Pika core. Do not copy
-Pika-only workflow, database, migration, feature-inventory, or production-access
-rules into this repo unless the project explicitly adopts them.
+CodePet Labs intentionally keeps lighter guidance than Pika core. It adopts
+Pika's one-worktree-per-branch workflow, but not Pika-only database, migration,
+feature-inventory, session-log, or production-access rules unless this project
+explicitly adds them.
 
 ## Default Startup Context
 
@@ -16,6 +17,7 @@ Read these files at the start of every session:
 3. [`AGENTS.md`](../AGENTS.md)
 4. [`README.md`](../README.md)
 5. [`docs/ai-instructions.md`](./ai-instructions.md)
+6. [`docs/dev-workflow.md`](./dev-workflow.md) for edit tasks
 
 After that, load only the docs needed for the task.
 
@@ -29,7 +31,7 @@ After that, load only the docs needed for the task.
 | Builder onboarding or student expectations | [`docs/onboarding.md`](./onboarding.md), [`docs/student-roles.md`](./student-roles.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
 | Membership, join, hub, or admin flow | [`docs/member-management.md`](./member-management.md), `README.md` environment section |
 | Discord setup or community operations | [`docs/discord-setup.md`](./discord-setup.md), `scripts/setup-discord.mjs` |
-| Workflow, PRs, demos, and reviews | [`docs/workflow.md`](./workflow.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
+| Branches, worktrees, PRs, demos, and reviews | [`docs/dev-workflow.md`](./dev-workflow.md), [`docs/workflow.md`](./workflow.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
 | Build, dependencies, or deployment | `README.md`, `package.json`, `next.config.ts` |
 
 Inspect or modify source only after the startup context and task-specific docs
@@ -61,6 +63,8 @@ route smoke tests. Do not claim strict TDD is required for this repo yet.
 - Keep WorkOS usage limited to the documented lightweight membership flow.
 - Prefer local content files over dynamic storage for public-site content.
 - Preserve small, reviewable PRs with clear test notes.
+- Use one worktree per branch. `docs/dev-workflow.md` is the source of truth
+  for worktree locations, env-file handling, and cleanup.
 - Use existing project patterns before adding abstractions or dependencies.
 
 ## Agent Modes
@@ -95,6 +99,7 @@ When guidance conflicts, trust this order:
 1. `AGENTS.md`
 2. `.ai/CURRENT.md`
 3. `docs/ai-instructions.md`
-4. `README.md`
-5. Task-specific docs in `docs/`
-6. Source code and local content files
+4. `docs/dev-workflow.md` for branch and worktree workflow
+5. `README.md`
+6. Task-specific docs in `docs/`
+7. Source code and local content files

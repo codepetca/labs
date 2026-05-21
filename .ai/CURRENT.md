@@ -30,11 +30,17 @@ compact continuity layer for the repo.
 - Public content: `content/projects.json`, `content/updates/`, and `docs/`.
 - Membership docs: `docs/member-management.md`.
 - Discord setup docs: `docs/discord-setup.md`.
-- Testing posture: no dedicated test script or harness yet; use `pnpm lint` and
-  `pnpm build` for code/UI changes.
+- Testing posture: small Vitest and Playwright harness; use `pnpm lint`,
+  `pnpm test`, and `pnpm build` for code/UI changes, plus `pnpm test:e2e` for
+  public routes or flows.
+- Hub checkout: `$HOME/Repos/codepet-labs`.
+- New named worktrees: `$HOME/.codex/worktrees/codepet-labs/<branch-slug>`.
+- Branch and worktree workflow lives in `docs/dev-workflow.md`.
 
 ## Known Hazards
 
+- Do not do feature or branch work in the hub checkout; create or open a
+  dedicated worktree first.
 - Do not let Labs docs imply students have unsupervised Pika core access.
 - Keep copy short; this repo should not become a dense marketing site.
 - Keep demo data obviously mocked.
@@ -45,6 +51,7 @@ compact continuity layer for the repo.
 ## Normal Checks
 
 - Docs-only: review changed Markdown and run `git diff --check`.
-- Code or UI: run `pnpm lint` and `pnpm build`.
-- Behavior changes: add tests when a harness exists; otherwise explain the gap
-  and describe the manual verification.
+- Code or UI: run `pnpm lint`, `pnpm test`, and `pnpm build`.
+- Public routes or flows: also run `pnpm test:e2e`.
+- Behavior changes: add or update focused tests when practical; otherwise
+  explain the gap and describe the manual verification.

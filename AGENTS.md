@@ -3,6 +3,9 @@
 For AI session startup and doc routing, read `.ai/START-HERE.md` and
 `docs/ai-instructions.md`.
 
+For branch and worktree usage, `docs/dev-workflow.md` is authoritative.
+Use one worktree per branch and avoid feature edits in the hub checkout.
+
 Before changing UI, read `docs/ui-ux-style.md`.
 
 Keep the public site mobile-first, minimal, and low-text. Prefer concise labels,

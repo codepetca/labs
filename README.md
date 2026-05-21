@@ -112,6 +112,7 @@ flow in production.
 
 - [Vision](docs/vision.md)
 - [Operating Model](docs/operating-model.md)
+- [Development Workflow](docs/dev-workflow.md)
 - [Workflow](docs/workflow.md)
 - [AI Guidelines](docs/ai-guidelines.md)
 - [AI Instructions](docs/ai-instructions.md)

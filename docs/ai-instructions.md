@@ -37,12 +37,16 @@ are loaded.
 
 ## Testing And TDD
 
-CodePet Labs does not currently have a dedicated test script or test harness.
-Do not claim strict TDD is required for this repo yet.
+CodePet Labs has a small test harness for focused behavior coverage and public
+route smoke tests. Do not claim strict TDD is required for this repo yet.
 
-- Preserve `pnpm lint` and `pnpm build` as the normal checks for code or UI.
-- For future non-trivial behavior changes, prefer adding tests once a test
-  harness exists.
+- Preserve `pnpm lint`, `pnpm test`, and `pnpm build` as the normal checks for
+  code changes.
+- Use `pnpm test:e2e` when public routes, navigation, or user flows change.
+- Keep unit tests in `tests/unit/**/*.test.ts`.
+- Keep Playwright tests in `tests/e2e/**/*.spec.ts`.
+- For future non-trivial behavior changes, prefer adding or updating focused
+  tests.
 - If a behavior change ships without tests, explain why in the handoff.
 - Do not require tests for docs-only changes, copy edits, visual-only polish,
   scaffolding experiments, or mock-data prototypes.
@@ -78,9 +82,9 @@ Use the smallest verification that covers the change:
 - Docs-only changes: review links and run `git diff --check`.
 - Content-only changes: run `pnpm lint` if TypeScript or JSON shape can be
   affected.
-- Code or UI changes: run `pnpm lint` and `pnpm build`.
-- Behavior changes: add or update tests when a test harness exists; otherwise
-  state that no test harness exists and describe the manual check.
+- Code changes: run `pnpm lint`, `pnpm test`, and `pnpm build`.
+- Public route or flow changes: also run `pnpm test:e2e`.
+- Behavior changes: add or update focused tests when practical.
 - UI changes: also inspect the page at mobile width and include screenshots or
   a short screen recording in the PR when useful.
 

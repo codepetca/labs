@@ -10,4 +10,5 @@ small cards, obvious actions, and mock-data messaging. Do not add new auth beyon
 the documented WorkOS membership flow, databases, production Pika access, or
 real student data flows to this repo.
 
-Run `pnpm lint` and `pnpm build` before shipping UI changes.
+Run `pnpm lint`, `pnpm test`, and `pnpm build` before shipping code changes.
+Run `pnpm test:e2e` when public routes or user flows change.

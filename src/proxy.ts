@@ -8,5 +8,5 @@ export default authkitProxy({
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/hub/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/hub", "/hub/:path*"],
 };

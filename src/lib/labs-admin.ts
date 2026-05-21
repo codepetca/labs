@@ -1,6 +1,12 @@
 import { WorkOS } from "@workos-inc/node";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 
+import {
+  getLabsDirectoryBuckets,
+  getNextLabsStatus,
+  isGithubAuthenticationMethod,
+} from "@/lib/labs-state";
+
 export type LabsConfig = {
   apiKey: string;
   adminEmails: string[];
@@ -136,12 +142,7 @@ export async function getLabsDirectory() {
   });
   const labsUsers = (await userList.autoPagination()).map(toLabsUser);
 
-  return {
-    pendingUsers: labsUsers.filter((user) => user.labsStatus === "pending"),
-    activeBuilders: labsUsers.filter((user) => user.labsStatus === "approved"),
-    inactiveBuilders: labsUsers.filter((user) => user.labsStatus === "inactive"),
-    archivedUsers: labsUsers.filter((user) => user.labsStatus === "not_now"),
-  };
+  return getLabsDirectoryBuckets(labsUsers);
 }
 
 export function isAdminEmail(email: string) {
@@ -160,29 +161,6 @@ function parseAdminEmails(value: string | undefined) {
 
 function isGithubIdentity(identity: LabsIdentity) {
   return identity.type === "OAuth" && isGithubAuthenticationMethod(identity.provider);
-}
-
-function isGithubAuthenticationMethod(method: string | undefined) {
-  if (!method) {
-    return false;
-  }
-
-  const normalized = method.replace(/[-_\s]/g, "").toLowerCase();
-
-  return normalized === "githuboauth";
-}
-
-function getNextLabsStatus(
-  currentStatus: string | undefined,
-  hasGithubIdentity: boolean,
-) {
-  if (hasGithubIdentity) {
-    return currentStatus === "github_required" || !currentStatus
-      ? "pending"
-      : currentStatus;
-  }
-
-  return currentStatus === "not_now" ? currentStatus : "github_required";
 }
 
 function toLabsUser(user: Awaited<ReturnType<WorkOS["userManagement"]["getUser"]>>) {

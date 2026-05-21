@@ -2,18 +2,14 @@ import { unstable_rethrow } from "next/navigation";
 
 import {
   approveUser,
-  deactivateMember,
   markNotNow,
-  reactivateMember,
+  pauseBuilder,
+  reactivateBuilder,
   restorePotentialUser,
-  setMemberRole,
 } from "@/app/admin/actions";
 import {
-  getLabsConfig,
   getLabsConfigStatus,
   getLabsDirectory,
-  type LabsConfig,
-  type LabsMember,
   type LabsUser,
   requireLabsAdmin,
 } from "@/lib/labs-admin";
@@ -27,26 +23,22 @@ export default async function AdminPage() {
     return <SetupNeeded missing={configStatus.missing} />;
   }
 
-  let config: LabsConfig;
   let directory: Awaited<ReturnType<typeof getLabsDirectory>>;
 
   try {
     await requireLabsAdmin();
-    config = getLabsConfig();
     directory = await getLabsDirectory();
   } catch (error) {
     unstable_rethrow(error);
     return <AccessProblem error={error} />;
   }
 
-  return <AdminDashboard config={config} directory={directory} />;
+  return <AdminDashboard directory={directory} />;
 }
 
 function AdminDashboard({
-  config,
   directory,
 }: {
-  config: LabsConfig;
   directory: Awaited<ReturnType<typeof getLabsDirectory>>;
 }) {
   return (
@@ -57,8 +49,8 @@ function AdminDashboard({
         </h1>
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           <Metric label="Pending" value={directory.pendingUsers.length} />
-          <Metric label="Builders" value={directory.activeMembers.length} />
-          <Metric label="Paused" value={directory.inactiveMembers.length} />
+          <Metric label="Builders" value={directory.activeBuilders.length} />
+          <Metric label="Paused" value={directory.inactiveBuilders.length} />
         </div>
       </section>
 
@@ -82,66 +74,32 @@ function AdminDashboard({
       </AdminSection>
 
       <AdminSection title="Builders">
-        {directory.activeMembers.length ? (
-          directory.activeMembers.map((member) => (
-            <MemberCard key={member.membershipId} member={member}>
-              <form action={setMemberRole}>
-                <input
-                  type="hidden"
-                  name="membershipId"
-                  value={member.membershipId}
-                />
-                <input
-                  type="hidden"
-                  name="roleSlug"
-                  value={config.builderRoleSlug}
-                />
-                <ActionButton label="Builder" />
-              </form>
-              <form action={setMemberRole}>
-                <input
-                  type="hidden"
-                  name="membershipId"
-                  value={member.membershipId}
-                />
-                <input
-                  type="hidden"
-                  name="roleSlug"
-                  value={config.adminRoleSlug}
-                />
-                <ActionButton label="Admin" />
-              </form>
-              <form action={deactivateMember}>
-                <input
-                  type="hidden"
-                  name="membershipId"
-                  value={member.membershipId}
-                />
+        {directory.activeBuilders.length ? (
+          directory.activeBuilders.map((user) => (
+            <UserCard key={user.id} user={user}>
+              <form action={pauseBuilder}>
+                <input type="hidden" name="userId" value={user.id} />
                 <ActionButton label="Pause" />
               </form>
-            </MemberCard>
+            </UserCard>
           ))
         ) : (
-          <EmptyState label="No active members." />
+          <EmptyState label="No active builders." />
         )}
       </AdminSection>
 
       <AdminSection title="Paused">
-        {directory.inactiveMembers.length ? (
-          directory.inactiveMembers.map((member) => (
-            <MemberCard key={member.membershipId} member={member}>
-              <form action={reactivateMember}>
-                <input
-                  type="hidden"
-                  name="membershipId"
-                  value={member.membershipId}
-                />
+        {directory.inactiveBuilders.length ? (
+          directory.inactiveBuilders.map((user) => (
+            <UserCard key={user.id} user={user}>
+              <form action={reactivateBuilder}>
+                <input type="hidden" name="userId" value={user.id} />
                 <ActionButton label="Reactivate" primary />
               </form>
-            </MemberCard>
+            </UserCard>
           ))
         ) : (
-          <EmptyState label="No paused memberships." />
+          <EmptyState label="No paused builders." />
         )}
       </AdminSection>
 
@@ -186,27 +144,6 @@ function UserCard({
   return (
     <article className="grid gap-3 rounded-md border border-border bg-card-soft p-3 sm:grid-cols-[1fr_auto] sm:items-center">
       <UserSummary user={user} />
-      <div className="flex flex-wrap gap-2">{children}</div>
-    </article>
-  );
-}
-
-function MemberCard({
-  member,
-  children,
-}: {
-  member: LabsMember;
-  children: React.ReactNode;
-}) {
-  return (
-    <article className="grid gap-3 rounded-md border border-border bg-card-soft p-3 sm:grid-cols-[1fr_auto] sm:items-center">
-      <div>
-        <UserSummary user={member} />
-        <div className="mt-2 flex flex-wrap gap-2">
-          <Chip label={member.role} />
-          <Chip label={member.membershipStatus} />
-        </div>
-      </div>
       <div className="flex flex-wrap gap-2">{children}</div>
     </article>
   );

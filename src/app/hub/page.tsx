@@ -7,7 +7,6 @@ import {
   getLabsConfig,
   getLabsConfigStatus,
   getLabsGithubIdentity,
-  getLabsMembership,
   isAdminEmail,
 } from "@/lib/labs-admin";
 
@@ -28,9 +27,9 @@ export default async function HubPage() {
   }
 
   const config = getLabsConfig();
-  const membership = await getLabsMembership(user.id);
   const isAdmin = isAdminEmail(user.email);
-  const isActiveMember = membership?.status === "active";
+  const labsStatus = user.metadata.labsStatus ?? "pending";
+  const isApprovedBuilder = labsStatus === "approved";
   const githubUsername = user.metadata.githubUsername;
 
   return (
@@ -38,15 +37,15 @@ export default async function HubPage() {
       <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
         <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
           <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
-            {isActiveMember ? "Builder access" : "Thanks for your interest"}
+            {isApprovedBuilder ? "Builder access" : "Thanks for your interest"}
           </h1>
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
-            {isActiveMember
+            {isApprovedBuilder
               ? "You have access to the CodePet Labs workspace."
               : "We will review your profile. Keep your GitHub handle current."}
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <StatusChip label={membership?.role.slug ?? "pending"} />
+            <StatusChip label={isApprovedBuilder ? "builder" : labsStatus} />
             {isAdmin ? <StatusChip label="admin access" /> : null}
           </div>
         </section>
@@ -89,10 +88,10 @@ export default async function HubPage() {
 
       <section className="mt-4 rounded-lg border border-border bg-card p-5 shadow-sm">
         <h2 className="text-base font-semibold text-foreground">
-          {isActiveMember ? "Next steps" : "Links"}
+          {isApprovedBuilder ? "Next steps" : "Links"}
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          {isActiveMember && config.discordInviteUrl ? (
+          {isApprovedBuilder && config.discordInviteUrl ? (
             <HubLink href={config.discordInviteUrl} label="Join Discord" />
           ) : null}
           <HubLink href="/#tracks" label="Projects" />

@@ -2,31 +2,17 @@
 
 import { revalidatePath } from "next/cache";
 
-import {
-  getLabsConfig,
-  getWorkOSClient,
-  requireLabsAdmin,
-} from "@/lib/labs-admin";
+import { requireLabsAdmin, updateLabsUserMetadata } from "@/lib/labs-admin";
 
 export async function approveUser(formData: FormData) {
   await requireLabsAdmin();
 
   const userId = getFormValue(formData, "userId");
-  const config = getLabsConfig();
-  const workos = getWorkOSClient();
 
-  await workos.userManagement.createOrganizationMembership({
-    organizationId: config.orgId,
-    userId,
-    roleSlug: config.builderRoleSlug,
-  });
-
-  await workos.userManagement.updateUser({
-    userId,
-    metadata: {
-      labsStatus: "approved",
-      labsApprovedAt: new Date().toISOString(),
-    },
+  await updateLabsUserMetadata(userId, {
+    labsStatus: "approved",
+    labsRole: "builder",
+    labsApprovedAt: new Date().toISOString(),
   });
 
   revalidatePath("/admin");
@@ -37,11 +23,8 @@ export async function markNotNow(formData: FormData) {
 
   const userId = getFormValue(formData, "userId");
 
-  await getWorkOSClient().userManagement.updateUser({
-    userId,
-    metadata: {
-      labsStatus: "not_now",
-    },
+  await updateLabsUserMetadata(userId, {
+    labsStatus: "not_now",
   });
 
   revalidatePath("/admin");
@@ -52,50 +35,34 @@ export async function restorePotentialUser(formData: FormData) {
 
   const userId = getFormValue(formData, "userId");
 
-  await getWorkOSClient().userManagement.updateUser({
-    userId,
-    metadata: {
-      labsStatus: "pending",
-    },
+  await updateLabsUserMetadata(userId, {
+    labsStatus: "pending",
   });
 
   revalidatePath("/admin");
 }
 
-export async function deactivateMember(formData: FormData) {
+export async function pauseBuilder(formData: FormData) {
   await requireLabsAdmin();
 
-  const membershipId = getFormValue(formData, "membershipId");
+  const userId = getFormValue(formData, "userId");
 
-  await getWorkOSClient().userManagement.deactivateOrganizationMembership(
-    membershipId,
-  );
+  await updateLabsUserMetadata(userId, {
+    labsStatus: "inactive",
+  });
 
   revalidatePath("/admin");
 }
 
-export async function reactivateMember(formData: FormData) {
+export async function reactivateBuilder(formData: FormData) {
   await requireLabsAdmin();
 
-  const membershipId = getFormValue(formData, "membershipId");
+  const userId = getFormValue(formData, "userId");
 
-  await getWorkOSClient().userManagement.reactivateOrganizationMembership(
-    membershipId,
-  );
-
-  revalidatePath("/admin");
-}
-
-export async function setMemberRole(formData: FormData) {
-  await requireLabsAdmin();
-
-  const membershipId = getFormValue(formData, "membershipId");
-  const roleSlug = getFormValue(formData, "roleSlug");
-
-  await getWorkOSClient().userManagement.updateOrganizationMembership(
-    membershipId,
-    { roleSlug },
-  );
+  await updateLabsUserMetadata(userId, {
+    labsStatus: "approved",
+    labsRole: "builder",
+  });
 
   revalidatePath("/admin");
 }

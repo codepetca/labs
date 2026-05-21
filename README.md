@@ -24,7 +24,20 @@ Run checks:
 
 ```bash
 pnpm lint
+pnpm test
 pnpm build
+```
+
+Run public route smoke tests:
+
+```bash
+pnpm test:e2e
+```
+
+If Playwright asks for a browser on first local run:
+
+```bash
+pnpm exec playwright install chromium
 ```
 
 ## Content Model
@@ -80,7 +93,8 @@ Edit `content/projects.json` and add an object:
 }
 ```
 
-Then run `pnpm lint` and `pnpm build` before opening a pull request.
+Then run `pnpm lint`, `pnpm test`, and `pnpm build` before opening a pull
+request. Run `pnpm test:e2e` when the change affects public pages or flows.
 
 ## Deploy to Vercel
 

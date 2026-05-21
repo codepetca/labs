@@ -95,7 +95,7 @@ export default async function HubPage() {
             <HubLink href={config.discordInviteUrl} label="Join Discord" />
           ) : null}
           <HubLink href="/#tracks" label="Projects" />
-          {isAdmin ? <HubLink href="/admin" label="Admin" /> : null}
+          {isAdmin ? <HubLink href="/admin" label="Admin" plain /> : null}
         </div>
       </section>
     </main>
@@ -159,12 +159,28 @@ function SetupNeeded({ missing }: { missing: string[] }) {
   );
 }
 
-function HubLink({ href, label }: { href: string; label: string }) {
+function HubLink({
+  href,
+  label,
+  plain = false,
+}: {
+  href: string;
+  label: string;
+  plain?: boolean;
+}) {
+  const className =
+    "rounded-md border border-border bg-card-soft px-3 py-3 text-sm font-semibold text-foreground transition hover:bg-surface";
+
+  if (plain) {
+    return (
+      <a href={href} className={className}>
+        {label}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className="rounded-md border border-border bg-card-soft px-3 py-3 text-sm font-semibold text-foreground transition hover:bg-surface"
-    >
+    <Link href={href} className={className}>
       {label}
     </Link>
   );

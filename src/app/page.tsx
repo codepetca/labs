@@ -31,12 +31,12 @@ export default function Home() {
             className="mt-6 aspect-[3/2] w-full rounded-lg border border-border bg-card object-cover shadow-sm lg:hidden"
           />
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <Link
+            <a
               href="/hub"
               className="inline-flex min-h-16 items-center justify-center rounded-md bg-foreground px-10 py-5 text-xl font-semibold text-background transition hover:opacity-90 sm:min-w-44"
             >
               Join
-            </Link>
+            </a>
             {discordInviteUrl ? (
               <Link
                 href={discordInviteUrl}

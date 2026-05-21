@@ -4,10 +4,11 @@ import { revalidatePath } from "next/cache";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 
 import { getWorkOSClient } from "@/lib/labs-admin";
+import { parseGithubUsername } from "@/lib/labs-state";
 
 export async function saveGithubUsername(formData: FormData) {
   const { user } = await withAuth({ ensureSignedIn: true });
-  const githubUsername = getGithubUsername(formData);
+  const githubUsername = parseGithubUsername(formData.get("githubUsername"));
   const workos = getWorkOSClient();
   const fullUser = await workos.userManagement.getUser(user.id);
 
@@ -21,20 +22,4 @@ export async function saveGithubUsername(formData: FormData) {
   });
 
   revalidatePath("/hub");
-}
-
-function getGithubUsername(formData: FormData) {
-  const value = formData.get("githubUsername");
-
-  if (typeof value !== "string") {
-    throw new Error("Missing GitHub username");
-  }
-
-  const githubUsername = value.trim().replace(/^@/, "");
-
-  if (!/^[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,37}[a-zA-Z0-9])?$/.test(githubUsername)) {
-    throw new Error("Enter a valid GitHub username.");
-  }
-
-  return githubUsername;
 }

@@ -31,14 +31,14 @@ export function SiteHeader() {
           aria-label="Main navigation"
           className="-mx-1 flex min-w-0 gap-1 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <Link
+          <a
             href="/hub"
             aria-label="Profile"
             title="Profile"
             className="grid size-10 shrink-0 place-items-center rounded-md text-muted transition hover:bg-card-soft hover:text-foreground"
           >
             <ProfileIcon />
-          </Link>
+          </a>
         </nav>
       </div>
     </header>

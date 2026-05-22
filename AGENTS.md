@@ -5,6 +5,8 @@ For AI session startup and doc routing, read `.ai/START-HERE.md` and
 
 For branch and worktree usage, `docs/dev-workflow.md` is authoritative.
 Use one worktree per branch and avoid feature edits in the hub checkout.
+After every branch or PR merge, keep the hub checkout on `main` and
+fast-forward it to `origin/main`.
 
 Before changing UI, read `docs/ui-ux-style.md`.
 

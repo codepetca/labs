@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   description:
     "An AI-native software lab exploring educational tools around the Pika ecosystem.",
   icons: {
-    icon: "/images/codepet-paw-badge.svg",
+    icon: "/images/paw-icon.svg",
     apple: "/images/codepet-paw-badge.png",
   },
 };

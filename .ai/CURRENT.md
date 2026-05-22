@@ -36,11 +36,15 @@ compact continuity layer for the repo.
 - Hub checkout: `$HOME/Repos/codepet-labs`.
 - New named worktrees: `$HOME/.codex/worktrees/codepet-labs/<branch-slug>`.
 - Branch and worktree workflow lives in `docs/dev-workflow.md`.
+- After every branch or PR merge, the hub checkout should stay on `main` and
+  fast-forward to `origin/main` before new work starts.
 
 ## Known Hazards
 
 - Do not do feature or branch work in the hub checkout; create or open a
   dedicated worktree first.
+- Do not let the hub checkout drift behind remote after a merge; use
+  fast-forward only.
 - Do not let Labs docs imply students have unsupervised Pika core access.
 - Keep copy short; this repo should not become a dense marketing site.
 - Keep demo data obviously mocked.

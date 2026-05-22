@@ -12,6 +12,8 @@ Pika-only database, migration, feature-inventory, or production-release rules.
   explicitly says otherwise.
 - Do not do feature or branch work in the hub checkout. If edits start there,
   create or open a dedicated worktree first.
+- Keep the hub checkout on `main`. After every branch or PR merge, fetch and
+  fast-forward the hub checkout to `origin/main` before starting more work.
 - Resolve the current repo root with `git rev-parse --show-toplevel` and run
   commands from that root.
 
@@ -48,6 +50,8 @@ BASE="${BASE:-origin/main}"
 
 mkdir -p "$WT_ROOT"
 git -C "$HUB" fetch origin
+git -C "$HUB" switch main
+git -C "$HUB" merge --ff-only origin/main
 git -C "$HUB" worktree add -b "$BRANCH" "$WT" "$BASE"
 cd "$WT"
 ```
@@ -92,13 +96,16 @@ e2e verification and say so in the handoff.
 
 ## Cleanup
 
-After a branch is merged, clean up from the hub checkout:
+After a branch is merged, first fast-forward the hub checkout to match the
+remote, then clean up from the hub checkout:
 
 ```bash
 HUB="$HOME/Repos/codepet-labs"
 BRANCH="codex/<short-task-name>"
 
 git -C "$HUB" fetch origin
+git -C "$HUB" switch main
+git -C "$HUB" merge --ff-only origin/main
 WT_PATH="$(git -C "$HUB" worktree list --porcelain \
   | awk -v branch="$BRANCH" '
       /^worktree / { path=substr($0, 10) }

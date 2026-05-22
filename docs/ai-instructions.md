@@ -65,6 +65,8 @@ route smoke tests. Do not claim strict TDD is required for this repo yet.
 - Preserve small, reviewable PRs with clear test notes.
 - Use one worktree per branch. `docs/dev-workflow.md` is the source of truth
   for worktree locations, env-file handling, and cleanup.
+- Keep the hub checkout on `main`; after every branch or PR merge, fetch and
+  fast-forward it to `origin/main` before creating more worktrees.
 - Use existing project patterns before adding abstractions or dependencies.
 
 ## Agent Modes

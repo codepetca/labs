@@ -7,6 +7,7 @@ Follow this checklist at the start of every AI-assisted coding session.
 ```text
 [ ] Resolve repo root: git rev-parse --show-toplevel
 [ ] Confirm edit work is in a dedicated worktree, not the hub checkout
+[ ] If the hub checkout just received a merge, fast-forward it to origin/main
 [ ] Check status: git status --short --branch
 [ ] Read: AGENTS.md
 [ ] Read: .ai/CURRENT.md
@@ -31,6 +32,8 @@ Follow this checklist at the start of every AI-assisted coding session.
 - Keep changes small and reviewable.
 - For edits started from `$HOME/Repos/codepet-labs`, create or open a
   dedicated worktree first unless the user explicitly wants to work in place.
+- After every branch or PR merge, run `git fetch origin`, `git switch main`,
+  and `git merge --ff-only origin/main` in the hub checkout before new work.
 - For UI work, read `docs/ui-ux-style.md` before editing.
 - For membership/admin work, read `docs/member-management.md` before editing.
 - For docs/content work, match the concise tone already used in `docs/`.

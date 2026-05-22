@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-test("home page shows the Labs entry point and project tracks", async ({
+test("home page shows the Labs entry point and projects", async ({
   page,
 }) => {
   await page.goto("/");
@@ -11,7 +11,7 @@ test("home page shows the Labs entry point and project tracks", async ({
   await expect(
     page.getByRole("link", { name: "Join", exact: true }),
   ).toHaveAttribute("href", "/hub");
-  await expect(page.getByRole("heading", { name: "Five tracks" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "CodePetPal XP Prototype" }),
   ).toBeVisible();

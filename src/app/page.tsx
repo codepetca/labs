@@ -21,12 +21,9 @@ export default function Home() {
           <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
             CodePet Labs
           </h1>
-          <div className="mt-3 inline-flex items-center gap-2 text-muted">
-            <p className="text-base leading-6 sm:text-lg">
-              Tiny playful experiments.
-            </p>
-            <TennisBallIcon />
-          </div>
+          <p className="mt-3 text-base leading-6 text-muted sm:text-lg">
+            Tiny playful experiments.
+          </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a
               href="/hub"
@@ -60,24 +57,5 @@ export default function Home() {
         </div>
       </section>
     </main>
-  );
-}
-
-function TennisBallIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="0 0 32 32"
-      className="size-4 shrink-0 text-[#2faa58]"
-      fill="none"
-    >
-      <circle cx="16" cy="16" r="12" fill="currentColor" />
-      <path
-        d="M7.7 7.4c4.5 3 6.2 6.5 5.4 10.5-.4 2.4-1.7 4.7-3.7 6.9M24.3 7.2c-4.5 3-6.2 6.5-5.4 10.5.4 2.4 1.7 4.7 3.7 6.9"
-        stroke="var(--background)"
-        strokeLinecap="round"
-        strokeWidth="2.8"
-      />
-    </svg>
   );
 }

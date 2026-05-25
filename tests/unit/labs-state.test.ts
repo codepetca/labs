@@ -54,6 +54,22 @@ describe("Labs state helpers", () => {
     });
   });
 
+  it("keeps admins out of builder review buckets", () => {
+    const users = [
+      { id: "admin_pending", isLabsAdmin: true, labsStatus: "pending" },
+      { id: "admin_started", isLabsAdmin: true, labsStatus: "profile_required" },
+      { id: "user_pending", labsStatus: "pending" },
+    ];
+
+    expect(getLabsDirectoryBuckets(users)).toEqual({
+      profileRequiredUsers: [],
+      pendingUsers: [users[2]],
+      activeBuilders: [],
+      inactiveBuilders: [],
+      archivedUsers: [],
+    });
+  });
+
   it("moves completed profiles into pending review", () => {
     expect(getLabsStatusAfterProfileSubmit("profile_required")).toBe("pending");
     expect(getLabsStatusAfterProfileSubmit("github_required")).toBe("pending");

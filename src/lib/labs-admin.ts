@@ -28,6 +28,7 @@ export type LabsUser = {
   interests: string | null;
   buildGoal: string | null;
   githubComfort: string | null;
+  isLabsAdmin: boolean;
   aiTools: string | null;
   availability: string | null;
   preferredRole: string | null;
@@ -291,6 +292,7 @@ function toLabsUser(user: LabsWorkOSUser) {
     interests: user.metadata.interests ?? null,
     buildGoal: user.metadata.buildGoal ?? null,
     githubComfort: user.metadata.githubComfort ?? null,
+    isLabsAdmin: isAdminEmail(user.email),
     aiTools: user.metadata.aiTools ?? null,
     availability: user.metadata.availability ?? null,
     preferredRole: user.metadata.preferredRole ?? null,

@@ -15,6 +15,9 @@ CodePet Labs uses WorkOS as the member source of truth.
 9. Approval marks the user as an approved builder in WorkOS metadata.
 10. Approved builders use `/hub` for Discord and project links.
 
+Admin allowlist users skip the builder application flow. After sign-in, `/profile`
+redirects them to `/admin`, and admin users are excluded from review buckets.
+
 No separate database is needed for the first version.
 
 ## Admin States

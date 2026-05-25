@@ -18,7 +18,7 @@ export async function saveBuilderProfile(formData: FormData) {
   const githubIdentity = await getLabsGithubIdentity(user.id);
 
   if (!githubIdentity) {
-    redirect("/hub");
+    redirect("/profile");
   }
 
   const now = new Date().toISOString();
@@ -32,6 +32,6 @@ export async function saveBuilderProfile(formData: FormData) {
   });
 
   revalidatePath("/admin");
-  revalidatePath("/hub");
-  redirect("/hub");
+  revalidatePath("/profile");
+  redirect("/profile");
 }

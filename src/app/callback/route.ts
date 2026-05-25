@@ -3,7 +3,7 @@ import { handleAuth } from "@workos-inc/authkit-nextjs";
 import { getLabsConfigStatus, markLabsInterest } from "@/lib/labs-admin";
 
 export const GET = handleAuth({
-  returnPathname: "/hub",
+  returnPathname: "/profile",
   onSuccess: async ({ user, authenticationMethod, oauthTokens }) => {
     if (!getLabsConfigStatus().ready) {
       return;

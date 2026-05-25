@@ -8,12 +8,12 @@ CodePet Labs uses WorkOS as the member source of truth.
 2. WorkOS AuthKit authenticates the user with GitHub.
 3. The Labs callback confirms a linked GitHub OAuth identity.
 4. The callback marks GitHub-authenticated users as `profile_required`.
-5. The callback or hub resolves the GitHub username when possible.
-6. The user completes the short builder profile wizard in `/hub`.
+5. The callback or profile page resolves the GitHub username when possible.
+6. The user completes the short builder profile wizard in `/profile`.
 7. Profile completion marks the user as `pending`.
 8. An admin reviews `/admin`.
 9. Approval marks the user as an approved builder in WorkOS metadata.
-10. Approved builders see Discord and project links in `/hub`.
+10. Approved builders use `/hub` for Discord and project links.
 
 No separate database is needed for the first version.
 
@@ -36,7 +36,7 @@ No separate database is needed for the first version.
 - Set the sign-in endpoint to `/login`.
 
 The app also checks WorkOS user identities server-side. A signed-in user without
-a GitHub OAuth identity sees a GitHub-required screen instead of the normal hub.
+a GitHub OAuth identity sees a GitHub-required screen instead of the normal profile page.
 
 No WorkOS organization is required for the first version. Builder state lives in
 user metadata so Labs can stay small until organization roles or SSO are needed.

@@ -25,7 +25,7 @@ export default function Home() {
               href="/signup"
               className="inline-flex min-h-16 items-center justify-center rounded-md bg-foreground px-10 py-5 text-xl font-semibold text-background transition hover:opacity-90 sm:min-w-44"
             >
-              Apply to Build
+              Join
             </a>
           </div>
         </div>

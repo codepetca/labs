@@ -20,6 +20,7 @@ type BuilderProfileWizardProps = {
 };
 
 type WizardStep = 0 | 1 | 2;
+type MultiSelectKey = "interests" | "aiTools" | "preferredRole";
 
 export function BuilderProfileWizard({
   action,
@@ -40,10 +41,16 @@ export function BuilderProfileWizard({
     setMessage("");
   }
 
-  function toggleListValue(
-    key: "interests" | "aiTools",
-    value: string,
-  ) {
+  function toggleListValue(key: MultiSelectKey, value: string) {
+    if (
+      key === "preferredRole" &&
+      !values.preferredRole.includes(value) &&
+      values.preferredRole.length >= 2
+    ) {
+      setMessage("Choose up to two preferred roles.");
+      return;
+    }
+
     setValues((current) => {
       const selected = new Set(current[key]);
 
@@ -103,7 +110,7 @@ export function BuilderProfileWizard({
             {progressLabel}
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
-            Apply to build
+            Join
           </h1>
         </div>
         {githubUsername ? (
@@ -227,7 +234,7 @@ function InterestsStep({
     value: LabsProfileFormValues[Key],
   ) => void;
   toggleListValue: (
-    key: "interests" | "aiTools",
+    key: MultiSelectKey,
     value: string,
   ) => void;
 }) {
@@ -268,7 +275,7 @@ function WorkflowStep({
     value: LabsProfileFormValues[Key],
   ) => void;
   toggleListValue: (
-    key: "interests" | "aiTools",
+    key: MultiSelectKey,
     value: string,
   ) => void;
 }) {
@@ -296,11 +303,12 @@ function WorkflowStep({
         selected={values.availability}
         onSelect={(value) => updateValue("availability", value)}
       />
-      <SegmentedGroup
-        label="Preferred role"
+      <ChipGroup
+        label="Preferred roles"
+        hint="Choose up to 2."
         options={LABS_ROLE_OPTIONS}
         selected={values.preferredRole}
-        onSelect={(value) => updateValue("preferredRole", value)}
+        onToggle={(value) => toggleListValue("preferredRole", value)}
       />
     </div>
   );
@@ -326,7 +334,9 @@ function HiddenProfileFields({ values }: { values: LabsProfileFormValues }) {
         <input key={tool} type="hidden" name="aiTools" value={tool} />
       ))}
       <input type="hidden" name="availability" value={values.availability} />
-      <input type="hidden" name="preferredRole" value={values.preferredRole} />
+      {values.preferredRole.map((role) => (
+        <input key={role} type="hidden" name="preferredRole" value={role} />
+      ))}
     </>
   );
 }
@@ -385,18 +395,25 @@ function TextField({
 
 function ChipGroup({
   label,
+  hint,
   options,
   selected,
   onToggle,
 }: {
   label: string;
+  hint?: string;
   options: readonly LabsOption[];
   selected: string[];
   onToggle: (value: string) => void;
 }) {
   return (
     <fieldset>
-      <legend className="text-sm font-semibold text-foreground">{label}</legend>
+      <legend className="text-sm font-semibold text-foreground">
+        {label}
+        {hint ? (
+          <span className="ml-1 font-normal text-muted">{hint}</span>
+        ) : null}
+      </legend>
       <div className="mt-3 flex flex-wrap gap-2">
         {options.map((option) => {
           const isSelected = selected.includes(option.value);
@@ -499,8 +516,12 @@ function validateStep(step: WizardStep, values: LabsProfileFormValues) {
       return "Choose your summer availability.";
     }
 
-    if (!values.preferredRole) {
-      return "Choose a preferred role, even if you are not sure.";
+    if (values.preferredRole.length === 0) {
+      return "Choose at least one preferred role.";
+    }
+
+    if (values.preferredRole.length > 2) {
+      return "Choose up to two preferred roles.";
     }
   }
 

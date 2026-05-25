@@ -12,14 +12,8 @@ import {
   isAdminEmail,
 } from "@/lib/labs-admin";
 import {
-  getLabsOptionLabels,
   getLabsProfileFormValues,
   hasCompletedLabsProfile,
-  LABS_AI_TOOL_OPTIONS,
-  LABS_AVAILABILITY_OPTIONS,
-  LABS_GITHUB_COMFORT_OPTIONS,
-  LABS_INTEREST_OPTIONS,
-  LABS_ROLE_OPTIONS,
 } from "@/lib/labs-state";
 
 export const dynamic = "force-dynamic";
@@ -68,7 +62,7 @@ export default async function HubPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-      <div className="grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
+      <div className="grid gap-4 lg:grid-cols-2">
         <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
           <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
             {getHubTitle(labsStatus)}
@@ -103,24 +97,6 @@ export default async function HubPage() {
               label="GitHub"
               value={githubUsername ? `@${githubUsername}` : "Not added"}
             />
-            <SummaryRow
-              label="Interests"
-              value={formatList(
-                getLabsOptionLabels(
-                  user.metadata.interests,
-                  LABS_INTEREST_OPTIONS,
-                ),
-              )}
-            />
-            <SummaryRow
-              label="GitHub comfort"
-              value={formatList(
-                getLabsOptionLabels(
-                  user.metadata.githubComfort,
-                  LABS_GITHUB_COMFORT_OPTIONS,
-                ),
-              )}
-            />
           </dl>
         </section>
       </div>
@@ -141,8 +117,6 @@ export default async function HubPage() {
           {isAdmin ? <HubLink href="/admin" label="Admin" /> : null}
         </div>
       </section>
-
-      {profileComplete ? <ApplicationSummary metadata={user.metadata} /> : null}
     </main>
   );
 }
@@ -248,44 +222,6 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ApplicationSummary({
-  metadata,
-}: {
-  metadata: Record<string, string | null | undefined>;
-}) {
-  return (
-    <section className="mt-4 rounded-lg border border-border bg-card p-5 shadow-sm">
-      <h2 className="text-base font-semibold text-foreground">Application</h2>
-      <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-        <SummaryRow
-          label="Preferred role"
-          value={formatList(
-            getLabsOptionLabels(metadata.preferredRole, LABS_ROLE_OPTIONS),
-          )}
-        />
-        <SummaryRow
-          label="Availability"
-          value={formatList(
-            getLabsOptionLabels(metadata.availability, LABS_AVAILABILITY_OPTIONS),
-          )}
-        />
-        <SummaryRow
-          label="AI tools"
-          value={formatList(
-            getLabsOptionLabels(metadata.aiTools, LABS_AI_TOOL_OPTIONS),
-          )}
-        />
-        <SummaryRow label="Referrer" value={metadata.referrer || "Not added"} />
-      </dl>
-      {metadata.buildGoal ? (
-        <p className="mt-4 border-t border-border pt-4 text-sm leading-6 text-muted">
-          {metadata.buildGoal}
-        </p>
-      ) : null}
-    </section>
-  );
-}
-
 function getHubTitle(status: string) {
   if (status === "approved") {
     return "Builder access";
@@ -316,10 +252,6 @@ function getHubMessage(status: string) {
   }
 
   return "We will review your profile before sharing builder links.";
-}
-
-function formatList(values: string[]) {
-  return values.length ? values.join(", ") : "Not added";
 }
 
 function getEmailInitial(email: string) {

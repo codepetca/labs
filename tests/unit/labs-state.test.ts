@@ -76,7 +76,8 @@ describe("Labs state helpers", () => {
     formData.append("aiTools", "none");
     formData.append("aiTools", "chatgpt");
     formData.set("availability", "steady");
-    formData.set("preferredRole", "builder");
+    formData.append("preferredRole", "builder");
+    formData.append("preferredRole", "ui");
 
     expect(parseBuilderProfileForm(formData)).toEqual({
       preferredName: "Jane Smith",
@@ -88,8 +89,25 @@ describe("Labs state helpers", () => {
       githubComfort: "basics",
       aiTools: "chatgpt",
       availability: "steady",
-      preferredRole: "builder",
+      preferredRole: "builder,ui",
     });
+  });
+
+  it("limits preferred roles to two choices", () => {
+    const formData = new FormData();
+
+    formData.set("preferredName", "Jane Smith");
+    formData.set("contactEmail", "jane@example.com");
+    formData.append("interests", "ui");
+    formData.set("githubComfort", "basics");
+    formData.set("availability", "steady");
+    formData.append("preferredRole", "builder");
+    formData.append("preferredRole", "ui");
+    formData.append("preferredRole", "other");
+
+    expect(() => parseBuilderProfileForm(formData)).toThrow(
+      "no more than 2 preferredRole",
+    );
   });
 
   it("detects completed builder profiles", () => {

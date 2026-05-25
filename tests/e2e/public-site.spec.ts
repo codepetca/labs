@@ -9,7 +9,7 @@ test("home page shows the Labs entry point and projects", async ({
     page.getByRole("heading", { name: "CodePet Labs" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Apply to Build", exact: true }),
+    page.getByRole("link", { name: "Join", exact: true }),
   ).toHaveAttribute("href", "/signup");
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(

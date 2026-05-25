@@ -54,6 +54,7 @@ export const LABS_ROLE_OPTIONS = [
   { value: "docs", label: "Docs" },
   { value: "product", label: "Product" },
   { value: "unsure", label: "Not sure" },
+  { value: "other", label: "Other" },
 ] as const satisfies readonly LabsOption[];
 
 export type LabsProfileFormValues = {
@@ -66,7 +67,7 @@ export type LabsProfileFormValues = {
   githubComfort: string;
   aiTools: string[];
   availability: string;
-  preferredRole: string;
+  preferredRole: string[];
 };
 
 export function isGithubAuthenticationMethod(method: string | undefined) {
@@ -129,7 +130,7 @@ export function getLabsProfileFormValues(
     githubComfort: metadata.githubComfort ?? "",
     aiTools: parseStoredList(metadata.aiTools),
     availability: metadata.availability ?? "",
-    preferredRole: metadata.preferredRole ?? "",
+    preferredRole: parseStoredList(metadata.preferredRole),
   };
 }
 
@@ -181,7 +182,13 @@ export function parseBuilderProfileForm(formData: FormData) {
       "availability",
       LABS_AVAILABILITY_OPTIONS,
     ),
-    preferredRole: parseOption(formData, "preferredRole", LABS_ROLE_OPTIONS),
+    preferredRole: parseOptionList(
+      formData,
+      "preferredRole",
+      LABS_ROLE_OPTIONS,
+      true,
+      2,
+    ).join(","),
   };
 }
 
@@ -273,6 +280,7 @@ function parseOptionList(
   key: string,
   options: readonly LabsOption[],
   required: boolean,
+  maxLength?: number,
 ) {
   const validValues = new Set(options.map((option) => option.value));
   const values = formData
@@ -284,6 +292,10 @@ function parseOptionList(
 
   if (required && uniqueValues.length === 0) {
     throw new Error(`Choose at least one ${key}.`);
+  }
+
+  if (maxLength && uniqueValues.length > maxLength) {
+    throw new Error(`Choose no more than ${maxLength} ${key}.`);
   }
 
   return uniqueValues;

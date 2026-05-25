@@ -4,7 +4,7 @@ CodePet Labs uses WorkOS as the member source of truth.
 
 ## Flow
 
-1. An interested builder clicks **Apply to Build**.
+1. An interested builder clicks **Join**.
 2. WorkOS AuthKit authenticates the user with GitHub.
 3. The Labs callback confirms a linked GitHub OAuth identity.
 4. The callback marks GitHub-authenticated users as `profile_required`.

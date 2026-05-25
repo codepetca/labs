@@ -53,7 +53,7 @@ export default async function HubPage() {
         <StatusChip label={isApprovedBuilder ? "builder" : "admin"} />
       </div>
 
-      {isApprovedBuilder ? (
+      {isApprovedBuilder || isAdmin ? (
         <DiscordSection inviteUrl={config.discordInviteUrl} />
       ) : null}
 

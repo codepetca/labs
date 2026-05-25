@@ -29,7 +29,7 @@ After that, load only the docs needed for the task.
 | Project cards or demo content | [`docs/project-ideas.md`](./project-ideas.md), `content/projects.json`, `content/updates/` |
 | Labs purpose, positioning, or policy copy | [`docs/vision.md`](./vision.md), [`docs/operating-model.md`](./operating-model.md) |
 | Builder onboarding, expectations, or contribution boundaries | [`docs/onboarding.md`](./onboarding.md), [`docs/builder-expectations.md`](./builder-expectations.md), [`docs/student-roles.md`](./student-roles.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
-| Membership, join, hub, or admin flow | [`docs/member-management.md`](./member-management.md), `README.md` environment section |
+| Membership, join, profile, hub, or admin flow | [`docs/member-management.md`](./member-management.md), `README.md` environment section |
 | Discord setup or community operations | [`docs/discord-setup.md`](./discord-setup.md), `scripts/setup-discord.mjs` |
 | Branches, worktrees, PRs, demos, and reviews | [`docs/dev-workflow.md`](./dev-workflow.md), [`docs/workflow.md`](./workflow.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
 | Build, dependencies, or deployment | `README.md`, `package.json`, `next.config.ts` |

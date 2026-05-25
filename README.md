@@ -48,8 +48,8 @@ The public site is static-first. Content lives in local files:
 - `content/updates/2026-summer-launch.md` is rendered on `/projects`.
 - `docs/` stores practical operating docs for students and reviewers.
 
-There is no database or production data dependency. The optional member hub uses
-WorkOS for authentication and lightweight approval metadata.
+There is no database or production data dependency. The optional member profile
+and builder hub use WorkOS for authentication and lightweight approval metadata.
 
 ## Member Management
 
@@ -57,8 +57,9 @@ Labs has a lightweight WorkOS-backed approval flow:
 
 - The home page sends interested builders to the WorkOS sign-up flow.
 - AuthKit should be configured for GitHub Social Login only.
-- `/hub` requires a linked GitHub OAuth identity, records the GitHub username
+- `/profile` requires a linked GitHub OAuth identity, records the GitHub username
   when it can be resolved, and asks for a short builder profile before review.
+- `/hub` is the approved-builder workspace.
 - `/admin` lets allowlisted admins approve, pause, reactivate, or hide builders.
 - Approved builders see Discord and project links in `/hub`.
 
@@ -106,8 +107,8 @@ This app is ready for Vercel:
 3. Keep the default Next.js settings.
 4. Deploy.
 
-Add the WorkOS environment variables above before enabling the home/member hub
-flow in production.
+Add the WorkOS environment variables above before enabling the home/member
+profile flow in production.
 
 ## Docs
 

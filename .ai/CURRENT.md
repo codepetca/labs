@@ -19,7 +19,7 @@ compact continuity layer for the repo.
 - Do not introduce direct Pika production dependencies.
 - Do not add a new database or real student workflow unless explicitly approved.
 - WorkOS is the current lightweight membership source of truth for the optional
-  member hub/admin flow.
+  member profile, hub, and admin flow.
 
 ## Repo Facts
 

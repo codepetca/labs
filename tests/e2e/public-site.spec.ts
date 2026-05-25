@@ -11,6 +11,10 @@ test("home page shows the Labs entry point and projects", async ({
   await expect(
     page.getByRole("link", { name: "Join", exact: true }),
   ).toHaveAttribute("href", "/signup");
+  await expect(page.getByRole("link", { name: "Profile" })).toHaveAttribute(
+    "href",
+    "/profile",
+  );
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "CodePetPal XP Prototype" }),

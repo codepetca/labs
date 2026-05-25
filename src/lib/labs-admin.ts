@@ -1,10 +1,11 @@
-import { WorkOS } from "@workos-inc/node";
+import { WorkOS, type OauthTokens } from "@workos-inc/node";
 import { withAuth } from "@workos-inc/authkit-nextjs";
 
 import {
   getLabsDirectoryBuckets,
   getNextLabsStatus,
   isGithubAuthenticationMethod,
+  parseGithubApiUsername,
 } from "@/lib/labs-state";
 
 export type LabsConfig = {
@@ -27,6 +28,9 @@ export type LabsUser = {
 type LabsIdentity = Awaited<
   ReturnType<WorkOS["userManagement"]["getUserIdentities"]>
 >[number];
+type LabsWorkOSUser = Awaited<
+  ReturnType<WorkOS["userManagement"]["getUser"]>
+>;
 
 let workosClient: WorkOS | null = null;
 
@@ -69,7 +73,7 @@ export function getWorkOSClient() {
 
 export async function markLabsInterest(
   userId: string,
-  options: { authenticationMethod?: string } = {},
+  options: { authenticationMethod?: string; oauthTokens?: OauthTokens } = {},
 ) {
   const workos = getWorkOSClient();
   const [user, githubIdentity] = await Promise.all([
@@ -80,20 +84,33 @@ export async function markLabsInterest(
     Boolean(githubIdentity) ||
     isGithubAuthenticationMethod(options.authenticationMethod);
 
-  if (user.metadata.labsStatus && user.metadata.labsAuthProvider === "github") {
+  const nextMetadata: Record<string, string> = {
+    ...user.metadata,
+    labsStatus: getNextLabsStatus(user.metadata.labsStatus, hasGithubIdentity),
+    labsJoinedAt: user.metadata.labsJoinedAt ?? new Date().toISOString(),
+    labsSource: "codepet-labs",
+    labsAuthProvider: hasGithubIdentity ? "github" : "github_required",
+    ...(githubIdentity ? { githubIdentityId: githubIdentity.idpId } : {}),
+  };
+
+  if (hasGithubIdentity && !nextMetadata.githubUsername) {
+    const githubUsername = await resolveGithubUsername({
+      githubIdentity,
+      oauthTokens: options.oauthTokens,
+    });
+
+    if (githubUsername) {
+      nextMetadata.githubUsername = githubUsername;
+    }
+  }
+
+  if (hasSameMetadata(user.metadata, nextMetadata)) {
     return;
   }
 
   await workos.userManagement.updateUser({
     userId,
-    metadata: {
-      ...user.metadata,
-      labsStatus: getNextLabsStatus(user.metadata.labsStatus, hasGithubIdentity),
-      labsJoinedAt: user.metadata.labsJoinedAt ?? new Date().toISOString(),
-      labsSource: "codepet-labs",
-      labsAuthProvider: hasGithubIdentity ? "github" : "github_required",
-      ...(githubIdentity ? { githubIdentityId: githubIdentity.idpId } : {}),
-    },
+    metadata: nextMetadata,
   });
 }
 
@@ -107,6 +124,29 @@ export async function getLabsGithubIdentity(userId: string) {
     await getWorkOSClient().userManagement.getUserIdentities(userId);
 
   return identities.find(isGithubIdentity) ?? null;
+}
+
+export async function ensureLabsGithubUsername(
+  user: LabsWorkOSUser,
+  githubIdentity: LabsIdentity,
+) {
+  if (user.metadata.githubUsername) {
+    return user;
+  }
+
+  const githubUsername = await resolveGithubUsername({ githubIdentity });
+
+  if (!githubUsername) {
+    return user;
+  }
+
+  return getWorkOSClient().userManagement.updateUser({
+    userId: user.id,
+    metadata: {
+      ...user.metadata,
+      githubUsername,
+    },
+  });
 }
 
 export async function updateLabsUserMetadata(
@@ -159,11 +199,67 @@ function parseAdminEmails(value: string | undefined) {
     .filter(Boolean);
 }
 
+async function resolveGithubUsername({
+  githubIdentity,
+  oauthTokens,
+}: {
+  githubIdentity: LabsIdentity | null;
+  oauthTokens?: OauthTokens;
+}) {
+  const tokenUsername = oauthTokens
+    ? await fetchGithubUsername("https://api.github.com/user", oauthTokens)
+    : null;
+
+  if (tokenUsername || !githubIdentity || !/^\d+$/.test(githubIdentity.idpId)) {
+    return tokenUsername;
+  }
+
+  return fetchGithubUsername(
+    `https://api.github.com/user/${githubIdentity.idpId}`,
+  );
+}
+
+async function fetchGithubUsername(url: string, oauthTokens?: OauthTokens) {
+  const headers: Record<string, string> = {
+    Accept: "application/vnd.github+json",
+    "User-Agent": "codepet-labs",
+  };
+
+  if (oauthTokens?.accessToken) {
+    headers.Authorization = `Bearer ${oauthTokens.accessToken}`;
+  }
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+      headers,
+      signal: AbortSignal.timeout(2500),
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return parseGithubApiUsername(await response.json());
+  } catch {
+    return null;
+  }
+}
+
+function hasSameMetadata(
+  current: Record<string, string>,
+  next: Record<string, string>,
+) {
+  const keys = new Set([...Object.keys(current), ...Object.keys(next)]);
+
+  return Array.from(keys).every((key) => current[key] === next[key]);
+}
+
 function isGithubIdentity(identity: LabsIdentity) {
   return identity.type === "OAuth" && isGithubAuthenticationMethod(identity.provider);
 }
 
-function toLabsUser(user: Awaited<ReturnType<WorkOS["userManagement"]["getUser"]>>) {
+function toLabsUser(user: LabsWorkOSUser) {
   return {
     id: user.id,
     name: [user.firstName, user.lastName].filter(Boolean).join(" ") || "Unknown",

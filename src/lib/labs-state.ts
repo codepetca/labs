@@ -54,3 +54,15 @@ export function parseGithubUsername(value: unknown) {
 
   return githubUsername;
 }
+
+export function parseGithubApiUsername(profile: unknown) {
+  if (!profile || typeof profile !== "object" || !("login" in profile)) {
+    return null;
+  }
+
+  try {
+    return parseGithubUsername((profile as { login: unknown }).login);
+  } catch {
+    return null;
+  }
+}

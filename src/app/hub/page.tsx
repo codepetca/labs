@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { saveGithubUsername } from "@/app/hub/actions";
 import {
+  ensureLabsGithubUsername,
   getCurrentLabsUser,
   getLabsConfig,
   getLabsConfigStatus,
@@ -19,12 +20,14 @@ export default async function HubPage() {
     return <SetupNeeded missing={configStatus.missing} />;
   }
 
-  const user = await getCurrentLabsUser();
+  let user = await getCurrentLabsUser();
   const githubIdentity = await getLabsGithubIdentity(user.id);
 
   if (!githubIdentity) {
     return <GitHubRequired email={user.email} />;
   }
+
+  user = await ensureLabsGithubUsername(user, githubIdentity);
 
   const config = getLabsConfig();
   const isAdmin = isAdminEmail(user.email);

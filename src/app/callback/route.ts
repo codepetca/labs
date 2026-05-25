@@ -4,11 +4,11 @@ import { getLabsConfigStatus, markLabsInterest } from "@/lib/labs-admin";
 
 export const GET = handleAuth({
   returnPathname: "/hub",
-  onSuccess: async ({ user, authenticationMethod }) => {
+  onSuccess: async ({ user, authenticationMethod, oauthTokens }) => {
     if (!getLabsConfigStatus().ready) {
       return;
     }
 
-    await markLabsInterest(user.id, { authenticationMethod });
+    await markLabsInterest(user.id, { authenticationMethod, oauthTokens });
   },
 });

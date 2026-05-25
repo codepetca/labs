@@ -4,6 +4,7 @@ import {
   getLabsDirectoryBuckets,
   getNextLabsStatus,
   isGithubAuthenticationMethod,
+  parseGithubApiUsername,
   parseGithubUsername,
 } from "../../src/lib/labs-state";
 
@@ -53,6 +54,15 @@ describe("Labs state helpers", () => {
     expect(parseGithubUsername(" @codepet-labs ")).toBe("codepet-labs");
     expect(parseGithubUsername("a")).toBe("a");
     expect(parseGithubUsername("a".repeat(39))).toBe("a".repeat(39));
+  });
+
+  it("extracts valid GitHub usernames from API profiles", () => {
+    expect(parseGithubApiUsername({ login: "codepet-labs" })).toBe(
+      "codepet-labs",
+    );
+    expect(parseGithubApiUsername({ login: "codepet_labs" })).toBeNull();
+    expect(parseGithubApiUsername({})).toBeNull();
+    expect(parseGithubApiUsername(null)).toBeNull();
   });
 
   it("rejects invalid GitHub usernames", () => {

@@ -5,10 +5,15 @@ Welcome to CodePet Labs. Start small, keep the scope visible, and build with moc
 ## First Steps
 
 1. Read the project README and docs.
-2. Run the app locally.
-3. Find the mock data or local content files.
-4. Make one small change and open a pull request.
-5. Explain what changed, how you tested it, and what remains unfinished.
+2. Read the builder expectations before submitting work.
+3. Run the app locally.
+4. Find the mock data or local content files.
+5. Make one small change and open a pull request.
+6. Explain what changed, how you tested it, and what remains unfinished.
+
+See [`docs/builder-expectations.md`](./builder-expectations.md) for the plain
+expectations around CodePet-directed work, attribution, portfolio use, mock
+data, and private material.
 
 ## System Boundaries
 

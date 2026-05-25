@@ -28,7 +28,7 @@ After that, load only the docs needed for the task.
 | Public site UI or page copy | [`docs/ui-ux-style.md`](./ui-ux-style.md), relevant page/component |
 | Project cards or demo content | [`docs/project-ideas.md`](./project-ideas.md), `content/projects.json`, `content/updates/` |
 | Labs purpose, positioning, or policy copy | [`docs/vision.md`](./vision.md), [`docs/operating-model.md`](./operating-model.md) |
-| Builder onboarding or student expectations | [`docs/onboarding.md`](./onboarding.md), [`docs/student-roles.md`](./student-roles.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
+| Builder onboarding, expectations, or contribution boundaries | [`docs/onboarding.md`](./onboarding.md), [`docs/builder-expectations.md`](./builder-expectations.md), [`docs/student-roles.md`](./student-roles.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
 | Membership, join, hub, or admin flow | [`docs/member-management.md`](./member-management.md), `README.md` environment section |
 | Discord setup or community operations | [`docs/discord-setup.md`](./discord-setup.md), `scripts/setup-discord.mjs` |
 | Branches, worktrees, PRs, demos, and reviews | [`docs/dev-workflow.md`](./dev-workflow.md), [`docs/workflow.md`](./workflow.md), [`docs/ai-guidelines.md`](./ai-guidelines.md) |
@@ -61,6 +61,8 @@ route smoke tests. Do not claim strict TDD is required for this repo yet.
 - Do not add real student data flows.
 - Do not add a database or new auth model without explicit approval.
 - Keep WorkOS usage limited to the documented lightweight membership flow.
+- Keep contribution expectations plain and practical. Route builder expectation
+  questions through [`docs/builder-expectations.md`](./builder-expectations.md).
 - Prefer local content files over dynamic storage for public-site content.
 - Preserve small, reviewable PRs with clear test notes.
 - Use one worktree per branch. `docs/dev-workflow.md` is the source of truth

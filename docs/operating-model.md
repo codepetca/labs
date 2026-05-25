@@ -22,3 +22,15 @@ CodePet Labs runs as a small reviewed builder environment.
 ## Permanence
 
 Student work may become inspiration, a prototype, a reference implementation, or a production feature. It may also be rewritten or replaced. Attribution and portfolio value matter, but production permanence is not guaranteed.
+
+## Builder Expectations
+
+CodePet Labs work is CodePet-directed prototype and learning work. Builders
+should expect submitted project work to be property of CodePet unless a specific
+project says otherwise. CodePet may use, change, rewrite, pause, replace, or
+fold Labs work into other CodePet work later.
+
+Attribution and portfolio value are part of the Labs model. Builders should not
+share private CodePet, Pika, student, business, or unreleased product details
+unless CodePet says they are okay to share publicly. See
+[`docs/builder-expectations.md`](./builder-expectations.md).

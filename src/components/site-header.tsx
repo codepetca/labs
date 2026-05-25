@@ -16,7 +16,7 @@ export function SiteHeader() {
 
         <nav
           aria-label="Main navigation"
-          className="-mx-1 flex min-w-0 gap-1 overflow-x-auto pb-1 text-sm [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="-mx-1 flex min-w-0 gap-1 text-sm"
         >
           <HeaderUserArea />
         </nav>

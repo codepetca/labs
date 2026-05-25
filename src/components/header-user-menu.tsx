@@ -296,19 +296,7 @@ function getDisplayName(user: User) {
 }
 
 function getInitials(user: User) {
-  const firstNameInitial = user.firstName?.trim().charAt(0).toUpperCase();
-  const lastNameInitial = user.lastName?.trim().charAt(0).toUpperCase();
-
-  if (firstNameInitial && lastNameInitial) {
-    return `${firstNameInitial}${lastNameInitial}`;
-  }
-
-  return (
-    firstNameInitial ||
-    lastNameInitial ||
-    user.email.trim().charAt(0).toUpperCase() ||
-    "?"
-  );
+  return user.email.trim().charAt(0).toUpperCase() || "?";
 }
 
 function getAvatarColor(value: string) {

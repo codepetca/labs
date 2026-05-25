@@ -7,6 +7,7 @@ export type LabsStatus =
   | "inactive";
 
 export type LabsDirectoryUser = {
+  isLabsAdmin?: boolean;
   labsStatus: string | null;
 };
 
@@ -104,14 +105,24 @@ export function getLabsStatusAfterProfileSubmit(
 }
 
 export function getLabsDirectoryBuckets<T extends LabsDirectoryUser>(users: T[]) {
+  const reviewableUsers = users.filter((user) => !user.isLabsAdmin);
+
   return {
-    profileRequiredUsers: users.filter(
+    profileRequiredUsers: reviewableUsers.filter(
       (user) => user.labsStatus === "profile_required",
     ),
-    pendingUsers: users.filter((user) => user.labsStatus === "pending"),
-    activeBuilders: users.filter((user) => user.labsStatus === "approved"),
-    inactiveBuilders: users.filter((user) => user.labsStatus === "inactive"),
-    archivedUsers: users.filter((user) => user.labsStatus === "not_now"),
+    pendingUsers: reviewableUsers.filter(
+      (user) => user.labsStatus === "pending",
+    ),
+    activeBuilders: reviewableUsers.filter(
+      (user) => user.labsStatus === "approved",
+    ),
+    inactiveBuilders: reviewableUsers.filter(
+      (user) => user.labsStatus === "inactive",
+    ),
+    archivedUsers: reviewableUsers.filter(
+      (user) => user.labsStatus === "not_now",
+    ),
   };
 }
 

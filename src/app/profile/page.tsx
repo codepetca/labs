@@ -1,5 +1,6 @@
 import { signOut } from "@workos-inc/authkit-nextjs";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { saveBuilderProfile } from "@/app/profile/actions";
 import { BuilderProfileWizard } from "@/components/builder-profile-wizard";
@@ -25,6 +26,12 @@ export default async function ProfilePage() {
   }
 
   let user = await getCurrentLabsUser();
+  const isAdmin = isAdminEmail(user.email);
+
+  if (isAdmin) {
+    redirect("/admin");
+  }
+
   const githubIdentity = await getLabsGithubIdentity(user.id);
 
   if (!githubIdentity) {
@@ -33,7 +40,6 @@ export default async function ProfilePage() {
 
   user = await ensureLabsGithubUsername(user, githubIdentity);
 
-  const isAdmin = isAdminEmail(user.email);
   const labsStatus = user.metadata.labsStatus ?? "profile_required";
   const isApprovedBuilder = labsStatus === "approved";
   const githubUsername = user.metadata.githubUsername;

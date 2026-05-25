@@ -96,7 +96,7 @@ The `BUILDERS` category is private to `Builder`, `Moderator`, `Labs Admin`, and
 2. Assign yourself `Labs Admin`.
 3. Assign trusted helpers `Moderator`.
 4. Generate a Discord invite and set `CODEPET_DISCORD_INVITE_URL`.
-   This enables the **Join Discord** button on the home page and `/hub`.
+   This enables the **Join Discord** button on the home page.
 5. Keep `#announcements`, `#rules`, and `#roadmap` low-noise and read-only.
 
 Later bot work should be added as explicit slash commands, such as:

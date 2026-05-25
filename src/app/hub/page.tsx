@@ -1,11 +1,9 @@
 import { signOut } from "@workos-inc/authkit-nextjs";
 import Link from "next/link";
 
-import { saveGithubUsername } from "@/app/hub/actions";
 import {
   ensureLabsGithubUsername,
   getCurrentLabsUser,
-  getLabsConfig,
   getLabsConfigStatus,
   getLabsGithubIdentity,
   isAdminEmail,
@@ -29,11 +27,11 @@ export default async function HubPage() {
 
   user = await ensureLabsGithubUsername(user, githubIdentity);
 
-  const config = getLabsConfig();
   const isAdmin = isAdminEmail(user.email);
   const labsStatus = user.metadata.labsStatus ?? "pending";
   const isApprovedBuilder = labsStatus === "approved";
   const githubUsername = user.metadata.githubUsername;
+  const emailInitial = getEmailInitial(user.email);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
@@ -45,7 +43,7 @@ export default async function HubPage() {
           <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
             {isApprovedBuilder
               ? "You have access to the CodePet Labs workspace."
-              : "We will review your profile. Keep your GitHub handle current."}
+              : "We will review your profile."}
           </p>
           <div className="mt-5 flex flex-wrap gap-2">
             <StatusChip label={isApprovedBuilder ? "builder" : labsStatus} />
@@ -54,12 +52,21 @@ export default async function HubPage() {
         </section>
 
         <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-          <h2 className="text-base font-semibold text-foreground">Profile</h2>
-          <dl className="mt-4 grid gap-3 text-sm">
-            <div className="rounded-md border border-border bg-card-soft p-3">
-              <dt className="text-muted">Email</dt>
-              <dd className="mt-1 font-medium text-foreground">{user.email}</dd>
+          <div className="flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="flex size-12 shrink-0 items-center justify-center rounded-md border border-border bg-card-soft font-mono text-lg font-semibold text-foreground"
+            >
+              {emailInitial}
+            </span>
+            <div className="min-w-0">
+              <h2 className="text-base font-semibold text-foreground">
+                Profile
+              </h2>
+              <p className="mt-1 truncate text-sm text-muted">{user.email}</p>
             </div>
+          </div>
+          <dl className="mt-4 grid gap-3 text-sm">
             <div className="rounded-md border border-border bg-card-soft p-3">
               <dt className="text-muted">GitHub auth</dt>
               <dd className="mt-1 font-medium text-foreground">Verified</dd>
@@ -71,36 +78,8 @@ export default async function HubPage() {
               </dd>
             </div>
           </dl>
-
-          <form action={saveGithubUsername} className="mt-4 flex gap-2">
-            <input
-              name="githubUsername"
-              placeholder="github username"
-              defaultValue={githubUsername ?? ""}
-              className="min-h-11 min-w-0 flex-1 rounded-md border border-border bg-surface px-3 text-sm text-foreground outline-none transition placeholder:text-muted focus:border-accent"
-            />
-            <button
-              type="submit"
-              className="min-h-11 shrink-0 rounded-md bg-foreground px-4 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              Save
-            </button>
-          </form>
         </section>
       </div>
-
-      <section className="mt-4 rounded-lg border border-border bg-card p-5 shadow-sm">
-        <h2 className="text-base font-semibold text-foreground">
-          {isApprovedBuilder ? "Next steps" : "Links"}
-        </h2>
-        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-          {isApprovedBuilder && config.discordInviteUrl ? (
-            <HubLink href={config.discordInviteUrl} label="Join Discord" />
-          ) : null}
-          <HubLink href="/#tracks" label="Projects" />
-          {isAdmin ? <HubLink href="/admin" label="Admin" plain /> : null}
-        </div>
-      </section>
     </main>
   );
 }
@@ -162,37 +141,14 @@ function SetupNeeded({ missing }: { missing: string[] }) {
   );
 }
 
-function HubLink({
-  href,
-  label,
-  plain = false,
-}: {
-  href: string;
-  label: string;
-  plain?: boolean;
-}) {
-  const className =
-    "rounded-md border border-border bg-card-soft px-3 py-3 text-sm font-semibold text-foreground transition hover:bg-surface";
-
-  if (plain) {
-    return (
-      <a href={href} className={className}>
-        {label}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} className={className}>
-      {label}
-    </Link>
-  );
-}
-
 function StatusChip({ label }: { label: string }) {
   return (
     <span className="rounded-md border border-border bg-card-soft px-2.5 py-1 text-xs font-semibold text-muted">
       {label}
     </span>
   );
+}
+
+function getEmailInitial(email: string) {
+  return email.trim().charAt(0).toUpperCase() || "?";
 }

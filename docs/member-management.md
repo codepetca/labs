@@ -9,11 +9,9 @@ CodePet Labs uses WorkOS as the member source of truth.
 3. The Labs callback confirms a linked GitHub OAuth identity.
 4. The callback marks GitHub-authenticated users as `pending`.
 5. The callback or hub resolves the GitHub username when possible.
-6. The user can correct their GitHub username in `/hub`.
-7. An admin reviews `/admin`.
-8. Approval marks the user as an approved builder in WorkOS metadata.
-9. If Discord is configured, users can join from the home page.
-10. Approved builders also see the Discord invite and project links in `/hub`.
+6. An admin reviews `/admin`.
+7. Approval marks the user as an approved builder in WorkOS metadata.
+8. If Discord is configured, users can join from the home page.
 
 No separate database is needed for the first version.
 
@@ -46,4 +44,4 @@ Use `.env.example` as the template. `CODEPET_ADMIN_EMAILS` is a
 comma-separated allowlist for people who can open `/admin`.
 
 `CODEPET_DISCORD_INVITE_URL` is optional. If it is set, the home page shows a
-public **Join Discord** button, and active builders also see the link in `/hub`.
+public **Join Discord** button.

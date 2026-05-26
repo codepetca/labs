@@ -5,6 +5,7 @@ import {
   markNotNow,
   pauseBuilder,
   reactivateBuilder,
+  removeBuilderFromDiscord,
   restorePotentialUser,
 } from "@/app/admin/actions";
 import {
@@ -13,6 +14,7 @@ import {
   type LabsUser,
   requireLabsAdmin,
 } from "@/lib/labs-admin";
+import { getDiscordDisplayName } from "@/lib/labs-discord";
 import {
   getLabsOptionLabels,
   LABS_AI_TOOL_OPTIONS,
@@ -104,6 +106,11 @@ function AdminDashboard({
             <UserCard key={user.id} user={user}>
               <form action={pauseBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
+                <input
+                  type="hidden"
+                  name="discordUserId"
+                  value={user.discordUserId ?? ""}
+                />
                 <ActionButton label="Pause" />
               </form>
             </UserCard>
@@ -119,8 +126,14 @@ function AdminDashboard({
             <UserCard key={user.id} user={user}>
               <form action={reactivateBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
+                <input
+                  type="hidden"
+                  name="discordUserId"
+                  value={user.discordUserId ?? ""}
+                />
                 <ActionButton label="Reactivate" primary />
               </form>
+              <DiscordRemovalForm user={user} />
             </UserCard>
           ))
         ) : (
@@ -196,9 +209,28 @@ function UserSummary({ user }: { user: LabsUser }) {
           <span>No GitHub handle</span>
         )}
         {user.affiliation ? <span>{user.affiliation}</span> : null}
+        {getDiscordDisplayName(user) ? (
+          <span>Discord: {getDiscordDisplayName(user)}</span>
+        ) : (
+          <span>No Discord link</span>
+        )}
       </div>
       {user.labsProfileCompletedAt ? <ProfileDetails user={user} /> : null}
     </div>
+  );
+}
+
+function DiscordRemovalForm({ user }: { user: LabsUser }) {
+  return (
+    <form action={removeBuilderFromDiscord}>
+      <input type="hidden" name="userId" value={user.id} />
+      <input
+        type="hidden"
+        name="discordUserId"
+        value={user.discordUserId ?? ""}
+      />
+      <ActionButton label="Remove Discord" disabled={!user.discordUserId} />
+    </form>
   );
 }
 
@@ -266,19 +298,22 @@ function Chip({ label }: { label: string }) {
 }
 
 function ActionButton({
+  disabled = false,
   label,
   primary = false,
 }: {
+  disabled?: boolean;
   label: string;
   primary?: boolean;
 }) {
   return (
     <button
       type="submit"
+      disabled={disabled}
       className={
         primary
-          ? "min-h-10 rounded-md bg-foreground px-3 text-sm font-semibold text-background transition hover:opacity-90"
-          : "min-h-10 rounded-md border border-border bg-surface px-3 text-sm font-semibold text-foreground transition hover:bg-card"
+          ? "min-h-10 rounded-md bg-foreground px-3 text-sm font-semibold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          : "min-h-10 rounded-md border border-border bg-surface px-3 text-sm font-semibold text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-40"
       }
     >
       {label}

@@ -13,6 +13,8 @@ export const config = {
     "/admin/:path*",
     "/hub",
     "/hub/:path*",
+    "/discord",
+    "/discord/:path*",
     "/profile",
     "/profile/:path*",
   ],

@@ -29,6 +29,11 @@ export type LabsUser = {
   buildGoal: string | null;
   githubComfort: string | null;
   isLabsAdmin: boolean;
+  discordGlobalName: string | null;
+  discordLinkedAt: string | null;
+  discordRemovedAt: string | null;
+  discordUserId: string | null;
+  discordUsername: string | null;
   aiTools: string | null;
   availability: string | null;
   preferredRole: string | null;
@@ -293,6 +298,11 @@ function toLabsUser(user: LabsWorkOSUser) {
     buildGoal: user.metadata.buildGoal ?? null,
     githubComfort: user.metadata.githubComfort ?? null,
     isLabsAdmin: isAdminEmail(user.email),
+    discordGlobalName: user.metadata.discordGlobalName || null,
+    discordLinkedAt: user.metadata.discordLinkedAt || null,
+    discordRemovedAt: user.metadata.discordRemovedAt || null,
+    discordUserId: user.metadata.discordUserId || null,
+    discordUsername: user.metadata.discordUsername || null,
     aiTools: user.metadata.aiTools ?? null,
     availability: user.metadata.availability ?? null,
     preferredRole: user.metadata.preferredRole ?? null,

@@ -16,9 +16,9 @@ projects.
 
 The 8-week summer format is:
 
-- weekly 1-2 hour collaborative review check-ins
+- weekly 1-2 hour online video check-ins for collaborative review
 - about 10 hours per week of independent learning and building
-- end-of-summer wrap-up and celebration
+- final demo and wrap-up
 
 You can read more here: [CodePet Labs About link]
 

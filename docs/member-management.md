@@ -14,8 +14,8 @@ CodePet Labs uses WorkOS as the member source of truth.
 8. An admin reviews `/admin`.
 9. Approval marks the user as an approved builder in WorkOS metadata.
 10. Approved builders use `/hub` for Discord and project links.
-11. Builders link Discord from `/hub`; the Discord user ID is stored in WorkOS
-    metadata so admins can remove Discord access later.
+11. Builders click **Join Discord** from `/hub`; Discord OAuth stores the user
+    ID in WorkOS metadata so admins can remove Discord access later.
 12. Pausing a linked builder removes the Discord `Builder` role. The paused
     list has a separate remove action that kicks them from the Discord server.
     Successful removal clears the active Discord link so reactivated builders
@@ -55,8 +55,8 @@ user metadata so Labs can stay small until organization roles or SSO are needed.
 Use `.env.example` as the template. `CODEPET_ADMIN_EMAILS` is a
 comma-separated allowlist for people who can open `/admin`.
 
-`CODEPET_DISCORD_INVITE_URL` is optional. If it is set, approved builders see
-the Discord link in `/hub`.
+`CODEPET_DISCORD_INVITE_URL` is optional. It is only a fallback link when
+Discord OAuth is not fully configured.
 
 Discord linking needs `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`,
 `DISCORD_REDIRECT_URI`, `DISCORD_BOT_TOKEN`, and `DISCORD_GUILD_ID`. The Discord

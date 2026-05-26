@@ -12,6 +12,7 @@ import {
 import {
   getDiscordConfigStatus,
   getDiscordDisplayName,
+  getDiscordServerUrl,
 } from "@/lib/labs-discord";
 
 export const dynamic = "force-dynamic";
@@ -91,13 +92,15 @@ function DiscordSection({
   inviteUrl: string | null;
   linkingReady: boolean;
 }) {
+  const serverUrl = getDiscordServerUrl();
+
   return (
     <section className="mt-6 rounded-lg border border-border bg-card p-5 shadow-sm">
       <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
         <div>
           <h2 className="text-lg font-semibold text-foreground">Discord</h2>
           <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
-            Link Discord to join the server and keep access in sync.
+            Small builder server for quick questions and demos.
           </p>
           {discordDisplayName ? (
             <p className="mt-2 text-sm font-medium text-foreground">
@@ -106,14 +109,14 @@ function DiscordSection({
           ) : null}
         </div>
         {discordDisplayName ? (
-          inviteUrl ? (
+          serverUrl ? (
             <a
-              href={inviteUrl}
+              href={serverUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-4 py-3 text-sm font-semibold text-background transition hover:opacity-90"
             >
-              Join Discord
+              Open Discord
             </a>
           ) : (
             <StatusChip label="discord linked" />
@@ -123,7 +126,7 @@ function DiscordSection({
             href="/discord/link"
             className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-4 py-3 text-sm font-semibold text-background transition hover:opacity-90"
           >
-            Link Discord
+            Join Discord
           </Link>
         ) : inviteUrl ? (
           <a

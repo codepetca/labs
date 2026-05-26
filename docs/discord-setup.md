@@ -83,8 +83,8 @@ Keep most discussion in `#builders`: questions, intros, demos, lightweight AI
 help, and quick feedback. Use GitHub issues, PRs, and docs for durable decisions.
 The `CODEPET LABS` category is private to `Builder`, `Moderator`, `Labs Admin`,
 and `AI Helper`. The site assigns and removes the `Builder` role after a builder
-links Discord from `/hub`. The bot's `AI Helper` role includes Create Instant
-Invite so Discord OAuth can add approved builders to the server.
+clicks **Join Discord** from `/hub`. The bot's `AI Helper` role includes Create
+Instant Invite so Discord OAuth can add approved builders to the server.
 
 If you already ran an older bootstrap, delete unused channels manually. The
 script does not delete existing Discord content.
@@ -94,8 +94,8 @@ script does not delete existing Discord content.
 1. Review every channel and delete anything you do not want.
 2. Assign yourself `Labs Admin`.
 3. Assign trusted helpers `Moderator`.
-4. Generate a Discord invite and set `CODEPET_DISCORD_INVITE_URL`.
-   This enables the **Join Discord** link for approved builders in `/hub`.
+4. Optionally generate a Discord invite and set `CODEPET_DISCORD_INVITE_URL`.
+   This is only a fallback while Discord OAuth is not fully configured.
 5. Keep `#announcements` low-noise and read-only.
 6. In the Discord Developer Portal, add the OAuth redirect URI:
    `/discord/callback`.

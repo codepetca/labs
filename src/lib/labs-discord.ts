@@ -256,6 +256,12 @@ export function getDiscordDisplayName(user: {
   return user.discordGlobalName || user.discordUsername;
 }
 
+export function getDiscordServerUrl() {
+  const guildId = process.env.DISCORD_GUILD_ID?.trim();
+
+  return guildId ? `https://discord.com/channels/${guildId}` : null;
+}
+
 function getDiscordOAuthConfig() {
   const status = getDiscordConfigStatus();
 

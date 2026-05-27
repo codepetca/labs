@@ -24,6 +24,12 @@ export function SiteHeader() {
           >
             About
           </Link>
+          <Link
+            href="/contributors"
+            className="inline-flex min-h-10 items-center rounded-md px-2.5 font-semibold text-muted transition hover:bg-card-soft hover:text-foreground"
+          >
+            Contributors
+          </Link>
           <HeaderUserArea />
         </nav>
       </div>

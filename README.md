@@ -98,6 +98,27 @@ Edit `content/projects.json` and add an object:
 Then run `pnpm lint`, `pnpm test`, and `pnpm build` before opening a pull
 request. Run `pnpm test:e2e` when the change affects public pages or flows.
 
+## Add a Contributor Record
+
+Edit `content/contributors.json` after CodePet awards recognition for a
+successful Labs participation. Keep the summary brief, include only public-safe
+contributions, and add `personalUrl` only when the builder wants a page linked.
+
+Contributor records use this shape:
+
+```json
+{
+  "name": "Builder Name",
+  "role": "Labs Graduate",
+  "cohort": "Summer 2026",
+  "award": "Awarded",
+  "awardedOn": "August 2026",
+  "summary": "Built a reviewed prototype and demo.",
+  "contributions": ["Shipped prototype UI", "Wrote demo notes"],
+  "personalUrl": "https://example.com"
+}
+```
+
 ## Deploy to Vercel
 
 This app is ready for Vercel:

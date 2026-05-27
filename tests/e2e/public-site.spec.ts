@@ -15,6 +15,9 @@ test("home page shows the Labs entry point and projects", async ({
     "href",
     "/profile",
   );
+  await expect(
+    page.getByRole("link", { name: "Contributors" }),
+  ).toHaveAttribute("href", "/contributors");
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(
     page.getByRole("link", { name: "CodePetPal XP Prototype" }),
@@ -67,4 +70,22 @@ test("about page renders the Labs vision summary", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: "Join", exact: true }),
   ).toHaveAttribute("href", "/signup");
+});
+
+test("contributors page renders the awarded record placeholder", async ({
+  page,
+}) => {
+  await page.goto("/contributors");
+
+  await expect(
+    page.getByRole("heading", { name: "Contributors" }),
+  ).toBeVisible();
+  await expect(page.getByText("Summer 2026")).toBeVisible();
+  await expect(
+    page.getByText("Recognition is awarded by CodePet after reviewed participation."),
+  ).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Awarded" })).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", { name: "First records after the pilot" }),
+  ).toHaveCount(0);
 });

@@ -83,9 +83,6 @@ export default async function AboutPage() {
               priority
               className="aspect-square w-full rounded-md object-cover"
             />
-            <p className="font-mono text-xs font-semibold uppercase tracking-normal text-accent">
-              Summer shape
-            </p>
             <dl className="mt-4 grid gap-4 text-sm">
               <div>
                 <dt className="font-semibold text-foreground">Format</dt>

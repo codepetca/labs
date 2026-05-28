@@ -76,7 +76,7 @@ export default async function AboutPage() {
 
           <aside className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
             <Image
-              src="/images/lab-dog-transparent.png"
+              src="/images/lab-dog.png"
               alt="Friendly dog wearing goggles and a lab coat"
               width={960}
               height={960}

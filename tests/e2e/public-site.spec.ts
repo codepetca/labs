@@ -60,7 +60,7 @@ test("about page renders the Labs vision summary", async ({ page }) => {
     page.getByRole("heading", { name: "Codepet Labs" }),
   ).toBeVisible();
   await expect(
-    page.getByText("not affiliated with, sponsored by, or operated by any school"),
+    page.getByText("young builders who are eager to learn"),
   ).toBeVisible();
   await expect(page.getByText("Codepet.ca provides")).toBeVisible();
   await expect(page.getByText("By invitation")).toBeVisible();

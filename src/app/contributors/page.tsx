@@ -36,7 +36,7 @@ export default function ContributorsPage() {
         </h1>
       </section>
 
-      <section className="mt-10 border-t border-border pt-10 sm:mt-14 sm:pt-14">
+      <section className="mt-10 sm:mt-14">
         {records.length > 0 ? (
           <div className="grid gap-3 sm:grid-cols-2">
             {records.map((record) => (

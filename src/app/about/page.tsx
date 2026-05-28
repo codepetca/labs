@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -74,6 +75,14 @@ export default async function AboutPage() {
           <div className="space-y-5">{renderAboutMarkdown(aboutCopy)}</div>
 
           <aside className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
+            <Image
+              src="/images/lab-dog.png"
+              alt="Friendly dog wearing goggles and a lab coat"
+              width={960}
+              height={960}
+              priority
+              className="aspect-square w-full rounded-md object-cover"
+            />
             <p className="font-mono text-xs font-semibold uppercase tracking-normal text-accent">
               Summer shape
             </p>

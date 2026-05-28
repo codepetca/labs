@@ -1,6 +1,6 @@
 # Operating Model
 
-CodePet Labs runs as a small reviewed builder environment.
+Codepet Labs runs as a small reviewed builder environment.
 
 ## Boundaries
 
@@ -25,12 +25,12 @@ Student work may become inspiration, a prototype, a reference implementation, or
 
 ## Builder Expectations
 
-CodePet Labs work is CodePet-directed prototype and learning work. Builders
-should expect submitted project work to be property of CodePet unless a specific
-project says otherwise. CodePet may use, change, rewrite, pause, replace, or
-fold Labs work into other CodePet work later.
+Codepet Labs work is Codepet-directed prototype and learning work. Builders
+should expect submitted project work to be property of Codepet unless a specific
+project says otherwise. Codepet may use, change, rewrite, pause, replace, or
+fold Labs work into other Codepet work later.
 
 Attribution and portfolio value are part of the Labs model. Builders should not
-share private CodePet, Pika, student, business, or unreleased product details
-unless CodePet says they are okay to share publicly. See
+share private Codepet, Pika, student, business, or unreleased product details
+unless Codepet says they are okay to share publicly. See
 [`docs/builder-expectations.md`](./builder-expectations.md).

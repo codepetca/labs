@@ -1,6 +1,6 @@
-# CodePet Labs Development Workflow
+# Codepet Labs Development Workflow
 
-This document is the canonical source for CodePet Labs branch and worktree
+This document is the canonical source for Codepet Labs branch and worktree
 usage. It adapts the Pika workflow to this smaller repo without importing
 Pika-only database, migration, feature-inventory, or production-release rules.
 
@@ -19,7 +19,7 @@ Pika-only database, migration, feature-inventory, or production-release rules.
 
 ## Worktree Locations
 
-New named CodePet Labs worktrees should live under:
+New named Codepet Labs worktrees should live under:
 
 ```bash
 $HOME/.codex/worktrees/codepet-labs/<branch-slug>

@@ -339,7 +339,7 @@ function getStatusLabel(status: string | undefined) {
     return "Not this round";
   }
 
-  return "CodePet Labs";
+  return "Codepet Labs";
 }
 
 function ProfileIcon() {

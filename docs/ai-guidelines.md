@@ -1,6 +1,6 @@
 # AI Guidelines
 
-AI is expected in CodePet Labs work. It should raise the quality and speed of
+AI is expected in Codepet Labs work. It should raise the quality and speed of
 learning, not hide weak understanding.
 
 For AI coding-agent session routing, use [`docs/ai-instructions.md`](ai-instructions.md)

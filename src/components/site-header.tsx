@@ -8,7 +8,7 @@ export function SiteHeader() {
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link
           href="/"
-          aria-label="CodePet Labs home"
+          aria-label="Codepet Labs home"
           className="grid size-10 shrink-0 place-items-center rounded-md text-warm transition hover:bg-card-soft"
         >
           <SimplePawIcon />

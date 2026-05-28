@@ -15,7 +15,7 @@ export default function Home() {
       >
         <div className="max-w-3xl">
           <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
-            CodePet Labs
+            Codepet Labs
           </h1>
           <p className="mt-3 text-base leading-6 text-muted sm:text-lg">
             Tiny playful experiments.

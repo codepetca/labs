@@ -15,7 +15,7 @@ Labs projects should orbit Pika without requiring production access.
 
 ## Starter Ideas
 
-- CodePetPal XP and streak prototype.
+- CodepetPal XP and streak prototype.
 - Gradex dashboard with mock class data.
 - TapCheck attendance check-in flow.
 - Pika polling playground.

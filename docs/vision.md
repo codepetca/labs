@@ -1,6 +1,6 @@
 # Vision
 
-CodePet Labs is an independent AI-native student software lab connected to the Pika ecosystem.
+Codepet Labs is an independent AI-native student software lab connected to the Pika ecosystem.
 
 The lab exists to help motivated students learn modern software development by building useful, visible, Pika-adjacent tools. It is not a school club, a formal class, an employment program, or a path to unsupervised production access.
 

@@ -1,13 +1,12 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "About CodePet Labs",
+  title: "About Codepet Labs",
   description:
-    "A brief vision summary for CodePet Labs, an invite-only summer builder group.",
+    "A brief vision summary for Codepet Labs, an invite-only summer builder group.",
 };
 
 async function getAboutLabsCopy() {
@@ -75,15 +74,7 @@ export default async function AboutPage() {
           <div className="space-y-5">{renderAboutMarkdown(aboutCopy)}</div>
 
           <aside className="rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
-            <Image
-              src="/images/lab-board.svg"
-              alt="Prototype board with small project cards"
-              width={960}
-              height={640}
-              priority
-              className="aspect-[3/2] w-full rounded-md object-cover"
-            />
-            <p className="mt-5 font-mono text-xs font-semibold uppercase tracking-normal text-accent">
+            <p className="font-mono text-xs font-semibold uppercase tracking-normal text-accent">
               Summer shape
             </p>
             <dl className="mt-4 grid gap-4 text-sm">

@@ -1,6 +1,6 @@
 # Student Roles
 
-Roles in CodePet Labs describe the kind of contribution a student is practicing. They are not job titles.
+Roles in Codepet Labs describe the kind of contribution a student is practicing. They are not job titles.
 
 ## Builder
 

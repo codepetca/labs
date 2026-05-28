@@ -1,4 +1,4 @@
-# CodePet Labs Agent Notes
+# Codepet Labs Agent Notes
 
 For AI session startup and doc routing, read `.ai/START-HERE.md` and
 `docs/ai-instructions.md`.

@@ -1,6 +1,6 @@
 # Discord Setup
 
-CodePet Labs uses Discord as an optional builder hangout for lightweight feedback,
+Codepet Labs uses Discord as an optional builder hangout for lightweight feedback,
 feature jams, and AI-assisted discussion. GitHub and the public site should remain
 the durable places for decisions, project work, and school-friendly access.
 

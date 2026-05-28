@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
-  <title id="title">CodePet paw badge</title>
+  <title id="title">Codepet paw badge</title>
   <desc id="desc">A minimal orange gradient paw icon on a warm circular badge.</desc>
   <defs>
     <linearGradient id="badge-bg" x1="96" y1="60" x2="416" y2="452" gradientUnits="userSpaceOnUse">

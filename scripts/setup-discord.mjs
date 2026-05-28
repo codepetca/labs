@@ -70,14 +70,14 @@ const layout = [
     channels: [
       {
         name: "announcements",
-        topic: "Low-noise updates about CodePet Labs.",
+        topic: "Low-noise updates about Codepet Labs.",
         readOnly: true,
       },
       {
         name: "builders",
         topic: "One small channel for questions, intros, demos, AI help, and quick feedback.",
         starter:
-          "Welcome to CodePet Labs. Use this one channel for quick questions, intros, demos, and lightweight AI-assisted discussion. Keep durable work in GitHub. Do not post credentials, real student data, or production Pika details.",
+          "Welcome to Codepet Labs. Use this one channel for quick questions, intros, demos, and lightweight AI-assisted discussion. Keep durable work in GitHub. Do not post credentials, real student data, or production Pika details.",
       },
     ],
   },
@@ -419,7 +419,7 @@ async function discord(method, path, body) {
     headers: {
       Authorization: `Bot ${token}`,
       "Content-Type": "application/json",
-      "X-Audit-Log-Reason": encodeURIComponent("CodePet Labs Discord bootstrap"),
+      "X-Audit-Log-Reason": encodeURIComponent("Codepet Labs Discord bootstrap"),
     },
     body: body ? JSON.stringify(body) : undefined,
   });

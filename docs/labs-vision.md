@@ -1,7 +1,7 @@
-# CodePet Labs Vision
+# Codepet Labs Vision
 
-CodePet Labs is an independent, startup-style builder lab for invited students.
-It is supported and funded by CodePet.ca, and is not affiliated with,
+Codepet Labs is an independent, startup-style builder lab for invited students.
+It is supported and funded by Codepet.ca, and is not affiliated with,
 sponsored by, or operated by any school.
 
 The lab helps students learn modern software development by building small,
@@ -18,10 +18,10 @@ use those tools to build, test, explain, and improve real work.
 
 ## What
 
-CodePet Labs is a summer builder group. It is currently by invitation. It
+Codepet Labs is a summer builder group. It is currently by invitation. It
 operates more like a small builder incubator than a school program.
 
-Students work on CodePet and Pika-adjacent prototypes, docs, demos, QA, product
+Students work on Codepet and Pika-adjacent prototypes, docs, demos, QA, product
 ideas, and small tools.
 
 It is not a formal class, job, internship, or path to unsupervised production
@@ -50,12 +50,12 @@ communication.
 They also get portfolio-worthy work, clearer attribution, and a better sense of
 what real software work feels like.
 
-## What CodePet Gets
+## What Codepet Gets
 
-CodePet gets fresh student perspective from people who have used Pika in real
+Codepet gets fresh student perspective from people who have used Pika in real
 classrooms.
 
 Labs can produce useful prototypes, sharper product ideas, better feedback
-loops, and future features worth exploring. It also helps CodePet understand how
+loops, and future features worth exploring. It also helps Codepet understand how
 students learn and build with AI when they have structure, trust, and clear
 boundaries.

@@ -6,7 +6,7 @@ test("home page shows the Labs entry point and projects", async ({
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { name: "CodePet Labs" }),
+    page.getByRole("heading", { name: "Codepet Labs" }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Join", exact: true }),
@@ -20,7 +20,7 @@ test("home page shows the Labs entry point and projects", async ({
   ).toHaveAttribute("href", "/contributors");
   await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "CodePetPal XP Prototype" }),
+    page.getByRole("link", { name: "CodepetPal XP Prototype" }),
   ).toBeVisible();
 });
 
@@ -28,11 +28,11 @@ test("track demo opens and closes from the home page", async ({ page }) => {
   await page.goto("/");
 
   await page
-    .getByRole("button", { name: "Play CodePetPal XP Prototype demo" })
+    .getByRole("button", { name: "Play CodepetPal XP Prototype demo" })
     .click();
 
   const dialog = page.getByRole("dialog", {
-    name: "CodePetPal XP Prototype demo",
+    name: "CodepetPal XP Prototype demo",
   });
   await expect(dialog).toBeVisible();
 
@@ -57,12 +57,12 @@ test("about page renders the Labs vision summary", async ({ page }) => {
   await page.goto("/about");
 
   await expect(
-    page.getByRole("heading", { name: "CodePet Labs" }),
+    page.getByRole("heading", { name: "Codepet Labs" }),
   ).toBeVisible();
   await expect(
     page.getByText("not affiliated with, sponsored by, or operated by any school"),
   ).toBeVisible();
-  await expect(page.getByText("CodePet.ca provides")).toBeVisible();
+  await expect(page.getByText("Codepet.ca provides")).toBeVisible();
   await expect(page.getByText("By invitation")).toBeVisible();
   await expect(
     page.getByText("About 10 hours per week of independent learning and building"),
@@ -82,7 +82,7 @@ test("contributors page renders the awarded record placeholder", async ({
   ).toBeVisible();
   await expect(page.getByText("Summer 2026")).toBeVisible();
   await expect(
-    page.getByText("Recognition is awarded by CodePet after reviewed participation."),
+    page.getByText("Recognition is awarded by Codepet after reviewed participation."),
   ).toHaveCount(0);
   await expect(page.getByRole("heading", { name: "Awarded" })).toHaveCount(0);
   await expect(

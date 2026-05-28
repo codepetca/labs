@@ -1,14 +1,14 @@
 # Builder Expectations
 
-This is a plain-language expectations note for CodePet Labs builders, not a
+This is a plain-language expectations note for Codepet Labs builders, not a
 standalone legal agreement.
 
 ## How Labs Work Is Used
 
-CodePet Labs projects are CodePet-directed learning and prototype work. When you
-submit work to Labs, expect that the project work is property of CodePet unless
-a specific project says otherwise. CodePet may use it, change it, rewrite it,
-pause it, replace it, or fold the ideas into other CodePet work later.
+Codepet Labs projects are Codepet-directed learning and prototype work. When you
+submit work to Labs, expect that the project work is property of Codepet unless
+a specific project says otherwise. Codepet may use it, change it, rewrite it,
+pause it, replace it, or fold the ideas into other Codepet work later.
 
 Labs work may include code, docs, designs, videos, demos, notes, mock data,
 generated assets, and project writeups.
@@ -18,15 +18,15 @@ generated assets, and project writeups.
 Builders should get clear attribution where it makes sense. You can usually talk
 about Labs work in a portfolio, resume, interview, or personal writeup.
 
-Do not share private CodePet, Pika, student, business, or unreleased product
-details unless CodePet says they are okay to share publicly.
+Do not share private Codepet, Pika, student, business, or unreleased product
+details unless Codepet says they are okay to share publicly.
 
 If a project is rewritten or not shipped, the learning and contribution still
 count. Production permanence is not promised.
 
 ## What Builders Should Bring
 
-Only submit work that you are allowed to share with CodePet Labs.
+Only submit work that you are allowed to share with Codepet Labs.
 
 - Do not include private employer, school, client, or third-party code.
 - Do not include real student data.

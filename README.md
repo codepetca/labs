@@ -1,6 +1,6 @@
-# CodePet Labs
+# Codepet Labs
 
-CodePet Labs is an independent AI-native student software lab/studio connected to the Pika ecosystem.
+Codepet Labs is an independent AI-native student software lab/studio connected to the Pika ecosystem.
 
 It is not a school club, formal class, or employment program. It is a small reviewed builder environment where motivated students learn modern software development by building Pika-adjacent tools, prototypes, and experiments.
 
@@ -101,7 +101,7 @@ request. Run `pnpm test:e2e` when the change affects public pages or flows.
 
 ## Add a Contributor Record
 
-Edit `content/contributors.json` after CodePet awards recognition for a
+Edit `content/contributors.json` after Codepet awards recognition for a
 successful Labs participation. Keep the summary brief, include only public-safe
 contributions, and add `personalUrl` only when the builder wants a page linked.
 

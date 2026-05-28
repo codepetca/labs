@@ -1,9 +1,9 @@
-# AI Instructions for CodePet Labs
+# AI Instructions for Codepet Labs
 
 This file routes AI coding agents to the right project docs. Use it after
 `.ai/START-HERE.md`.
 
-CodePet Labs intentionally keeps lighter guidance than Pika core. It adopts
+Codepet Labs intentionally keeps lighter guidance than Pika core. It adopts
 Pika's one-worktree-per-branch workflow, but not Pika-only database, migration,
 feature-inventory, session-log, or production-access rules unless this project
 explicitly adds them.
@@ -39,7 +39,7 @@ are loaded.
 
 ## Testing And TDD
 
-CodePet Labs has a small test harness for focused behavior coverage and public
+Codepet Labs has a small test harness for focused behavior coverage and public
 route smoke tests. Do not claim strict TDD is required for this repo yet.
 
 - Preserve `pnpm lint`, `pnpm test`, and `pnpm build` as the normal checks for

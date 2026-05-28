@@ -1,6 +1,6 @@
 # Member Management
 
-CodePet Labs uses WorkOS as the member source of truth.
+Codepet Labs uses WorkOS as the member source of truth.
 
 ## Flow
 
@@ -32,7 +32,7 @@ No separate database is needed for the first version.
 - `pending`: signed up and waiting for review.
 - `github_required`: signed in without a linked GitHub OAuth identity.
 - `profile_required`: signed in with GitHub and still needs the builder profile.
-- `approved`: approved as a CodePet Labs builder.
+- `approved`: approved as a Codepet Labs builder.
 - `not_now`: hidden from the main pending queue.
 - `inactive`: builder access is paused.
 

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodePet Labs",
+  title: "Codepet Labs",
   description:
     "An AI-native software lab exploring educational tools around the Pika ecosystem.",
   icons: {

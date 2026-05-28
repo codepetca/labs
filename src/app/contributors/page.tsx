@@ -20,9 +20,9 @@ type ContributorContent = {
 const content = contributorContent as ContributorContent;
 
 export const metadata: Metadata = {
-  title: "Contributors | CodePet Labs",
+  title: "Contributors | Codepet Labs",
   description:
-    "Awarded CodePet Labs contributor and graduate records, maintained as static public content.",
+    "Awarded Codepet Labs contributor and graduate records, maintained as static public content.",
 };
 
 export default function ContributorsPage() {

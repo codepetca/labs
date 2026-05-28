@@ -1,13 +1,13 @@
-# CodePet Labs Parent Info Letter
+# Codepet Labs Parent Info Letter
 
-Subject: CodePet Labs invitation
+Subject: Codepet Labs invitation
 
 Hello parents,
 
-Your student has been invited to join CodePet Labs this summer. They were in my
+Your student has been invited to join Codepet Labs this summer. They were in my
 Grade 11 Computer Science course this past semester.
 
-CodePet Labs is an independent, startup-style student builder lab operated by
+Codepet Labs is an independent, startup-style student builder lab operated by
 Codepet.ca. It is not affiliated with, sponsored by, or operated by any school.
 
 Labs works more like a small startup than a class: students use AI tools,
@@ -20,10 +20,10 @@ The 8-week summer format is:
 - about 10 hours per week of independent learning and building
 - final demo and wrap-up
 
-You can read more here: [CodePet Labs About link]
+You can read more here: [Codepet Labs About link]
 
 Feel free to email me with any questions or concerns.
 
 Warm regards,
 
-CodePet Labs
+Codepet Labs

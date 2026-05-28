@@ -1,6 +1,6 @@
 # Onboarding
 
-Welcome to CodePet Labs. Start small, keep the scope visible, and build with mock data first.
+Welcome to Codepet Labs. Start small, keep the scope visible, and build with mock data first.
 
 ## First Steps
 
@@ -12,7 +12,7 @@ Welcome to CodePet Labs. Start small, keep the scope visible, and build with moc
 6. Explain what changed, how you tested it, and what remains unfinished.
 
 See [`docs/builder-expectations.md`](./builder-expectations.md) for the plain
-expectations around CodePet-directed work, attribution, portfolio use, mock
+expectations around Codepet-directed work, attribution, portfolio use, mock
 data, and private material.
 
 ## System Boundaries
@@ -28,7 +28,7 @@ data, and private material.
 Labs projects should eventually feel compatible with a shared WorkOS/Pika-shaped session contract, even when they start with mock data.
 
 ```ts
-type CodePetUser = {
+type CodepetUser = {
   id: string
   workosUserId: string
   email: string
@@ -36,19 +36,19 @@ type CodePetUser = {
   avatarUrl?: string
 }
 
-type CodePetOrganization = {
+type CodepetOrganization = {
   id: string
   workosOrgId: string
   name: string
   type: "school" | "classroom" | "personal"
 }
 
-type CodePetRole = "student" | "teacher" | "admin"
+type CodepetRole = "student" | "teacher" | "admin"
 
-type CodePetSession = {
-  user: CodePetUser
-  organization: CodePetOrganization
-  role: CodePetRole
+type CodepetSession = {
+  user: CodepetUser
+  organization: CodepetOrganization
+  role: CodepetRole
 }
 ```
 

@@ -56,7 +56,7 @@ function AdminDashboard({
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
       <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
         <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
-          CodePet members
+          Codepet members
         </h1>
         <div className="mt-5 grid gap-3 sm:grid-cols-4">
           <Metric
@@ -233,7 +233,7 @@ function PausedUserRemovalForm({ user }: { user: LabsUser }) {
       <ConfirmSubmitButton
         className={getActionButtonClassName({ tone: "danger" })}
         message={[
-          `Remove ${user.name} from CodePet Labs?`,
+          `Remove ${user.name} from Codepet Labs?`,
           "This deletes the WorkOS user and cannot be undone.",
         ].join(" ")}
       >
@@ -369,7 +369,7 @@ function SetupNeeded({ missing }: { missing: string[] }) {
 function AccessProblem({ error }: { error: unknown }) {
   const message =
     error instanceof Error && error.message.includes("Not authorized")
-      ? "This page is only for CodePet Labs admins."
+      ? "This page is only for Codepet Labs admins."
       : "Check the WorkOS configuration and try again.";
 
   return (

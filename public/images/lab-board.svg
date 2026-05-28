@@ -1,5 +1,5 @@
 <svg width="960" height="640" viewBox="0 0 960 640" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">CodePet Labs prototype board</title>
+  <title id="title">Codepet Labs prototype board</title>
   <desc id="desc">A minimal product board with prototype cards, mock data, and demo status.</desc>
   <rect width="960" height="640" rx="32" fill="#17202A"/>
   <rect x="48" y="48" width="864" height="544" rx="24" fill="#F7F9F6"/>

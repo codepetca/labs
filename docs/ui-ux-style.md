@@ -1,6 +1,6 @@
 # UI/UX Style Guide
 
-CodePet Labs should feel like a small builder studio, not a school club, SaaS
+Codepet Labs should feel like a small builder studio, not a school club, SaaS
 landing page, or corporate program.
 
 ## Direction

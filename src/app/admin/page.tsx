@@ -8,14 +8,21 @@ import {
   removeBuilderFromDiscord,
   removePausedUser,
   restorePotentialUser,
+  saveObservedRepos,
 } from "@/app/admin/actions";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
+import { RepoObserverPicker } from "@/components/repo-observer-picker";
 import {
   getLabsConfigStatus,
   getLabsDirectory,
   type LabsUser,
   requireLabsAdmin,
 } from "@/lib/labs-admin";
+import {
+  getRepoObservabilityDashboard,
+  type RepoActivitySummary,
+  type RepoObservabilityDashboard,
+} from "@/lib/github-observability";
 import { getDiscordDisplayName } from "@/lib/labs-discord";
 import {
   getLabsOptionLabels,
@@ -35,22 +42,28 @@ export default async function AdminPage() {
   }
 
   let directory: Awaited<ReturnType<typeof getLabsDirectory>>;
+  let repoDashboard: RepoObservabilityDashboard;
 
   try {
     await requireLabsAdmin();
-    directory = await getLabsDirectory();
+    [directory, repoDashboard] = await Promise.all([
+      getLabsDirectory(),
+      getRepoObservabilityDashboard(),
+    ]);
   } catch (error) {
     unstable_rethrow(error);
     return <AccessProblem error={error} />;
   }
 
-  return <AdminDashboard directory={directory} />;
+  return <AdminDashboard directory={directory} repoDashboard={repoDashboard} />;
 }
 
 function AdminDashboard({
   directory,
+  repoDashboard,
 }: {
   directory: Awaited<ReturnType<typeof getLabsDirectory>>;
+  repoDashboard: RepoObservabilityDashboard;
 }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
@@ -70,6 +83,8 @@ function AdminDashboard({
           </div>
         </div>
       </section>
+
+      <RepoActivitySection dashboard={repoDashboard} />
 
       <AdminSection title="Applications" count={directory.pendingUsers.length}>
         {directory.pendingUsers.length ? (
@@ -158,6 +173,118 @@ function AdminDashboard({
         </AdminSection>
       ) : null}
     </main>
+  );
+}
+
+function RepoActivitySection({
+  dashboard,
+}: {
+  dashboard: RepoObservabilityDashboard;
+}) {
+  return (
+    <AdminSection title="Projects" count={dashboard.selectedRepos.length}>
+      {dashboard.githubError ? (
+        <EmptyState label="GitHub repos are unavailable." />
+      ) : null}
+
+      {dashboard.storageError ? (
+        <EmptyState label="Repo selection could not load from storage." />
+      ) : null}
+
+      {!dashboard.storageReady ? (
+        <EmptyState label="Add BLOB_READ_WRITE_TOKEN to persist selected repos." />
+      ) : null}
+
+      {dashboard.selectedRepos.length ? (
+        <div className="grid gap-2 lg:grid-cols-3">
+          {dashboard.selectedRepos.map((repo) => (
+            <RepoActivityCard key={repo.repo.fullName} repo={repo} />
+          ))}
+        </div>
+      ) : (
+        <EmptyState label="No observed repos selected." />
+      )}
+
+      {dashboard.repos.length ? (
+        <RepoObserverPicker
+          action={saveObservedRepos}
+          repos={dashboard.repos}
+          selectedRepoNames={dashboard.selectedRepoNames}
+          storageReady={dashboard.storageReady}
+        />
+      ) : null}
+    </AdminSection>
+  );
+}
+
+function RepoActivityCard({ repo }: { repo: RepoActivitySummary }) {
+  return (
+    <article className="rounded-md border border-border bg-card p-3">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <h3 className="truncate text-sm font-semibold text-foreground">
+            <a
+              href={repo.repo.htmlUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hover:text-accent"
+            >
+              {repo.repo.name}
+            </a>
+          </h3>
+          <p className="mt-0.5 text-xs text-muted">
+            {formatRelativeDate(repo.lastActiveAt ?? repo.repo.pushedAt)}
+          </p>
+        </div>
+        <span className="rounded-md border border-border bg-surface px-2 py-1 text-xs font-semibold text-muted">
+          {repo.totalActivity}
+        </span>
+      </div>
+
+      <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+        <RepoStat label="Commits" value={repo.totalCommits} />
+        <RepoStat label="PRs" value={repo.openPullRequests} />
+        <RepoStat label="Issues" value={repo.openIssues} />
+      </div>
+
+      <ActivityBars days={repo.days} />
+    </article>
+  );
+}
+
+function RepoStat({ label, value }: { label: string; value: number }) {
+  return (
+    <div>
+      <p className="font-semibold text-foreground">{value}</p>
+      <p className="text-muted">{label}</p>
+    </div>
+  );
+}
+
+function ActivityBars({
+  days,
+}: {
+  days: RepoActivitySummary["days"];
+}) {
+  const max = Math.max(...days.map((day) => day.count), 1);
+
+  return (
+    <div
+      aria-label="Repo activity in the last 14 days"
+      className="mt-3 flex h-8 items-end gap-1"
+    >
+      {days.map((day) => (
+        <span
+          key={day.date}
+          title={`${day.date}: ${day.count}`}
+          className="min-h-1 flex-1 rounded-sm bg-accent"
+          style={{
+            height: `${Math.max(10, Math.round((day.count / max) * 100))}%`,
+            opacity: day.count ? 1 : 0.25,
+          }}
+        />
+      ))}
+    </div>
   );
 }
 
@@ -361,6 +488,30 @@ function EmptyState({ label }: { label: string }) {
       {label}
     </p>
   );
+}
+
+function formatRelativeDate(value: string | null) {
+  if (!value) {
+    return "No activity";
+  }
+
+  const timestamp = Date.parse(value);
+
+  if (Number.isNaN(timestamp)) {
+    return "No activity";
+  }
+
+  const days = Math.floor((Date.now() - timestamp) / 86_400_000);
+
+  if (days <= 0) {
+    return "Active today";
+  }
+
+  if (days === 1) {
+    return "Active yesterday";
+  }
+
+  return `Active ${days}d ago`;
 }
 
 function SetupNeeded({ missing }: { missing: string[] }) {

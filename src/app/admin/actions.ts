@@ -8,6 +8,7 @@ import {
   requireLabsAdmin,
   updateLabsUserMetadata,
 } from "@/lib/labs-admin";
+import { saveObservedRepoSelection } from "@/lib/github-observability";
 import {
   type DiscordMemberActionResult,
   removeDiscordMember,
@@ -135,6 +136,18 @@ export async function removePausedUser(formData: FormData) {
   }
 
   await deletePausedLabsUser(userId);
+
+  revalidatePath("/admin");
+}
+
+export async function saveObservedRepos(formData: FormData) {
+  await requireLabsAdmin();
+
+  const repoNames = formData
+    .getAll("repo")
+    .filter((repoName): repoName is string => typeof repoName === "string");
+
+  await saveObservedRepoSelection(repoNames);
 
   revalidatePath("/admin");
 }

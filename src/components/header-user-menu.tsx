@@ -298,7 +298,7 @@ function GuestUserMenu() {
             profileLinkRef.current = element;
           }}
           href="/login"
-          label="Profile"
+          label="Log in"
           onClick={closeMenu}
           tabIndex={isOpen ? 0 : -1}
         >

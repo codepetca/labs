@@ -13,7 +13,7 @@ test("home page shows the Labs entry point and projects", async ({
   ).toHaveAttribute("href", "/signup");
   await page.getByRole("button", { name: "Profile menu" }).click();
   await expect(page).toHaveURL("/");
-  await expect(page.getByRole("menuitem", { name: "Profile" })).toHaveAttribute(
+  await expect(page.getByRole("menuitem", { name: "Log in" })).toHaveAttribute(
     "href",
     "/login",
   );

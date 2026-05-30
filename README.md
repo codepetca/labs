@@ -73,6 +73,9 @@ WORKOS_COOKIE_PASSWORD=
 NEXT_PUBLIC_WORKOS_REDIRECT_URI=http://localhost:3000/callback
 CODEPET_ADMIN_EMAILS=you@example.com
 CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
+CODEPET_GITHUB_ORG=codepetca
+CODEPET_GITHUB_TOKEN=
+BLOB_READ_WRITE_TOKEN=
 ```
 
 In WorkOS, enable GitHub Social Login and disable email/password sign-up plus
@@ -131,6 +134,11 @@ This app is ready for Vercel:
 
 Add the WorkOS environment variables above before enabling the home/member
 profile flow in production.
+
+Add `BLOB_READ_WRITE_TOKEN` before using persisted admin repo selection. The
+Blob only stores selected repo names; GitHub activity still comes from GitHub.
+Add `CODEPET_GITHUB_TOKEN` when the observed GitHub org includes private repos
+or needs higher API limits.
 
 ## Docs
 

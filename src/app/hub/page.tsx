@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { SectionHeading } from "@/components/section-heading";
+import { TrackCard } from "@/components/track-card";
+import type { ProjectCardProject } from "@/components/project-card";
 import {
   ensureLabsGithubUsername,
   getCurrentLabsUser,
@@ -14,6 +17,9 @@ import {
   getDiscordDisplayName,
   getDiscordServerUrl,
 } from "@/lib/labs-discord";
+import projects from "../../../content/projects.json";
+
+const projectList = projects as ProjectCardProject[];
 
 export const dynamic = "force-dynamic";
 
@@ -43,47 +49,61 @@ export default async function HubPage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <main>
+      <section className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-14">
         <div>
-          <p className="font-mono text-xs font-semibold uppercase tracking-normal text-accent">
-            Approved workspace
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
-            Builder hub
+          <h1 className="text-4xl font-semibold tracking-normal text-foreground sm:text-6xl">
+            Codepet Labs
           </h1>
-          <p className="mt-3 max-w-xl text-sm leading-6 text-muted">
-            Start here after approval.
+          <p className="mt-3 text-base leading-6 text-muted sm:text-lg">
+            Tiny playful experiments.
           </p>
         </div>
-        <StatusChip label={isApprovedBuilder ? "builder" : "admin"} />
-      </div>
 
-      {isApprovedBuilder || isAdmin ? (
-        <DiscordSection
-          discordDisplayName={
-            getDiscordDisplayName({
-              discordGlobalName: user.metadata.discordGlobalName ?? null,
-              discordUsername: user.metadata.discordUsername ?? null,
-            }) ?? null
-          }
-          inviteUrl={config.discordInviteUrl}
-          linkingReady={discordConfigStatus.ready}
-        />
-      ) : null}
+        <section className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <ContextLink
+            href="/profile"
+            label="Profile"
+            value={user.metadata.githubUsername ? `@${user.metadata.githubUsername}` : "GitHub"}
+          />
+          <DiscordLink
+            discordDisplayName={
+              getDiscordDisplayName({
+                discordGlobalName: user.metadata.discordGlobalName ?? null,
+                discordUsername: user.metadata.discordUsername ?? null,
+              }) ?? null
+            }
+            inviteUrl={config.discordInviteUrl}
+            linkingReady={discordConfigStatus.ready}
+          />
+          {isAdmin ? (
+            <ContextLink href="/admin" label="Admin" value="Review" />
+          ) : null}
+          <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+            <span className="block text-xs font-semibold text-muted">Status</span>
+            <span className="mt-1 block text-sm font-semibold text-foreground">
+              {isApprovedBuilder ? "Builder" : "Admin"}
+            </span>
+          </div>
+        </section>
+      </section>
 
-      <section className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <HubLink href="/projects" label="Projects" description="Current demos" />
-        <HubLink href="/profile" label="Profile" description="Status and GitHub" />
-        {isAdmin ? (
-          <HubLink href="/admin" label="Admin" description="Review builders" />
-        ) : null}
+      <section id="tracks" className="border-y border-border bg-surface/75">
+        <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
+          <SectionHeading title="Projects" />
+
+          <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+            {projectList.map((project) => (
+              <TrackCard key={project.name} project={project} />
+            ))}
+          </div>
+        </div>
       </section>
     </main>
   );
 }
 
-function DiscordSection({
+function DiscordLink({
   discordDisplayName,
   inviteUrl,
   linkingReady,
@@ -93,55 +113,23 @@ function DiscordSection({
   linkingReady: boolean;
 }) {
   const serverUrl = getDiscordServerUrl();
+  const href = discordDisplayName
+    ? serverUrl
+    : linkingReady
+      ? "/discord/link"
+      : inviteUrl;
+
+  if (!href) {
+    return <ContextStatus label="Discord" value="Setup needed" />;
+  }
 
   return (
-    <section className="mt-6 rounded-lg border border-border bg-card p-5 shadow-sm">
-      <div className="grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">Discord</h2>
-          <p className="mt-2 max-w-xl text-sm leading-6 text-muted">
-            Small builder server for quick questions and demos.
-          </p>
-          {discordDisplayName ? (
-            <p className="mt-2 text-sm font-medium text-foreground">
-              Linked as {discordDisplayName}
-            </p>
-          ) : null}
-        </div>
-        {discordDisplayName ? (
-          serverUrl ? (
-            <a
-              href={serverUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-4 py-3 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              Open Discord
-            </a>
-          ) : (
-            <StatusChip label="discord linked" />
-          )
-        ) : linkingReady ? (
-          <Link
-            href="/discord/link"
-            className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-4 py-3 text-sm font-semibold text-background transition hover:opacity-90"
-          >
-            Join Discord
-          </Link>
-        ) : inviteUrl ? (
-          <a
-            href={inviteUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 items-center justify-center rounded-md bg-foreground px-4 py-3 text-sm font-semibold text-background transition hover:opacity-90"
-          >
-            Join Discord
-          </a>
-        ) : (
-          <StatusChip label="discord setup needed" />
-        )}
-      </div>
-    </section>
+    <ContextLink
+      href={href}
+      label="Discord"
+      value={discordDisplayName ?? "Join"}
+      external={href.startsWith("http")}
+    />
   );
 }
 
@@ -173,24 +161,51 @@ function StatusChip({ label }: { label: string }) {
   );
 }
 
-function HubLink({
-  description,
+function ContextStatus({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-lg border border-border bg-card p-4 shadow-sm">
+      <span className="block text-xs font-semibold text-muted">{label}</span>
+      <span className="mt-1 block text-sm font-semibold text-foreground">
+        {value}
+      </span>
+    </div>
+  );
+}
+
+function ContextLink({
+  external = false,
   href,
   label,
+  value,
 }: {
-  description: string;
+  external?: boolean;
   href: string;
   label: string;
+  value: string;
 }) {
-  return (
-    <Link
-      href={href}
-      className="rounded-lg border border-border bg-card p-4 shadow-sm transition hover:bg-card-soft"
-    >
-      <span className="block text-sm font-semibold text-foreground">
-        {label}
+  const className =
+    "rounded-lg border border-border bg-card p-4 shadow-sm transition hover:bg-card-soft";
+
+  const content = (
+    <>
+      <span className="block text-xs font-semibold text-muted">{label}</span>
+      <span className="mt-1 block text-sm font-semibold text-foreground">
+        {value}
       </span>
-      <span className="mt-1 block text-sm text-muted">{description}</span>
+    </>
+  );
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noreferrer" className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={href} className={className}>
+      {content}
     </Link>
   );
 }

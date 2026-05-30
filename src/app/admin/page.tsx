@@ -54,22 +54,24 @@ function AdminDashboard({
 }) {
   return (
     <main className="mx-auto w-full max-w-5xl px-4 py-10 sm:px-6 sm:py-14">
-      <section className="rounded-lg border border-border bg-card p-5 shadow-sm">
-        <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
-          Codepet members
-        </h1>
-        <div className="mt-5 grid gap-3 sm:grid-cols-4">
-          <Metric
-            label="Started"
-            value={directory.profileRequiredUsers.length}
-          />
-          <Metric label="Pending" value={directory.pendingUsers.length} />
-          <Metric label="Builders" value={directory.activeBuilders.length} />
-          <Metric label="Paused" value={directory.inactiveBuilders.length} />
+      <section>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h1 className="text-3xl font-semibold tracking-normal text-foreground sm:text-4xl">
+            Codepet members
+          </h1>
+          <div className="grid grid-cols-4 gap-2">
+            <Metric
+              label="Started"
+              value={directory.profileRequiredUsers.length}
+            />
+            <Metric label="Pending" value={directory.pendingUsers.length} />
+            <Metric label="Members" value={directory.activeBuilders.length} />
+            <Metric label="Paused" value={directory.inactiveBuilders.length} />
+          </div>
         </div>
       </section>
 
-      <AdminSection title="Applications">
+      <AdminSection title="Applications" count={directory.pendingUsers.length}>
         {directory.pendingUsers.length ? (
           directory.pendingUsers.map((user) => (
             <UserCard key={user.id} user={user}>
@@ -89,7 +91,7 @@ function AdminDashboard({
       </AdminSection>
 
       {directory.profileRequiredUsers.length ? (
-        <AdminSection title="Started">
+        <AdminSection title="Started" count={directory.profileRequiredUsers.length}>
           {directory.profileRequiredUsers.map((user) => (
             <UserCard key={user.id} user={user}>
               <form action={markNotNow}>
@@ -101,10 +103,10 @@ function AdminDashboard({
         </AdminSection>
       ) : null}
 
-      <AdminSection title="Builders">
+      <AdminSection title="Members" count={directory.activeBuilders.length}>
         {directory.activeBuilders.length ? (
           directory.activeBuilders.map((user) => (
-            <UserCard key={user.id} user={user}>
+            <UserCard key={user.id} user={user} showProfile={false}>
               <form action={pauseBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
                 <input
@@ -121,10 +123,10 @@ function AdminDashboard({
         )}
       </AdminSection>
 
-      <AdminSection title="Paused">
+      <AdminSection title="Paused" count={directory.inactiveBuilders.length}>
         {directory.inactiveBuilders.length ? (
           directory.inactiveBuilders.map((user) => (
-            <UserCard key={user.id} user={user}>
+            <UserCard key={user.id} user={user} showProfile={false}>
               <form action={reactivateBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
                 <input
@@ -144,7 +146,7 @@ function AdminDashboard({
       </AdminSection>
 
       {directory.archivedUsers.length ? (
-        <AdminSection title="Not now">
+        <AdminSection title="Not now" count={directory.archivedUsers.length}>
           {directory.archivedUsers.map((user) => (
             <UserCard key={user.id} user={user}>
               <form action={restorePotentialUser}>
@@ -160,16 +162,21 @@ function AdminDashboard({
 }
 
 function AdminSection({
+  count,
   title,
   children,
 }: {
+  count: number;
   title: string;
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-4 rounded-lg border border-border bg-card p-4 shadow-sm sm:p-5">
-      <h2 className="text-base font-semibold text-foreground">{title}</h2>
-      <div className="mt-4 grid gap-3">{children}</div>
+    <section className="mt-6 border-t border-border pt-4">
+      <div className="flex items-baseline justify-between gap-3">
+        <h2 className="text-base font-semibold text-foreground">{title}</h2>
+        <span className="text-xs font-semibold text-muted">{count}</span>
+      </div>
+      <div className="mt-3 grid gap-2">{children}</div>
     </section>
   );
 }
@@ -177,19 +184,27 @@ function AdminSection({
 function UserCard({
   user,
   children,
+  showProfile = true,
 }: {
   user: LabsUser;
   children: React.ReactNode;
+  showProfile?: boolean;
 }) {
   return (
-    <article className="grid gap-2 rounded-md border border-border bg-card-soft p-3 sm:grid-cols-[1fr_auto] sm:items-center">
-      <UserSummary user={user} />
+    <article className="grid gap-2 rounded-md border border-border bg-card p-2.5 sm:grid-cols-[1fr_auto] sm:items-center">
+      <UserSummary user={user} showProfile={showProfile} />
       <div className="flex flex-wrap gap-2 sm:justify-end">{children}</div>
     </article>
   );
 }
 
-function UserSummary({ user }: { user: LabsUser }) {
+function UserSummary({
+  showProfile,
+  user,
+}: {
+  showProfile: boolean;
+  user: LabsUser;
+}) {
   const contactEmail = user.contactEmail ?? user.email;
 
   return (
@@ -221,7 +236,9 @@ function UserSummary({ user }: { user: LabsUser }) {
           <span>No Discord link</span>
         )}
       </div>
-      {user.labsProfileCompletedAt ? <ProfileDetails user={user} /> : null}
+      {showProfile && user.labsProfileCompletedAt ? (
+        <ProfileDetails user={user} />
+      ) : null}
     </div>
   );
 }
@@ -303,9 +320,9 @@ function ProfileDetails({ user }: { user: LabsUser }) {
 
 function Metric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-md border border-border bg-card-soft p-3">
-      <p className="text-sm text-muted">{label}</p>
-      <p className="mt-1 text-2xl font-semibold text-foreground">{value}</p>
+    <div className="min-w-16 rounded-md border border-border bg-card px-3 py-2 text-right">
+      <p className="text-[11px] font-semibold text-muted">{label}</p>
+      <p className="mt-0.5 text-lg font-semibold text-foreground">{value}</p>
     </div>
   );
 }
@@ -340,7 +357,7 @@ function ActionButton({
 
 function EmptyState({ label }: { label: string }) {
   return (
-    <p className="rounded-md border border-border bg-card-soft p-3 text-sm text-muted">
+    <p className="rounded-md border border-border bg-card p-2.5 text-sm text-muted">
       {label}
     </p>
   );
@@ -402,12 +419,12 @@ function getActionButtonClassName({
   tone?: "default" | "danger";
 }) {
   if (primary) {
-    return "min-h-10 rounded-md bg-foreground px-3 text-sm font-semibold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40";
+    return "min-h-9 rounded-md bg-foreground px-3 text-sm font-semibold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40";
   }
 
   if (tone === "danger") {
-    return "min-h-10 rounded-md border border-warm bg-warm-soft px-3 text-sm font-semibold text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-40";
+    return "min-h-9 rounded-md border border-warm bg-warm-soft px-3 text-sm font-semibold text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-40";
   }
 
-  return "min-h-10 rounded-md border border-border bg-surface px-3 text-sm font-semibold text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-40";
+  return "min-h-9 rounded-md border border-border bg-surface px-3 text-sm font-semibold text-foreground transition hover:bg-card disabled:cursor-not-allowed disabled:opacity-40";
 }

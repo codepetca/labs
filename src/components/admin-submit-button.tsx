@@ -1,23 +1,20 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 
-type ConfirmSubmitButtonProps = {
-  children: ReactNode;
+type AdminSubmitButtonProps = {
   className: string;
   disabled?: boolean;
-  message: string;
+  label: string;
   pendingLabel?: string;
 };
 
-export function ConfirmSubmitButton({
-  children,
+export function AdminSubmitButton({
   className,
   disabled = false,
-  message,
-  pendingLabel = "Removing",
-}: ConfirmSubmitButtonProps) {
+  label,
+  pendingLabel = "Working",
+}: AdminSubmitButtonProps) {
   const { pending } = useFormStatus();
 
   return (
@@ -26,11 +23,6 @@ export function ConfirmSubmitButton({
       disabled={disabled || pending}
       aria-busy={pending}
       className={className}
-      onClick={(event) => {
-        if (!window.confirm(message)) {
-          event.preventDefault();
-        }
-      }}
     >
       <span className="inline-flex items-center gap-2">
         {pending ? (
@@ -39,7 +31,7 @@ export function ConfirmSubmitButton({
             className="size-3 animate-spin rounded-full border-2 border-current border-t-transparent"
           />
         ) : null}
-        {pending ? pendingLabel : children}
+        {pending ? pendingLabel : label}
       </span>
     </button>
   );

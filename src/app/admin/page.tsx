@@ -10,6 +10,7 @@ import {
   restorePotentialUser,
   saveObservedRepos,
 } from "@/app/admin/actions";
+import { AdminSubmitButton } from "@/components/admin-submit-button";
 import { ConfirmSubmitButton } from "@/components/confirm-submit-button";
 import { RepoObserverPicker } from "@/components/repo-observer-picker";
 import {
@@ -129,7 +130,7 @@ function AdminDashboard({
                   name="discordUserId"
                   value={user.discordUserId ?? ""}
                 />
-                <ActionButton label="Pause" />
+                <ActionButton label="Pause" pendingLabel="Pausing" />
               </form>
             </UserCard>
           ))
@@ -149,7 +150,11 @@ function AdminDashboard({
                   name="discordUserId"
                   value={user.discordUserId ?? ""}
                 />
-                <ActionButton label="Reactivate" primary />
+                <ActionButton
+                  label="Reactivate"
+                  pendingLabel="Reactivating"
+                  primary
+                />
               </form>
               <DiscordRemovalForm user={user} />
               <PausedUserRemovalForm user={user} />
@@ -472,20 +477,21 @@ function Chip({ label }: { label: string }) {
 function ActionButton({
   disabled = false,
   label,
+  pendingLabel,
   primary = false,
 }: {
   disabled?: boolean;
   label: string;
+  pendingLabel?: string;
   primary?: boolean;
 }) {
   return (
-    <button
-      type="submit"
+    <AdminSubmitButton
       disabled={disabled}
+      label={label}
+      pendingLabel={pendingLabel ?? `${label}...`}
       className={getActionButtonClassName({ primary })}
-    >
-      {label}
-    </button>
+    />
   );
 }
 

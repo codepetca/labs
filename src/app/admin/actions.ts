@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 
 import {
   deletePausedLabsUser,
+  getLabsUserApprovalEmailTarget,
   getPausedLabsUserRemovalTarget,
   requireLabsAdmin,
   updateLabsUserMetadata,
@@ -14,17 +15,25 @@ import {
   removeDiscordMember,
   setDiscordBuilderRole,
 } from "@/lib/labs-discord";
+import { sendLabsApprovalEmail } from "@/lib/labs-email";
 
 export async function approveUser(formData: FormData) {
   await requireLabsAdmin();
 
   const userId = getFormValue(formData, "userId");
-
-  await updateLabsUserMetadata(userId, {
+  const emailTarget = await getLabsUserApprovalEmailTarget(userId);
+  const approvedAt = new Date().toISOString();
+  const approvalMetadata = {
     labsStatus: "approved",
     labsRole: "builder",
-    labsApprovedAt: new Date().toISOString(),
-  });
+    labsApprovedAt: approvedAt,
+  };
+
+  await updateLabsUserMetadata(userId, approvalMetadata);
+
+  if (shouldSendApprovalEmail(emailTarget)) {
+    await sendApprovalEmail(userId, emailTarget, approvalMetadata);
+  }
 
   revalidatePath("/admin");
 }
@@ -194,4 +203,49 @@ function canDeleteAfterDiscordRemoval(
     result === "not_in_server" ||
     result === "missing_identity"
   );
+}
+
+function shouldSendApprovalEmail(emailTarget: {
+  labsStatus: string | null;
+  approvalEmailSentAt: string | null;
+}) {
+  return (
+    emailTarget.labsStatus !== "approved" && !emailTarget.approvalEmailSentAt
+  );
+}
+
+async function sendApprovalEmail(
+  userId: string,
+  emailTarget: {
+    email: string;
+    name: string | null;
+  },
+  approvalMetadata: Record<string, string>,
+) {
+  try {
+    const result = await sendLabsApprovalEmail({
+      name: emailTarget.name,
+      to: emailTarget.email,
+    });
+
+    await updateLabsUserMetadata(userId, {
+      ...approvalMetadata,
+      approvalEmailLastResult:
+        result.status === "sent" ? "sent" : result.reason,
+      ...(result.status === "sent"
+        ? {
+            approvalEmailId: result.id ?? "",
+            approvalEmailSentAt: new Date().toISOString(),
+          }
+        : {}),
+    });
+  } catch (error) {
+    console.error("[Approval email error]", error);
+
+    await updateLabsUserMetadata(userId, {
+      ...approvalMetadata,
+      approvalEmailLastResult: "error",
+      approvalEmailLastErrorAt: new Date().toISOString(),
+    });
+  }
 }

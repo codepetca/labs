@@ -222,7 +222,7 @@ function getProfileTitle(status: string) {
 
 function getProfileMessage(status: string) {
   if (status === "approved") {
-    return "Your profile is approved. Builder links live in the hub.";
+    return "Your profile is approved. Open the hub to get your Discord access link.";
   }
 
   if (status === "inactive") {
@@ -233,7 +233,7 @@ function getProfileMessage(status: string) {
     return "We are not adding this profile to the active builder group right now.";
   }
 
-  return "We will review your profile before sharing builder links.";
+  return "We will review your profile. If approved, return here and open the hub for Discord access.";
 }
 
 function getEmailInitial(email: string) {

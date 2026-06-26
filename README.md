@@ -76,6 +76,10 @@ CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
 CODEPET_GITHUB_ORG=codepetca
 CODEPET_GITHUB_TOKEN=
 BLOB_READ_WRITE_TOKEN=
+BREVO_API_KEY=
+CODEPET_EMAIL_FROM_ADDRESS=noreply@notify.codepet.ca
+CODEPET_EMAIL_FROM_NAME=Codepet Labs
+CODEPET_LABS_URL=https://labs.codepet.ca
 ```
 
 In WorkOS, enable GitHub Social Login and disable email/password sign-up plus
@@ -139,6 +143,11 @@ Add `BLOB_READ_WRITE_TOKEN` before using persisted admin repo selection. The
 Blob only stores selected repo names; GitHub activity still comes from GitHub.
 Add `CODEPET_GITHUB_TOKEN` when the observed GitHub org includes private repos
 or needs higher API limits.
+
+Add `BREVO_API_KEY`, `CODEPET_EMAIL_FROM_ADDRESS`, `CODEPET_EMAIL_FROM_NAME`,
+and `CODEPET_LABS_URL` before using automatic approval emails. The approval
+email sends builders back to `/hub` for Discord access instead of sending a raw
+Discord invite.
 
 ## Docs
 

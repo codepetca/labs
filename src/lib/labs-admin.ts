@@ -182,6 +182,20 @@ export async function updateLabsUserMetadata(
   });
 }
 
+export async function getLabsUserApprovalEmailTarget(userId: string) {
+  const user = await getWorkOSClient().userManagement.getUser(userId);
+  const preferredName = user.metadata.preferredName ?? null;
+  const workosName =
+    [user.firstName, user.lastName].filter(Boolean).join(" ") || null;
+
+  return {
+    email: user.metadata.contactEmail || user.email,
+    name: preferredName ?? workosName,
+    labsStatus: user.metadata.labsStatus ?? null,
+    approvalEmailSentAt: user.metadata.approvalEmailSentAt ?? null,
+  };
+}
+
 export async function getPausedLabsUserRemovalTarget(userId: string) {
   const user = await getWorkOSClient().userManagement.getUser(userId);
 

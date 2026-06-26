@@ -12,7 +12,8 @@ Codepet Labs uses WorkOS as the member source of truth.
 6. The user completes the short builder profile wizard in `/profile`.
 7. Profile completion marks the user as `pending`.
 8. An admin reviews `/admin`.
-9. Approval marks the user as an approved builder in WorkOS metadata.
+9. Approval marks the user as an approved builder in WorkOS metadata and sends
+   an approval email pointing them back to `/hub` when email is configured.
 10. Approved builders use `/hub` for Discord and project links.
 11. Builders click **Join Discord** from `/hub`; Discord OAuth stores the user
     ID in WorkOS metadata so admins can remove Discord access later.
@@ -58,6 +59,12 @@ comma-separated allowlist for people who can open `/admin`.
 
 `CODEPET_DISCORD_INVITE_URL` is optional. It is only a fallback link when
 Discord OAuth is not fully configured.
+
+Approval emails use Brevo transactional email. Set `BREVO_API_KEY`,
+`CODEPET_EMAIL_FROM_ADDRESS`, `CODEPET_EMAIL_FROM_NAME`, and
+`CODEPET_LABS_URL` to send an email when an admin approves a builder. The email
+links to `/hub` instead of a raw Discord invite so Labs can keep access checks
+and Discord role assignment in the app.
 
 Discord linking needs `DISCORD_CLIENT_ID`, `DISCORD_CLIENT_SECRET`,
 `DISCORD_REDIRECT_URI`, `DISCORD_BOT_TOKEN`, and `DISCORD_GUILD_ID`. The Discord

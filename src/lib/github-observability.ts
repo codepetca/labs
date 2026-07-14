@@ -2,6 +2,7 @@ import { get, put } from "@vercel/blob";
 
 const DEFAULT_ORG = "codepetca";
 const OBSERVED_REPOS_BLOB_KEY = "admin/observed-repos.json";
+const PRIVATE_BLOB_TOKEN_ENV = "CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN";
 const ACTIVITY_DAYS = 14;
 
 export type GithubRepoSummary = {
@@ -109,8 +110,10 @@ export async function getRepoObservabilityDashboard(): Promise<RepoObservability
 }
 
 export async function saveObservedRepoSelection(repoNames: string[]) {
-  if (!hasBlobStorageConfig()) {
-    throw new Error("Missing BLOB_READ_WRITE_TOKEN.");
+  const token = getPrivateBlobToken();
+
+  if (!token) {
+    throw new Error(`Missing ${PRIVATE_BLOB_TOKEN_ENV}.`);
   }
 
   const selectedRepoNames = normalizeObservedRepoNames(repoNames, getGithubOrg());
@@ -126,11 +129,12 @@ export async function saveObservedRepoSelection(repoNames: string[]) {
       2,
     ),
     {
-      access: "public",
+      access: "private",
       addRandomSuffix: false,
       allowOverwrite: true,
       cacheControlMaxAge: 60,
       contentType: "application/json",
+      token,
     },
   );
 }
@@ -229,7 +233,9 @@ export function summarizeGithubEvents(
 }
 
 async function readObservedRepoSelection() {
-  if (!hasBlobStorageConfig()) {
+  const token = getPrivateBlobToken();
+
+  if (!token) {
     return {
       error: null,
       ready: false,
@@ -238,7 +244,10 @@ async function readObservedRepoSelection() {
   }
 
   try {
-    const blob = await get(OBSERVED_REPOS_BLOB_KEY, { access: "public" });
+    const blob = await get(OBSERVED_REPOS_BLOB_KEY, {
+      access: "private",
+      token,
+    });
 
     if (!blob || blob.statusCode !== 200) {
       return {
@@ -403,8 +412,8 @@ function getGithubOrg() {
   return process.env.CODEPET_GITHUB_ORG?.trim() || DEFAULT_ORG;
 }
 
-function hasBlobStorageConfig() {
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+function getPrivateBlobToken() {
+  return process.env[PRIVATE_BLOB_TOKEN_ENV]?.trim() || null;
 }
 
 function getRecentDayKeys(days: number, now: Date) {

@@ -1,11 +1,18 @@
-import { describe, expect, it } from "vitest";
+import { put } from "@vercel/blob";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
   getSelectedRepoNames,
   normalizeObservedRepoNames,
+  saveObservedRepoSelection,
   summarizeGithubEvents,
   type GithubRepoSummary,
 } from "../../src/lib/github-observability";
+
+vi.mock("@vercel/blob", () => ({
+  get: vi.fn(),
+  put: vi.fn(),
+}));
 
 const repos: GithubRepoSummary[] = [
   repo("codepetca/codepet-labs"),
@@ -15,6 +22,25 @@ const repos: GithubRepoSummary[] = [
 ];
 
 describe("GitHub observability helpers", () => {
+  const previousPrivateBlobToken =
+    process.env.CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN;
+
+  beforeEach(() => {
+    vi.mocked(put).mockResolvedValue({} as Awaited<ReturnType<typeof put>>);
+    process.env.CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN = "private-test-token";
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+
+    if (previousPrivateBlobToken === undefined) {
+      delete process.env.CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN;
+    } else {
+      process.env.CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN =
+        previousPrivateBlobToken;
+    }
+  });
+
   it("normalizes selected Codepet repo names", () => {
     expect(
       normalizeObservedRepoNames([
@@ -56,6 +82,28 @@ describe("GitHub observability helpers", () => {
         storedRepoNames: [],
       }),
     ).toEqual([]);
+  });
+
+  it("stores observed repo names only in authenticated private Blob storage", async () => {
+    await saveObservedRepoSelection(["codepetca/codepet-labs"]);
+
+    expect(put).toHaveBeenCalledWith(
+      "admin/observed-repos.json",
+      expect.stringContaining("codepetca/codepet-labs"),
+      expect.objectContaining({
+        access: "private",
+        token: "private-test-token",
+      }),
+    );
+  });
+
+  it("fails closed when private Blob storage is not configured", async () => {
+    delete process.env.CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN;
+
+    await expect(
+      saveObservedRepoSelection(["codepetca/codepet-labs"]),
+    ).rejects.toThrow("Missing CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN");
+    expect(put).not.toHaveBeenCalled();
   });
 
   it("summarizes recent GitHub events into daily activity", () => {

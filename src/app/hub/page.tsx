@@ -93,8 +93,8 @@ export default async function HubPage() {
           <SectionHeading title="Projects" />
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-            {projectList.map((project) => (
-              <TrackCard key={project.name} project={project} />
+            {projectList.map((project, index) => (
+              <TrackCard key={project.name} project={project} priority={index === 0} />
             ))}
           </div>
         </div>

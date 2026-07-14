@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import {
   deletePausedLabsUser,
   getLabsUserApprovalEmailTarget,
+  getLabsUserAdminTarget,
   getPausedLabsUserRemovalTarget,
   requireLabsAdmin,
   updateLabsUserMetadata,
@@ -66,13 +67,18 @@ export async function pauseBuilder(formData: FormData) {
   await requireLabsAdmin();
 
   const userId = getFormValue(formData, "userId");
-  const discordUserId = getOptionalFormValue(formData, "discordUserId");
+  const target = await getLabsUserAdminTarget(userId);
+
+  if (target.labsStatus !== "approved") {
+    throw new Error("Only active builders can be paused.");
+  }
+
   const nextMetadata: Record<string, string> = {
     labsStatus: "inactive",
   };
 
-  if (discordUserId) {
-    const result = await syncDiscordBuilderRole(discordUserId, false);
+  if (target.discordUserId) {
+    const result = await syncDiscordBuilderRole(target.discordUserId, false);
 
     nextMetadata.discordLastRoleSyncResult = result;
     nextMetadata.discordRoleSyncedAt = new Date().toISOString();
@@ -87,14 +93,19 @@ export async function reactivateBuilder(formData: FormData) {
   await requireLabsAdmin();
 
   const userId = getFormValue(formData, "userId");
-  const discordUserId = getOptionalFormValue(formData, "discordUserId");
+  const target = await getLabsUserAdminTarget(userId);
+
+  if (target.labsStatus !== "inactive") {
+    throw new Error("Only paused builders can be reactivated.");
+  }
+
   const nextMetadata: Record<string, string> = {
     labsStatus: "approved",
     labsRole: "builder",
   };
 
-  if (discordUserId) {
-    const result = await syncDiscordBuilderRole(discordUserId, true);
+  if (target.discordUserId) {
+    const result = await syncDiscordBuilderRole(target.discordUserId, true);
 
     nextMetadata.discordLastRoleSyncResult = result;
     nextMetadata.discordRoleSyncedAt = new Date().toISOString();
@@ -109,9 +120,13 @@ export async function removeBuilderFromDiscord(formData: FormData) {
   await requireLabsAdmin();
 
   const userId = getFormValue(formData, "userId");
-  const discordUserId = getOptionalFormValue(formData, "discordUserId");
+  const target = await getLabsUserAdminTarget(userId);
 
-  const result = await removeDiscordAccess(discordUserId);
+  if (target.labsStatus !== "inactive") {
+    throw new Error("Discord access can only be removed from paused builders.");
+  }
+
+  const result = await removeDiscordAccess(target.discordUserId);
   const nextMetadata: Record<string, string> = {
     discordLastRemovalResult: result,
   };
@@ -169,12 +184,6 @@ function getFormValue(formData: FormData, key: string) {
   }
 
   return value.trim();
-}
-
-function getOptionalFormValue(formData: FormData, key: string) {
-  const value = formData.get(key);
-
-  return typeof value === "string" && value.trim() ? value.trim() : null;
 }
 
 async function syncDiscordBuilderRole(discordUserId: string, enabled: boolean) {

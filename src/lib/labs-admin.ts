@@ -1,5 +1,6 @@
 import { WorkOS, type OauthTokens } from "@workos-inc/node";
 import { withAuth } from "@workos-inc/authkit-nextjs";
+import { redirect } from "next/navigation";
 
 import {
   getLabsDirectoryBuckets,
@@ -102,7 +103,6 @@ export async function markLabsInterest(
     isGithubAuthenticationMethod(options.authenticationMethod);
 
   const nextMetadata: Record<string, string> = {
-    ...user.metadata,
     labsStatus: getNextLabsStatus(user.metadata.labsStatus, hasGithubIdentity),
     labsJoinedAt: user.metadata.labsJoinedAt ?? new Date().toISOString(),
     labsSource: "codepet-labs",
@@ -132,7 +132,12 @@ export async function markLabsInterest(
 }
 
 export async function getCurrentLabsUser() {
-  const { user } = await withAuth({ ensureSignedIn: true });
+  const { user } = await withAuth();
+
+  if (!user) {
+    redirect("/login");
+  }
+
   return getWorkOSClient().userManagement.getUser(user.id);
 }
 
@@ -160,7 +165,6 @@ export async function ensureLabsGithubUsername(
   return getWorkOSClient().userManagement.updateUser({
     userId: user.id,
     metadata: {
-      ...user.metadata,
       githubUsername,
     },
   });
@@ -170,16 +174,23 @@ export async function updateLabsUserMetadata(
   userId: string,
   metadata: Record<string, string>,
 ) {
-  const workos = getWorkOSClient();
-  const user = await workos.userManagement.getUser(userId);
-
-  await workos.userManagement.updateUser({
+  await getWorkOSClient().userManagement.updateUser({
     userId,
-    metadata: {
-      ...user.metadata,
-      ...metadata,
-    },
+    metadata,
   });
+}
+
+export async function getLabsUserAdminTarget(userId: string) {
+  const user = await getWorkOSClient().userManagement.getUser(userId);
+
+  if (isAdminEmail(user.email)) {
+    throw new Error("Admins cannot be changed through builder actions.");
+  }
+
+  return {
+    discordUserId: user.metadata.discordUserId || null,
+    labsStatus: user.metadata.labsStatus ?? null,
+  };
 }
 
 export async function getLabsUserApprovalEmailTarget(userId: string) {
@@ -197,19 +208,13 @@ export async function getLabsUserApprovalEmailTarget(userId: string) {
 }
 
 export async function getPausedLabsUserRemovalTarget(userId: string) {
-  const user = await getWorkOSClient().userManagement.getUser(userId);
+  const target = await getLabsUserAdminTarget(userId);
 
-  if (isAdminEmail(user.email)) {
-    throw new Error("Admins cannot be removed from Labs.");
-  }
-
-  if (user.metadata.labsStatus !== "inactive") {
+  if (target.labsStatus !== "inactive") {
     throw new Error("Only paused builders can be removed from Labs.");
   }
 
-  return {
-    discordUserId: user.metadata.discordUserId || null,
-  };
+  return target;
 }
 
 export async function deletePausedLabsUser(userId: string) {
@@ -218,11 +223,16 @@ export async function deletePausedLabsUser(userId: string) {
 }
 
 export async function requireLabsAdmin() {
-  const session = await withAuth({ ensureSignedIn: true });
+  const session = await withAuth();
+
+  if (!session.user) {
+    redirect("/login");
+  }
+
   const user = await getWorkOSClient().userManagement.getUser(session.user.id);
 
   if (!isAdminEmail(user.email)) {
-    throw new Error("Not authorized for Labs admin.");
+    redirect("/profile");
   }
 
   return user;
@@ -302,9 +312,7 @@ function hasSameMetadata(
   current: Record<string, string>,
   next: Record<string, string>,
 ) {
-  const keys = new Set([...Object.keys(current), ...Object.keys(next)]);
-
-  return Array.from(keys).every((key) => current[key] === next[key]);
+  return Object.entries(next).every(([key, value]) => current[key] === value);
 }
 
 function isGithubIdentity(identity: LabsIdentity) {

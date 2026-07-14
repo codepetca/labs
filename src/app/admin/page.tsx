@@ -125,11 +125,6 @@ function AdminDashboard({
             <UserCard key={user.id} user={user} showProfile={false}>
               <form action={pauseBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
-                <input
-                  type="hidden"
-                  name="discordUserId"
-                  value={user.discordUserId ?? ""}
-                />
                 <ActionButton label="Pause" pendingLabel="Pausing" />
               </form>
             </UserCard>
@@ -145,11 +140,6 @@ function AdminDashboard({
             <UserCard key={user.id} user={user} showProfile={false}>
               <form action={reactivateBuilder}>
                 <input type="hidden" name="userId" value={user.id} />
-                <input
-                  type="hidden"
-                  name="discordUserId"
-                  value={user.discordUserId ?? ""}
-                />
                 <ActionButton
                   label="Reactivate"
                   pendingLabel="Reactivating"
@@ -209,7 +199,7 @@ function RepoActivitySection({
       ) : null}
 
       {!dashboard.storageReady ? (
-        <EmptyState label="Add BLOB_READ_WRITE_TOKEN to persist selected repos." />
+        <EmptyState label="Connect a private Blob store to persist selected repos." />
       ) : null}
 
       {dashboard.selectedRepos.length ? (
@@ -403,11 +393,6 @@ function DiscordRemovalForm({ user }: { user: LabsUser }) {
   return (
     <form action={removeBuilderFromDiscord}>
       <input type="hidden" name="userId" value={user.id} />
-      <input
-        type="hidden"
-        name="discordUserId"
-        value={user.discordUserId ?? ""}
-      />
       <ActionButton label="Remove Discord" disabled={!user.discordUserId} />
     </form>
   );

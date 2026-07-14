@@ -60,6 +60,11 @@ comma-separated allowlist for people who can open `/admin`.
 `CODEPET_DISCORD_INVITE_URL` is optional. It is only a fallback link when
 Discord OAuth is not fully configured.
 
+Admin repository selection requires a private Vercel Blob store. Set its token
+as `CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN`. If a previous deployment wrote
+`admin/observed-repos.json` to a public store, delete that legacy blob after
+deploying this change.
+
 Approval emails use Brevo transactional email. Set `BREVO_API_KEY`,
 `CODEPET_EMAIL_FROM_ADDRESS`, `CODEPET_EMAIL_FROM_NAME`, and
 `CODEPET_LABS_URL` to send an email when an admin approves a builder. The email

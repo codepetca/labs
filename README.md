@@ -20,6 +20,9 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+For development over another hostname, such as Tailscale, add that hostname to
+`CODEPET_DEV_ALLOWED_ORIGINS`. Separate multiple hostnames with commas.
+
 Run checks:
 
 ```bash
@@ -75,7 +78,7 @@ CODEPET_ADMIN_EMAILS=you@example.com
 CODEPET_DISCORD_INVITE_URL=https://discord.gg/...
 CODEPET_GITHUB_ORG=codepetca
 CODEPET_GITHUB_TOKEN=
-BLOB_READ_WRITE_TOKEN=
+CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN=
 BREVO_API_KEY=
 CODEPET_EMAIL_FROM_ADDRESS=noreply@notify.codepet.ca
 CODEPET_EMAIL_FROM_NAME=Codepet Labs
@@ -139,8 +142,10 @@ This app is ready for Vercel:
 Add the WorkOS environment variables above before enabling the home/member
 profile flow in production.
 
-Add `BLOB_READ_WRITE_TOKEN` before using persisted admin repo selection. The
-Blob only stores selected repo names; GitHub activity still comes from GitHub.
+Connect a private Vercel Blob store and set
+`CODEPET_PRIVATE_BLOB_READ_WRITE_TOKEN` before using persisted admin repo
+selection. Do not reuse a public Blob store: selected private repository names
+must remain server-readable only. GitHub activity still comes from GitHub.
 Add `CODEPET_GITHUB_TOKEN` when the observed GitHub org includes private repos
 or needs higher API limits.
 

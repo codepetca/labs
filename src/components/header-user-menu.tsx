@@ -19,6 +19,7 @@ function AuthenticatedUserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const itemRefs = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([]);
   const shouldFocusFirstItem = useRef(false);
 
@@ -97,6 +98,7 @@ function AuthenticatedUserMenu() {
     if (event.key === "Escape") {
       event.preventDefault();
       closeMenu();
+      triggerRef.current?.focus();
       return;
     }
 
@@ -132,6 +134,7 @@ function AuthenticatedUserMenu() {
   return (
     <div ref={containerRef} className="relative">
       <button
+        ref={triggerRef}
         type="button"
         aria-label="Profile menu"
         aria-haspopup="menu"
@@ -213,99 +216,13 @@ function AuthenticatedUserMenu() {
 }
 
 function GuestUserMenu() {
-  const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const profileLinkRef = useRef<HTMLAnchorElement | null>(null);
-  const shouldFocusFirstItem = useRef(false);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    function handlePointerDown(event: PointerEvent) {
-      if (!containerRef.current?.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (isOpen && shouldFocusFirstItem.current) {
-      profileLinkRef.current?.focus();
-      shouldFocusFirstItem.current = false;
-    }
-  }, [isOpen]);
-
-  function openMenu(focusFirstItem = false) {
-    shouldFocusFirstItem.current = focusFirstItem;
-    setIsOpen(true);
-  }
-
-  function closeMenu() {
-    shouldFocusFirstItem.current = false;
-    setIsOpen(false);
-  }
-
-  function handleTriggerKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
-    if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      openMenu(true);
-    }
-
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-  }
-
-  function handleMenuKeyDown(event: KeyboardEvent<HTMLDivElement>) {
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeMenu();
-    }
-  }
-
   return (
-    <div ref={containerRef} className="relative">
-      <button
-        type="button"
-        aria-label="Profile menu"
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        onClick={() => (isOpen ? closeMenu() : openMenu())}
-        onKeyDown={handleTriggerKeyDown}
-        className="grid size-10 shrink-0 place-items-center rounded-md text-muted transition hover:bg-card-soft hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-      >
-        <ProfileIcon />
-      </button>
-
-      <div
-        role="menu"
-        aria-label="Profile menu"
-        aria-hidden={!isOpen}
-        onKeyDown={handleMenuKeyDown}
-        className={`absolute right-0 top-full z-50 mt-2 w-44 origin-top-right rounded-lg border border-border bg-card py-1 text-sm shadow-lg transition duration-150 ${
-          isOpen
-            ? "scale-100 opacity-100"
-            : "pointer-events-none scale-95 opacity-0"
-        }`}
-      >
-        <MenuLink
-          refCallback={(element) => {
-            profileLinkRef.current = element;
-          }}
-          href="/login"
-          label="Log in"
-          onClick={closeMenu}
-          tabIndex={isOpen ? 0 : -1}
-        >
-          <ProfileIcon />
-        </MenuLink>
-      </div>
-    </div>
+    <Link
+      href="/login"
+      className="inline-flex min-h-11 items-center rounded-md px-2.5 font-medium text-muted transition hover:bg-card-soft hover:text-foreground"
+    >
+      Log in
+    </Link>
   );
 }
 

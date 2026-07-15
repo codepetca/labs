@@ -7,6 +7,7 @@
     "demoUrl": "#demo-placeholder",
     "githubUrl": "https://github.com/codepetca/codepet-labs",
     "demoVideoUrl": "/videos/codepetpal-demo.mp4",
+    "demoDuration": "0:03",
     "contributor": "CP",
     "imageUrl": "/images/visual-codepetpal.svg",
     "imageAlt": "XP prototype card with progress states"
@@ -19,6 +20,7 @@
     "demoUrl": "#demo-placeholder",
     "githubUrl": "https://github.com/codepetca/codepet-labs",
     "demoVideoUrl": "/videos/gradex-demo.mp4",
+    "demoDuration": "0:04",
     "contributor": "GX",
     "imageUrl": "/images/visual-gradex.svg",
     "imageAlt": "Gradex dashboard prototype with charts"
@@ -31,6 +33,7 @@
     "demoUrl": "#demo-placeholder",
     "githubUrl": "https://github.com/codepetca/codepet-labs",
     "demoVideoUrl": "/videos/tapcheck-demo.mp4",
+    "demoDuration": "0:04",
     "contributor": "TC",
     "imageUrl": "/images/visual-attendance.svg",
     "imageAlt": "Attendance prototype with tap states"
@@ -43,6 +46,7 @@
     "demoUrl": "#demo-placeholder",
     "githubUrl": "https://github.com/codepetca/codepet-labs",
     "demoVideoUrl": "/videos/polling-demo.mp4",
+    "demoDuration": "0:05",
     "contributor": "PP",
     "imageUrl": "/images/visual-polling.svg",
     "imageAlt": "Polling playground prototype with answer bars"
@@ -55,6 +59,7 @@
     "demoUrl": "#demo-placeholder",
     "githubUrl": "https://github.com/codepetca/codepet-labs",
     "demoVideoUrl": "/videos/pika-ui-demo.mp4",
+    "demoDuration": "0:04",
     "contributor": "UI",
     "imageUrl": "/images/visual-ui.svg",
     "imageAlt": "Pika UI experiment card"

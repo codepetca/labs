@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import {
   getCurrentLabsUser,
-  isAdminEmail,
+  isVerifiedLabsAdmin,
   updateLabsUserMetadata,
 } from "@/lib/labs-admin";
 import {
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   }
 
   const user = await getCurrentLabsUser();
-  const isAdmin = isAdminEmail(user.email);
+  const isAdmin = isVerifiedLabsAdmin(user);
   const isAllowed = user.metadata.labsStatus === "approved" || isAdmin;
 
   if (!isAllowed) {

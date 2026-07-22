@@ -10,7 +10,7 @@ import {
   getLabsConfig,
   getLabsConfigStatus,
   getLabsGithubIdentity,
-  isAdminEmail,
+  isVerifiedLabsAdmin,
 } from "@/lib/labs-admin";
 import {
   getDiscordConfigStatus,
@@ -41,7 +41,7 @@ export default async function HubPage() {
 
   const config = getLabsConfig();
   const discordConfigStatus = getDiscordConfigStatus();
-  const isAdmin = isAdminEmail(user.email);
+  const isAdmin = isVerifiedLabsAdmin(user);
   const isApprovedBuilder = user.metadata.labsStatus === "approved";
 
   if (!isApprovedBuilder && !isAdmin) {

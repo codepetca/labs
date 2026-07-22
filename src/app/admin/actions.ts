@@ -44,6 +44,7 @@ export async function markNotNow(formData: FormData) {
 
   const userId = getFormValue(formData, "userId");
 
+  await getLabsUserAdminTarget(userId);
   await updateLabsUserMetadata(userId, {
     labsStatus: "not_now",
   });
@@ -56,6 +57,7 @@ export async function restorePotentialUser(formData: FormData) {
 
   const userId = getFormValue(formData, "userId");
 
+  await getLabsUserAdminTarget(userId);
   await updateLabsUserMetadata(userId, {
     labsStatus: "pending",
   });

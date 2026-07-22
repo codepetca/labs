@@ -110,7 +110,7 @@ export async function markLabsInterest(
     ...(githubIdentity ? { githubIdentityId: githubIdentity.idpId } : {}),
   };
 
-  if (hasGithubIdentity && !nextMetadata.githubUsername) {
+  if (hasGithubIdentity && !user.metadata.githubUsername) {
     const githubUsername = await resolveGithubUsername({
       githubIdentity,
       oauthTokens: options.oauthTokens,
@@ -195,6 +195,11 @@ export async function getLabsUserAdminTarget(userId: string) {
 
 export async function getLabsUserApprovalEmailTarget(userId: string) {
   const user = await getWorkOSClient().userManagement.getUser(userId);
+
+  if (isAdminEmail(user.email)) {
+    throw new Error("Admins cannot be changed through builder actions.");
+  }
+
   const preferredName = user.metadata.preferredName ?? null;
   const workosName =
     [user.firstName, user.lastName].filter(Boolean).join(" ") || null;
@@ -235,7 +240,22 @@ export async function requireLabsAdmin() {
     redirect("/profile");
   }
 
+  // Admin access must not rest on the email string alone: WorkOS is expected
+  // to allow only GitHub sign-in, but that lives in dashboard config outside
+  // this repo. Require a verified email and a linked GitHub identity so a
+  // re-enabled password or alternate provider cannot claim an admin email.
+  if (!isVerifiedLabsAdmin(user) || !(await getLabsGithubIdentity(user.id))) {
+    redirect("/");
+  }
+
   return user;
+}
+
+export function isVerifiedLabsAdmin(user: {
+  email: string;
+  emailVerified: boolean;
+}) {
+  return user.emailVerified && isAdminEmail(user.email);
 }
 
 export async function getLabsDirectory() {
@@ -340,7 +360,7 @@ function toLabsUser(user: LabsWorkOSUser) {
     interests: user.metadata.interests ?? null,
     buildGoal: user.metadata.buildGoal ?? null,
     githubComfort: user.metadata.githubComfort ?? null,
-    isLabsAdmin: isAdminEmail(user.email),
+    isLabsAdmin: isVerifiedLabsAdmin(user),
     discordGlobalName: user.metadata.discordGlobalName || null,
     discordLinkedAt: user.metadata.discordLinkedAt || null,
     discordRemovedAt: user.metadata.discordRemovedAt || null,

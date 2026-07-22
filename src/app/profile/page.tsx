@@ -9,7 +9,7 @@ import {
   getCurrentLabsUser,
   getLabsConfigStatus,
   getLabsGithubIdentity,
-  isAdminEmail,
+  isVerifiedLabsAdmin,
 } from "@/lib/labs-admin";
 import {
   getLabsProfileFormValues,
@@ -26,7 +26,7 @@ export default async function ProfilePage() {
   }
 
   let user = await getCurrentLabsUser();
-  const isAdmin = isAdminEmail(user.email);
+  const isAdmin = isVerifiedLabsAdmin(user);
 
   if (isAdmin) {
     redirect("/admin");

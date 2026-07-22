@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 const workosMocks = vi.hoisted(() => ({
   getUser: vi.fn(),
   updateUser: vi.fn(),
+  getUserIdentities: vi.fn(),
 }));
 const authMocks = vi.hoisted(() => ({ withAuth: vi.fn() }));
 const navigationMocks = vi.hoisted(() => ({ redirect: vi.fn() }));
@@ -12,6 +13,7 @@ vi.mock("@workos-inc/node", () => ({
     userManagement = {
       getUser: workosMocks.getUser,
       updateUser: workosMocks.updateUser,
+      getUserIdentities: workosMocks.getUserIdentities,
     };
   },
 }));
@@ -73,5 +75,87 @@ describe("Labs admin security helpers", () => {
       discordUserId: "discord_123",
       labsStatus: "approved",
     });
+  });
+
+  it("treats an admin email as an admin only when the email is verified", async () => {
+    const { isVerifiedLabsAdmin } = await import("../../src/lib/labs-admin");
+
+    expect(
+      isVerifiedLabsAdmin({ email: "admin@example.com", emailVerified: true }),
+    ).toBe(true);
+    expect(
+      isVerifiedLabsAdmin({ email: "admin@example.com", emailVerified: false }),
+    ).toBe(false);
+    expect(
+      isVerifiedLabsAdmin({ email: "builder@example.com", emailVerified: true }),
+    ).toBe(false);
+  });
+
+  it("grants admin access only with a verified email and a GitHub identity", async () => {
+    authMocks.withAuth.mockResolvedValue({ user: { id: "user_admin" } });
+    workosMocks.getUser.mockResolvedValue({
+      id: "user_admin",
+      email: "admin@example.com",
+      emailVerified: true,
+    });
+    workosMocks.getUserIdentities.mockResolvedValue([
+      { type: "OAuth", provider: "GitHubOAuth", idpId: "42" },
+    ]);
+    const { requireLabsAdmin } = await import("../../src/lib/labs-admin");
+
+    await expect(requireLabsAdmin()).resolves.toMatchObject({
+      email: "admin@example.com",
+    });
+    expect(navigationMocks.redirect).not.toHaveBeenCalled();
+  });
+
+  it("redirects an admin email with an unverified address away from admin", async () => {
+    authMocks.withAuth.mockResolvedValue({ user: { id: "user_admin" } });
+    workosMocks.getUser.mockResolvedValue({
+      id: "user_admin",
+      email: "admin@example.com",
+      emailVerified: false,
+    });
+    workosMocks.getUserIdentities.mockResolvedValue([
+      { type: "OAuth", provider: "GitHubOAuth", idpId: "42" },
+    ]);
+    navigationMocks.redirect.mockImplementation(() => {
+      throw new Error("NEXT_REDIRECT");
+    });
+    const { requireLabsAdmin } = await import("../../src/lib/labs-admin");
+
+    await expect(requireLabsAdmin()).rejects.toThrow("NEXT_REDIRECT");
+    expect(navigationMocks.redirect).toHaveBeenCalledWith("/");
+  });
+
+  it("redirects an admin email without a GitHub identity away from admin", async () => {
+    authMocks.withAuth.mockResolvedValue({ user: { id: "user_admin" } });
+    workosMocks.getUser.mockResolvedValue({
+      id: "user_admin",
+      email: "admin@example.com",
+      emailVerified: true,
+    });
+    workosMocks.getUserIdentities.mockResolvedValue([]);
+    navigationMocks.redirect.mockImplementation(() => {
+      throw new Error("NEXT_REDIRECT");
+    });
+    const { requireLabsAdmin } = await import("../../src/lib/labs-admin");
+
+    await expect(requireLabsAdmin()).rejects.toThrow("NEXT_REDIRECT");
+    expect(navigationMocks.redirect).toHaveBeenCalledWith("/");
+  });
+
+  it("refuses to build an approval email target for an admin account", async () => {
+    workosMocks.getUser.mockResolvedValue({
+      email: "admin@example.com",
+      metadata: {},
+    });
+    const { getLabsUserApprovalEmailTarget } = await import(
+      "../../src/lib/labs-admin"
+    );
+
+    await expect(
+      getLabsUserApprovalEmailTarget("user_admin"),
+    ).rejects.toThrow("Admins cannot be changed through builder actions.");
   });
 });

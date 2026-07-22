@@ -4,8 +4,21 @@ import { NextResponse } from "next/server";
 
 const authkit = authkitProxy();
 
+let warnedMissingAuthkitConfig = false;
+
 export default function proxy(request: NextRequest, event: NextFetchEvent) {
   if (!hasAuthkitProxyConfig()) {
+    // The public site must stay up without auth config, but in production a
+    // silently disabled auth middleware is a misconfiguration worth alarming
+    // on: protected pages fail closed on their own, yet any future route that
+    // assumes middleware protection would be exposed.
+    if (process.env.NODE_ENV === "production" && !warnedMissingAuthkitConfig) {
+      warnedMissingAuthkitConfig = true;
+      console.error(
+        "[proxy] AuthKit middleware disabled: WorkOS auth config is missing or incomplete.",
+      );
+    }
+
     return NextResponse.next();
   }
 

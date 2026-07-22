@@ -2,7 +2,7 @@ import { handleAuth } from "@workos-inc/authkit-nextjs";
 
 import {
   getLabsConfigStatus,
-  isAdminEmail,
+  isVerifiedLabsAdmin,
   markLabsInterest,
 } from "@/lib/labs-admin";
 
@@ -13,7 +13,7 @@ export const GET = handleAuth({
       return;
     }
 
-    if (isAdminEmail(user.email)) {
+    if (isVerifiedLabsAdmin(user)) {
       return;
     }
 

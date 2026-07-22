@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-import { getCurrentLabsUser, isAdminEmail } from "@/lib/labs-admin";
+import { getCurrentLabsUser, isVerifiedLabsAdmin } from "@/lib/labs-admin";
 import {
   getDiscordAuthorizationUrl,
   getDiscordConfigStatus,
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
   const user = await getCurrentLabsUser();
   const isAllowed =
-    user.metadata.labsStatus === "approved" || isAdminEmail(user.email);
+    user.metadata.labsStatus === "approved" || isVerifiedLabsAdmin(user);
 
   if (!isAllowed) {
     return NextResponse.redirect(new URL("/profile", request.url));

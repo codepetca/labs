@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 const workosMocks = vi.hoisted(() => ({
   getUser: vi.fn(),
@@ -34,6 +34,10 @@ describe("Labs admin security helpers", () => {
     process.env.WORKOS_COOKIE_PASSWORD = "x".repeat(32);
     process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI = "http://localhost/callback";
     process.env.CODEPET_ADMIN_EMAILS = "admin@example.com";
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
   });
 
   it("patches only intended WorkOS metadata keys", async () => {
@@ -157,5 +161,62 @@ describe("Labs admin security helpers", () => {
     await expect(
       getLabsUserApprovalEmailTarget("user_admin"),
     ).rejects.toThrow("Admins cannot be changed through builder actions.");
+  });
+
+  it("keeps a stored GitHub username without refetching it on sign-in", async () => {
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+    workosMocks.getUser.mockResolvedValue({
+      id: "user_1",
+      email: "builder@example.com",
+      metadata: {
+        githubUsername: "octocat",
+        labsStatus: "profile_required",
+        labsJoinedAt: "2026-01-01T00:00:00.000Z",
+        labsSource: "codepet-labs",
+        labsAuthProvider: "github",
+        githubIdentityId: "42",
+      },
+    });
+    workosMocks.getUserIdentities.mockResolvedValue([
+      { type: "OAuth", provider: "GitHubOAuth", idpId: "42" },
+    ]);
+    const { markLabsInterest } = await import("../../src/lib/labs-admin");
+
+    await markLabsInterest("user_1");
+
+    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(workosMocks.updateUser).not.toHaveBeenCalled();
+  });
+
+  it("resolves the GitHub username on sign-in when none is stored yet", async () => {
+    const fetchSpy = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ login: "octocat" }),
+    });
+    vi.stubGlobal("fetch", fetchSpy);
+    workosMocks.getUser.mockResolvedValue({
+      id: "user_1",
+      email: "builder@example.com",
+      metadata: { labsStatus: "github_required" },
+    });
+    workosMocks.getUserIdentities.mockResolvedValue([
+      { type: "OAuth", provider: "GitHubOAuth", idpId: "42" },
+    ]);
+    workosMocks.updateUser.mockResolvedValue({});
+    const { markLabsInterest } = await import("../../src/lib/labs-admin");
+
+    await markLabsInterest("user_1");
+
+    expect(fetchSpy).toHaveBeenCalledWith(
+      "https://api.github.com/user/42",
+      expect.anything(),
+    );
+    expect(workosMocks.updateUser).toHaveBeenCalledWith(
+      expect.objectContaining({
+        userId: "user_1",
+        metadata: expect.objectContaining({ githubUsername: "octocat" }),
+      }),
+    );
   });
 });

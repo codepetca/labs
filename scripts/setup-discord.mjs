@@ -1,9 +1,12 @@
 #!/usr/bin/env node
 
 import { existsSync, readFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const API_BASE = "https://discord.com/api/v10";
+const scriptDir = dirname(fileURLToPath(import.meta.url));
+const serverIconPath = resolve(scriptDir, "../public/images/paw-icon.png");
 const dryRun = process.argv.includes("--dry-run");
 
 const ChannelType = {
@@ -19,6 +22,7 @@ const OverwriteType = {
 const Permission = {
   CreateInstantInvite: 1n << 0n,
   KickMembers: 1n << 1n,
+  ManageGuild: 1n << 5n,
   ManageChannels: 1n << 4n,
   ViewChannel: 1n << 10n,
   SendMessages: 1n << 11n,
@@ -38,6 +42,7 @@ const rolesToCreate = [
       Permission.SendMessages,
       Permission.ReadMessageHistory,
       Permission.KickMembers,
+      Permission.ManageGuild,
       Permission.ManageMessages,
       Permission.ManageChannels,
       Permission.ManageRoles,
@@ -104,6 +109,7 @@ if (!token || !guildId) {
 const guild = await discord("GET", `/guilds/${guildId}`);
 console.log(`Setting up Discord server: ${guild.name} (${guild.id})`);
 
+await ensureGuildIcon(guildId);
 const roles = await ensureRoles(guildId);
 const botRoles = await getBotRoles(guildId, roles);
 const channels = await ensureChannels(guildId, roles, botRoles);
@@ -167,6 +173,41 @@ function parseEnvFile(content) {
   }
 
   return entries;
+}
+
+async function ensureGuildIcon(targetGuildId) {
+  const icon = readServerIcon();
+
+  try {
+    await discord("PATCH", `/guilds/${targetGuildId}`, { icon });
+  } catch (error) {
+    if (isDiscordMissingPermissionsError(error)) {
+      throw new Error(
+        "Could not update the Discord server icon. Re-invite the bot with Manage Server permission, then run pnpm discord:setup again.",
+      );
+    }
+
+    throw error;
+  }
+
+  console.log("Updated server icon: CodePet titlebar paw");
+}
+
+function readServerIcon() {
+  if (!existsSync(serverIconPath)) {
+    throw new Error(`Missing Discord server icon asset: ${serverIconPath}`);
+  }
+
+  const icon = readFileSync(serverIconPath);
+  return `data:image/png;base64,${icon.toString("base64")}`;
+}
+
+function isDiscordMissingPermissionsError(error) {
+  return (
+    error instanceof Error &&
+    error.message.includes("failed with 403") &&
+    error.message.includes("Missing Permissions")
+  );
 }
 
 async function ensureRoles(targetGuildId) {

@@ -22,6 +22,7 @@ makes project-specific channels useful.
 2. Create a bot in the Discord Developer Portal.
 3. Invite the bot to the server with these permissions:
    - Create Instant Invite
+   - Manage Server
    - Manage Channels
    - Manage Roles
    - Manage Messages
@@ -56,6 +57,8 @@ pnpm discord:setup
 The script is additive and idempotent:
 
 - It creates missing roles.
+- It updates the server icon to `public/images/paw-icon.png`, a padded PNG of
+  the titlebar paw.
 - It creates missing categories and channels.
 - It updates channel topics and permission overwrites for the managed channels.
 - It posts starter messages only into empty starter channels.

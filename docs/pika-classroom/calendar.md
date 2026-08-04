@@ -1,4 +1,4 @@
-## 2026-07-04
+## 2026-07-06 10:00
 Week 1 Labs onboarding check-in
 
 - Confirm GitHub, AI tool, editor, Vercel, and local setup.
@@ -7,7 +7,7 @@ Week 1 Labs onboarding check-in
 - Start the Week 1 assignment: personal Labs page on Vercel.
 - Leave with one clear next step for the week.
 
-## 2026-07-11
+## 2026-07-13 10:00
 Week 1 standup
 
 - Share the personal Labs page and Vercel link.
@@ -17,7 +17,7 @@ Week 1 standup
 - Set the plan for Week 2.
 - Start applying the shared Labs page structure.
 
-## 2026-07-18
+## 2026-07-20 10:00
 Week 2 standup
 
 - Show the updated Labs page structure.

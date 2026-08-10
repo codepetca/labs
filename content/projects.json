@@ -9,8 +9,8 @@
     "demoVideoUrl": "/videos/codepetpal-demo.mp4",
     "demoDuration": "0:03",
     "contributor": "CP",
-    "imageUrl": "/images/visual-codepetpal.svg",
-    "imageAlt": "XP prototype card with progress states"
+    "imageUrl": "/images/pal-achievement-map.png",
+    "imageAlt": "Pal achievement map with completed, active, and locked milestones"
   },
   {
     "name": "Gradex Dashboard Prototype",

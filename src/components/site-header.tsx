@@ -27,12 +27,6 @@ export function SiteHeader({ authReady }: { authReady: boolean }) {
             About
           </Link>
           <HeaderUserArea authReady={authReady} />
-          <Link
-            href="/join"
-            className="hidden min-h-11 items-center rounded-md bg-foreground px-4 font-semibold text-background transition hover:opacity-90 md:inline-flex"
-          >
-            Join
-          </Link>
           <MobileNavMenu />
         </nav>
       </div>

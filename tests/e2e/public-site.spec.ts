@@ -6,7 +6,7 @@ test("home page keeps the studio and featured project minimal", async ({
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Codepet Labs" })).toBeVisible();
-  await expect(page.getByText("Play, learn, solve real problems with AI.")).toBeVisible();
+  await expect(page.getByText("Play. Learn. Close a PR.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Log in", exact: true })).toHaveAttribute(
     "href",
     "/login",

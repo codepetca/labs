@@ -9,9 +9,11 @@ import type { ProjectCardProject } from "@/components/project-card";
 export function TrackCard({
   project,
   priority = false,
+  featured = false,
 }: {
   project: ProjectCardProject;
   priority?: boolean;
+  featured?: boolean;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -28,13 +30,21 @@ export function TrackCard({
   }
 
   return (
-    <article className="overflow-hidden rounded-lg border border-border bg-card">
+    <article
+      className={`overflow-hidden rounded-lg border border-border bg-card ${
+        featured
+          ? "sm:grid sm:grid-cols-[minmax(0,1.2fr)_minmax(14rem,0.8fr)] sm:items-stretch"
+          : ""
+      }`}
+    >
       <button
         ref={triggerRef}
         type="button"
         aria-label={`Play ${project.name} preview`}
         onClick={openDemo}
-        className="group relative block w-full overflow-hidden text-left"
+        className={`group relative block w-full overflow-hidden text-left ${
+          featured ? "sm:h-full" : ""
+        }`}
       >
         <Image
           src={project.imageUrl}
@@ -42,17 +52,25 @@ export function TrackCard({
           width={640}
           height={420}
           priority={priority}
-          className="aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.02]"
+          className={`aspect-[16/10] w-full object-cover transition duration-300 group-hover:scale-[1.02] ${
+            featured ? "sm:aspect-auto sm:h-full sm:min-h-64" : ""
+          }`}
         />
         <span className="absolute bottom-3 right-3 grid size-10 place-items-center rounded-md border border-border bg-background/95 text-foreground shadow-sm">
           <Play aria-hidden="true" size={17} weight="fill" />
         </span>
       </button>
-      <div className="border-t border-border p-4">
+      <div
+        className={`border-t border-border ${
+          featured
+            ? "p-5 sm:flex sm:flex-col sm:justify-center sm:border-l sm:border-t-0 sm:p-6"
+            : "p-4"
+        }`}
+      >
         <p className={`font-mono text-[11px] font-semibold uppercase tracking-[0.12em] ${getStatusColor(project.status)}`}>
           {project.status}
         </p>
-        <h3 className="mt-2 text-base font-semibold text-foreground">
+        <h3 className={`mt-2 font-semibold text-foreground ${featured ? "text-xl" : "text-base"}`}>
           {shortProjectName(project.name)}
         </h3>
         <p className="mt-2 text-sm leading-5 text-muted">{project.description}</p>

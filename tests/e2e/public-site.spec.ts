@@ -1,12 +1,12 @@
 import { expect, test } from "@playwright/test";
 
-test("home page explains the studio and routes to projects and join", async ({
+test("home page keeps the studio and featured project minimal", async ({
   page,
 }) => {
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Codepet Labs" })).toBeVisible();
-  await expect(page.getByText("Young builders make AI-assisted prototypes here")).toBeVisible();
+  await expect(page.getByText("Young builders make AI-assisted prototypes.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Log in", exact: true })).toHaveAttribute(
     "href",
     "/login",
@@ -15,19 +15,28 @@ test("home page explains the studio and routes to projects and join", async ({
     "href",
     "/join",
   );
-  await expect(page.getByRole("heading", { name: "Projects" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "CodepetPal XP" })).toBeVisible();
+  await expect(page.getByText("Featured project")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Pal", exact: true })).toBeVisible();
+  await expect(page.getByText("A gamified pet.")).toBeVisible();
+  await expect(
+    page.getByRole("img", {
+      name: "Pal achievement map with completed, active, and locked milestones",
+    }),
+  ).toHaveAttribute("src", /pal-achievement-map/);
+  await expect(page.getByText("Summer 2026")).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Browse projects" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: /Play (Gradex|TapCheck)/ })).toHaveCount(0);
 });
 
 test("project preview opens, closes, and restores focus", async ({ page }) => {
   await page.goto("/");
 
   const trigger = page.getByRole("button", {
-    name: "Play CodepetPal XP Prototype preview",
+    name: "Play Pal preview",
   });
   await trigger.click();
 
-  const dialog = page.getByRole("dialog", { name: "CodepetPal XP Prototype" });
+  const dialog = page.getByRole("dialog", { name: "Pal" });
   await expect(dialog).toBeVisible();
   await page.getByRole("button", { name: "Close demo" }).click();
   await expect(dialog).toBeHidden();

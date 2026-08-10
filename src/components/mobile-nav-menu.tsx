@@ -72,15 +72,6 @@ export function MobileNavMenu() {
         >
           Contributors
         </Link>
-        <Link
-          role="menuitem"
-          tabIndex={isOpen ? 0 : -1}
-          href="/join"
-          onClick={() => setIsOpen(false)}
-          className="flex min-h-11 items-center rounded-md px-3 font-semibold text-foreground hover:bg-card-soft"
-        >
-          Join
-        </Link>
       </div>
     </div>
   );

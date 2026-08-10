@@ -1,7 +1,5 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About | Codepet Labs",
@@ -14,11 +12,7 @@ const facts = [
   ["Commitment", "About 10 hours per week"],
 ];
 
-const outcomes = [
-  ["Prototype", "A small idea you can demo."],
-  ["Practice", "GitHub, review, and responsible AI habits."],
-  ["Credit", "Public attribution after reviewed work ships."],
-];
+const summerContributors = ["Abhijit", "Arron", "Jason", "Jessie"];
 
 export default function AboutPage() {
   return (
@@ -41,7 +35,7 @@ export default function AboutPage() {
           width={960}
           height={960}
           priority
-          className="aspect-[4/3] w-full rounded-lg border border-border object-cover"
+          className="aspect-square w-40 rounded-lg border border-border object-cover sm:w-48 lg:w-60 lg:justify-self-end"
         />
       </section>
 
@@ -60,22 +54,22 @@ export default function AboutPage() {
       </section>
 
       <section className="mx-auto w-full max-w-5xl px-4 py-12 sm:px-6 sm:py-16">
-        <h2 className="text-xl font-semibold text-foreground">What comes out</h2>
-        <div className="mt-5 grid gap-3 sm:grid-cols-3">
-          {outcomes.map(([title, description]) => (
-            <article key={title} className="border-t border-border pt-4">
-              <h3 className="font-semibold text-foreground">{title}</h3>
-              <p className="mt-2 text-sm leading-5 text-muted">{description}</p>
-            </article>
-          ))}
-        </div>
-        <Link
-          href="/join"
-          className="mt-10 inline-flex min-h-11 items-center gap-2 rounded-md bg-foreground px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
-        >
-          See how joining works
-          <ArrowRight aria-hidden="true" size={17} />
-        </Link>
+        <article className="max-w-lg rounded-lg border border-border bg-card p-5 sm:p-6">
+          <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+            Contributors
+          </p>
+          <h2 className="mt-2 text-xl font-semibold text-foreground">Summer 2026</h2>
+          <ul
+            aria-label="Summer 2026 contributors"
+            className="mt-5 grid grid-cols-2 gap-x-6"
+          >
+            {summerContributors.map((name) => (
+              <li key={name} className="border-t border-border py-3 text-sm font-semibold text-foreground">
+                {name}
+              </li>
+            ))}
+          </ul>
+        </article>
       </section>
     </main>
   );

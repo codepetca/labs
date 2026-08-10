@@ -219,9 +219,11 @@ function GuestUserMenu() {
   return (
     <Link
       href="/login"
-      className="inline-flex min-h-11 items-center rounded-md px-2.5 font-medium text-muted transition hover:bg-card-soft hover:text-foreground"
+      aria-label="Log in"
+      title="Log in"
+      className="grid size-11 shrink-0 place-items-center rounded-md text-muted transition hover:bg-card-soft hover:text-foreground"
     >
-      Log in
+      <ProfileIcon />
     </Link>
   );
 }

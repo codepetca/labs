@@ -6,15 +6,16 @@ test("home page keeps the studio and featured project minimal", async ({
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Codepet Labs" })).toBeVisible();
-  await expect(page.getByText("Young builders make AI-assisted prototypes.")).toBeVisible();
+  await expect(page.getByText("Young builders learn to solve real problems.")).toBeVisible();
   await expect(page.getByRole("link", { name: "Log in", exact: true })).toHaveAttribute(
     "href",
     "/login",
   );
-  await expect(page.getByRole("link", { name: "Join", exact: true })).toHaveAttribute(
+  await expect(page.getByRole("link", { name: "Apply", exact: true })).toHaveAttribute(
     "href",
     "/join",
   );
+  await expect(page.getByRole("link", { name: "Join", exact: true })).toHaveCount(0);
   await expect(page.getByText("Featured project")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Pal", exact: true })).toBeVisible();
   await expect(page.getByText("A gamified pet.")).toBeVisible();
@@ -26,6 +27,7 @@ test("home page keeps the studio and featured project minimal", async ({
   await expect(page.getByText("Summer 2026")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Browse projects" })).toHaveCount(0);
   await expect(page.getByRole("button", { name: /Play (Gradex|TapCheck)/ })).toHaveCount(0);
+  await expect(page.getByRole("contentinfo")).toHaveCount(0);
 });
 
 test("project preview opens, closes, and restores focus", async ({ page }) => {
@@ -59,10 +61,12 @@ test("about page keeps the Labs model concise", async ({ page }) => {
   await expect(page.getByRole("heading", { name: "About" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "At a glance" })).toBeVisible();
   await expect(page.getByText("Independent project work")).toBeVisible();
-  await expect(page.getByRole("link", { name: "See how joining works" })).toHaveAttribute(
-    "href",
-    "/join",
-  );
+  await expect(page.getByRole("heading", { name: "Summer 2026" })).toBeVisible();
+  await expect(
+    page.getByRole("list", { name: "Summer 2026 contributors" }).getByRole("listitem"),
+  ).toHaveText(["Abhijit", "Arron", "Jason", "Jessie"]);
+  await expect(page.getByRole("heading", { name: "What comes out" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "See how joining works" })).toHaveCount(0);
 });
 
 test("contributors empty state routes to useful next steps", async ({ page }) => {

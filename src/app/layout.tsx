@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { AuthKitProvider } from "@workos-inc/authkit-nextjs/components";
 import { Geist, Geist_Mono } from "next/font/google";
 
-import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getLabsConfigStatus } from "@/lib/labs-admin";
 
@@ -38,7 +37,6 @@ export default function RootLayout({
     <>
       <SiteHeader authReady={authReady} />
       {children}
-      <SiteFooter />
     </>
   );
 

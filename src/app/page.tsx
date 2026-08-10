@@ -30,7 +30,7 @@ export default async function Home() {
               Codepet Labs
             </h1>
             <p className="mt-5 max-w-lg text-lg leading-7 text-muted sm:text-xl sm:leading-8">
-              Young builders learn to solve real problems.
+              Play, learn, solve real problems with AI.
             </p>
             <div className="mt-8">
               <Link

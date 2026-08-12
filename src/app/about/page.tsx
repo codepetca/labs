@@ -17,7 +17,7 @@ const summerContributors = ["Abhijit", "Arron", "Jason", "Jessie"];
 export default function AboutPage() {
   return (
     <main>
-      <section className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-10 sm:px-6 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+      <section className="mx-auto grid w-full max-w-5xl gap-8 px-4 py-10 sm:px-6 sm:py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-stretch">
         <div>
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-warm">
             Small by design
@@ -29,14 +29,16 @@ export default function AboutPage() {
             Codepet Labs is a reviewed builder studio for young people making useful, Pika-adjacent software with AI and GitHub.
           </p>
         </div>
-        <Image
-          src="/images/lab-dog.png"
-          alt="Friendly dog wearing goggles and a Codepet lab coat"
-          width={960}
-          height={960}
-          priority
-          className="aspect-square w-40 rounded-lg border border-border object-cover sm:w-48 lg:w-60 lg:justify-self-end"
-        />
+        <div className="relative aspect-square w-40 rounded-lg border border-border sm:w-48 lg:aspect-auto lg:h-full lg:w-60 lg:justify-self-end">
+          <Image
+            src="/images/lab-dog.png"
+            alt="Friendly dog wearing goggles and a Codepet lab coat"
+            fill
+            priority
+            sizes="(min-width: 1024px) 240px, (min-width: 640px) 192px, 160px"
+            className="object-contain"
+          />
+        </div>
       </section>
 
       <section className="border-y border-border bg-surface-muted/35">
